@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { ArrowRight, Download, ExternalLink, MessageCircle, Github, MapPin, Calendar, Rocket, FolderOpen } from 'lucide-react'
-import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
+import { ArrowRight, MessageCircle, MapPin, Rocket, FolderOpen, Github, ExternalLink } from 'lucide-react'
+import { Helmet } from 'react-helmet-async'
+import { useData } from '../contexts/DataContext'
+import { getImageUrl, handleImageError } from '../utils/imageUtils'
 import Loading from '../components/UI/Loading'
 
 const Home = () => {
@@ -210,10 +212,11 @@ const Home = () => {
                     className="relative z-10 w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20"
                   >
                     <img
-                      src={about.profileImage}
-                      alt={about.name}
+                      src={getImageUrl(about?.profileImage)}
+                      alt={about?.name || 'Profile'}
                       className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
                       style={{ objectPosition: '50% 20%' }}
+                      onError={handleImageError}
                     />
                     {/* Subtle Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 via-transparent to-transparent"></div>
