@@ -7,6 +7,7 @@ import config from '../config'
  * @returns {string} - The full image URL
  */
 export const getImageUrl = (imagePath) => {
+  // Default to your existing profile image
   if (!imagePath) return '/images/default-profile.jpg'
   
   // If it's already a full URL (starts with http/https), return as is
@@ -14,27 +15,9 @@ export const getImageUrl = (imagePath) => {
     return imagePath
   }
   
-  // If it's a relative path starting with /, it's likely already handled by the backend
-  // In production, the backend should return full URLs
-  if (imagePath.startsWith('/')) {
-    // In development, prepend the API base URL
-    if (config.app.environment === 'development') {
-      const baseUrl = config.api.baseURL.replace('/api', '')
-      return `${baseUrl}${imagePath}`
-    }
-    // In production, if we get a relative path, it means backend isn't configured properly
-    // But we'll try to construct it anyway
-    return imagePath
-  }
-  
-  // If it doesn't start with /, add it
-  const cleanPath = `/${imagePath}`
-  if (config.app.environment === 'development') {
-    const baseUrl = config.api.baseURL.replace('/api', '')
-    return `${baseUrl}${cleanPath}`
-  }
-  
-  return cleanPath
+  // For relative paths, use as static files from public directory
+  // This ensures images are served from the frontend's public directory
+  return imagePath.startsWith('/') ? imagePath : `/${imagePath}`
 }
 
 /**

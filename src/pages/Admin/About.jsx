@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import { Save, Upload, Plus, X } from 'lucide-react'
+import { Save, Plus, X } from 'lucide-react'
 import { adminAPI } from '../../services/api'
 import toast from 'react-hot-toast'
 import Loading from '../../components/UI/Loading'
@@ -11,8 +11,6 @@ const AdminAbout = () => {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [highlights, setHighlights] = useState([''])
-  const [profileImagePreview, setProfileImagePreview] = useState(null)
-  const [resumeFile, setResumeFile] = useState(null)
 
   const {
     register,
@@ -43,7 +41,6 @@ const AdminAbout = () => {
           })
           
           setHighlights(data.highlights?.length > 0 ? data.highlights : [''])
-          setProfileImagePreview(data.profileImage)
         }
       } catch (error) {
         console.error('Error fetching about data:', error)
@@ -59,37 +56,23 @@ const AdminAbout = () => {
   const onSubmit = async (data) => {
     setSaving(true)
     try {
-      const formData = new FormData()
-      
       // Basic fields
-      formData.append('name', data.name)
-      formData.append('title', data.title)
-      formData.append('tagline', data.tagline)
-      formData.append('bio', data.bio)
-      
-      // Social links
-      const socialLinks = {
-        github: data['socialLinks.github'] || '',
-        linkedin: data['socialLinks.linkedin'] || '',
-        twitter: data['socialLinks.twitter'] || '',
-        leetcode: data['socialLinks.leetcode'] || '',
-        codeforces: data['socialLinks.codeforces'] || ''
-      }
-      formData.append('socialLinks', JSON.stringify(socialLinks))
-      
-      // Highlights (filter out empty ones)
-      const validHighlights = highlights.filter(h => h.trim() !== '')
-      formData.append('highlights', JSON.stringify(validHighlights))
-      
-      // Files
-      if (data.profileImage?.[0]) {
-        formData.append('profileImage', data.profileImage[0])
-      }
-      if (data.resume?.[0]) {
-        formData.append('resume', data.resume[0])
+      const aboutData = {
+        name: data.name,
+        title: data.title,
+        tagline: data.tagline,
+        bio: data.bio,
+        socialLinks: JSON.stringify({
+          github: data['socialLinks.github'] || '',
+          linkedin: data['socialLinks.linkedin'] || '',
+          twitter: data['socialLinks.twitter'] || '',
+          leetcode: data['socialLinks.leetcode'] || '',
+          codeforces: data['socialLinks.codeforces'] || ''
+        }),
+        highlights: JSON.stringify(highlights.filter(h => h.trim() !== ''))
       }
 
-      await adminAPI.updateAbout(formData)
+      await adminAPI.updateAbout(aboutData)
       toast.success('About information updated successfully!')
       
     } catch (error) {
@@ -100,16 +83,6 @@ const AdminAbout = () => {
     }
   }
 
-  const handleProfileImageChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setProfileImagePreview(reader.result)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
 
   const addHighlight = () => {
     setHighlights([...highlights, ''])
@@ -224,42 +197,20 @@ const AdminAbout = () => {
             <div className="card p-8">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Files</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Profile Image */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Profile Image
-                  </label>
-                  {profileImagePreview && (
-                    <div className="mb-4">
-                      <img
-                        src={profileImagePreview}
-                        alt="Profile preview"
-                        className="w-32 h-32 rounded-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    {...register('profileImage')}
-                    onChange={handleProfileImageChange}
-                    className="input"
-                  />
-                </div>
-
-                {/* Resume */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Resume (PDF)
-                  </label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    {...register('resume')}
-                    className="input"
-                  />
-                </div>
+              {/* File Upload Instructions */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                  Static Files Setup
+                </h4>
+                <p className="text-sm text-blue-600 dark:text-blue-300">
+                  Profile image: <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">client/public/images/default-profile.jpg</code>
+                </p>
+                <p className="text-sm text-blue-600 dark:text-blue-300 mt-1">
+                  Resume: <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">client/public/documents/naman-singh-resume.pdf</code>
+                </p>
+                <p className="text-sm text-blue-500 dark:text-blue-400 mt-2 italic">
+                  Replace these files with your actual profile image and resume.
+                </p>
               </div>
             </div>
 
