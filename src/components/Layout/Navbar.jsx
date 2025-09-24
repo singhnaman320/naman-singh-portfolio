@@ -41,6 +41,15 @@ const Navbar = () => {
     return location.pathname.startsWith(href)
   }
 
+  const handleDownloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/documents/naman-singh-resume.pdf'
+    link.download = 'Naman-Kumar-Singh-Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <>
       <motion.nav
@@ -59,7 +68,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link
               to="/"
-              className="text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200 relative z-10 leading-relaxed py-1"
+              className="text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200 relative z-10 leading-relaxed py-1 focus:outline-none focus:ring-0 focus:border-0"
               onClick={(e) => e.stopPropagation()}
             >
               Naman Kumar Singh
@@ -99,21 +108,17 @@ const Navbar = () => {
               ))}
               
               {/* Download Resume Icon */}
-              {about?.resumeUrl && (
-                <a
-                  href={about.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                >
-                  <Download className="w-5 h-5" />
-                  {/* Tooltip */}
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
-                    Download Resume
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
-                  </div>
-                </a>
-              )}
+              <button
+                onClick={handleDownloadResume}
+                className="group relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+              >
+                <Download className="w-5 h-5" />
+                {/* Tooltip */}
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
+                  Download Resume
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
+                </div>
+              </button>
 
               {/* Theme Toggle */}
               <ThemeToggle />
@@ -175,17 +180,13 @@ const Navbar = () => {
                 ))}
                 
                 {/* Download Resume Link */}
-                {about?.resumeUrl && (
-                  <a
-                    href={about.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Resume
-                  </a>
-                )}
+                <button
+                  onClick={handleDownloadResume}
+                  className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 w-full text-left"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download Resume
+                </button>
 
                 {/* Admin Link */}
                 <Link

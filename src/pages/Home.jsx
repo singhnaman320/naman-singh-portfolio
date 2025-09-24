@@ -31,7 +31,7 @@ const Home = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-16 sm:pt-20 pb-8 sm:pb-0 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-24 sm:pt-28 pb-20 sm:pb-24 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-4 sm:left-20 w-32 h-32 sm:w-72 sm:h-72 bg-primary-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
@@ -182,7 +182,7 @@ const Home = () => {
             </motion.div>
 
             {/* Profile Image Section */}
-            {about?.profileImage && (
+            {(
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={heroInView ? { opacity: 1, scale: 1 } : {}}
@@ -231,6 +231,7 @@ const Home = () => {
       {/* About/Bio Section */}
       {/* Debug: Check if about data exists */}
       {console.log('About data:', about)}
+      {console.log('Profile Image URL:', getImageUrl(about?.profileImage))}
       {about && (
         <section className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-800">
           <div className="container-max section-padding">
