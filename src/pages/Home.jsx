@@ -229,7 +229,9 @@ const Home = () => {
       </section>
 
       {/* About/Bio Section */}
-      {about?.bio && (
+      {/* Debug: Check if about data exists */}
+      {console.log('About data:', about)}
+      {about && (
         <section className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-800">
           <div className="container-max section-padding">
             <motion.div
@@ -257,11 +259,17 @@ const Home = () => {
                   className="text-center space-y-8"
                 >
                   <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 mx-auto px-4">
-                    {about.bio.split('\n').map((paragraph, index) => (
-                      <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
-                        {paragraph}
+                    {about?.bio ? (
+                      about.bio.split('\n').map((paragraph, index) => (
+                        <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
+                          {paragraph}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-gray-500 dark:text-gray-400 italic">
+                        Bio content is not available. Please add your story in the admin panel.
                       </p>
-                    ))}
+                    )}
                   </div>
 
                   {/* Social Links */}
