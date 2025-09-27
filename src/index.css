@@ -245,3 +245,13 @@ body {
   animation: float-3 12s ease-in-out infinite;
   animation-delay: 4s;
 }
+
+/* Hide scrollbar for filter dropdown */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}

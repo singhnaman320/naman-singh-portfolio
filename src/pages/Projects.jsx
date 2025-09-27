@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket } from 'lucide-react'
+import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown } from 'lucide-react'
 import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
 import { LoadingPage } from '../components/UI/Loading'
@@ -11,21 +11,62 @@ const Projects = () => {
   const { projects, loading } = useData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTech, setSelectedTech] = useState('')
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [projectsRef, projectsInView] = useInView({ threshold: 0.1, triggerOnce: true })
+  const filterRef = useRef(null)
+
+  // Available tech stacks for filtering
+  const availableTechStacks = [
+    'All Technologies',
+    'HTML5',
+    'CSS3', 
+    'JavaScript',
+    'Git',
+    'React',
+    'Tailwind CSS',
+    'WebSocket',
+    'Node.js',
+    'Express',
+    'MongoDB',
+    'PostgreSQL',
+    'Amazon DynamoDB',
+    'Amazon S3',
+    'AWS',
+    'Render',
+    'Vercel'
+  ]
+
+  // Close filter dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setIsFilterOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   if (loading) {
     return <LoadingPage message="Loading projects..." />
   }
 
-  // Get all unique technologies
+  // Get all unique technologies from projects
   const allTechnologies = [...new Set(projects.flatMap(project => project.techStack))].sort()
 
   // Filter projects
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          project.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesTech = !selectedTech || project.techStack.includes(selectedTech)
+    
+    if (selectedTech === '' || selectedTech === 'All Technologies') {
+      return matchesSearch
+    }
+    
+    // Check if selected tech stack is in project's tech stack
+    const matchesTech = project.techStack.includes(selectedTech)
+    
     return matchesSearch && matchesTech
   })
 
@@ -56,28 +97,76 @@ const Projects = () => {
             {/* Search and Filter */}
             <div className="flex flex-col md:flex-row gap-6 max-w-2xl mx-auto">
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="input pl-12 pr-4 w-full"
+                  className="w-full px-4 py-3 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
               
-              <div className="relative md:min-w-[220px]">
-                <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
-                <select
-                  value={selectedTech}
-                  onChange={(e) => setSelectedTech(e.target.value)}
-                  className="input pl-12 pr-10 appearance-none bg-white dark:bg-gray-800 cursor-pointer w-full"
+              <div className="relative md:min-w-[220px]" ref={filterRef}>
+                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10 pointer-events-none" />
+                <button
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="w-full px-4 py-3 pl-10 pr-12 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 cursor-pointer text-left flex items-center justify-between"
                 >
-                  <option value="">All Technologies</option>
-                  {allTechnologies.map(tech => (
-                    <option key={tech} value={tech}>{tech}</option>
-                  ))}
-                </select>
+                  <span className="truncate mr-3">
+                    {selectedTech || 'All Technologies'}
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ${isFilterOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Custom Dropdown */}
+                {isFilterOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl shadow-lg z-20 overflow-hidden"
+                  >
+                    <div 
+                      className="max-h-64 overflow-y-auto scrollbar-hide" 
+                      style={{ 
+                        scrollbarWidth: 'none', 
+                        msOverflowStyle: 'none',
+                        cursor: 'grab'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.cursor = 'grab'
+                      }}
+                      onMouseDown={(e) => {
+                        e.currentTarget.style.cursor = 'grabbing'
+                      }}
+                      onMouseUp={(e) => {
+                        e.currentTarget.style.cursor = 'grab'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.cursor = 'default'
+                      }}
+                    >
+                      {availableTechStacks.map((tech) => (
+                        <button
+                          key={tech}
+                          onClick={() => {
+                            setSelectedTech(tech === 'All Technologies' ? '' : tech)
+                            setIsFilterOpen(false)
+                          }}
+                          className={`w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700 last:border-b-0 ${
+                            (selectedTech === tech || (selectedTech === '' && tech === 'All Technologies'))
+                              ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                              : 'text-gray-900 dark:text-gray-100'
+                          }`}
+                        >
+                          <span className="font-medium">{tech}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </motion.div>

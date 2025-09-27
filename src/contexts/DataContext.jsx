@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { publicAPI } from '../services/api'
+import WelcomeScreen from '../components/WelcomeScreen'
 
 const DataContext = createContext()
 
@@ -18,6 +19,8 @@ export const DataProvider = ({ children }) => {
   const [skills, setSkills] = useState({})
   const [stats, setStats] = useState({})
   const [loading, setLoading] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(true)
+  const [dataLoaded, setDataLoaded] = useState(false)
 
   // Fetch all public data
   const fetchAllData = async () => {
@@ -42,8 +45,10 @@ export const DataProvider = ({ children }) => {
       setExperiences(experiencesRes.data)
       setSkills(skillsRes.data)
       setStats(statsRes.data)
+      setDataLoaded(true)
     } catch (error) {
       console.error('Error fetching data:', error)
+      setDataLoaded(true) // Still hide welcome screen even on error
     } finally {
       setLoading(false)
     }
@@ -119,9 +124,35 @@ export const DataProvider = ({ children }) => {
     }
   }
 
+  // Handle welcome screen completion
+  const handleWelcomeComplete = () => {
+    setShowWelcome(false)
+  }
+
+  // Ensure welcome screen shows for at least 12 seconds
   useEffect(() => {
     fetchAllData()
+    
+    // Minimum 12 second display time for welcome screen
+    const minDisplayTimer = setTimeout(() => {
+      if (dataLoaded) {
+        setShowWelcome(false)
+      }
+    }, 12000)
+
+    return () => clearTimeout(minDisplayTimer)
   }, [])
+
+  // Hide welcome screen when data is loaded and minimum time has passed
+  useEffect(() => {
+    if (dataLoaded) {
+      const timer = setTimeout(() => {
+        setShowWelcome(false)
+      }, 100) // Small delay to ensure smooth transition
+      
+      return () => clearTimeout(timer)
+    }
+  }, [dataLoaded])
 
   const value = {
     // Data
@@ -145,6 +176,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={value}>
+      {showWelcome && <WelcomeScreen onComplete={handleWelcomeComplete} />}
       {children}
     </DataContext.Provider>
   )
