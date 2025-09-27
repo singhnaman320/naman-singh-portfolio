@@ -19,7 +19,11 @@ export const DataProvider = ({ children }) => {
   const [skills, setSkills] = useState({})
   const [stats, setStats] = useState({})
   const [loading, setLoading] = useState(true)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(() => {
+    // Check if user has seen welcome screen before
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
+    return !hasSeenWelcome // Show welcome only if not seen before
+  })
   const [dataLoaded, setDataLoaded] = useState(false)
 
   // Fetch all public data
@@ -127,6 +131,14 @@ export const DataProvider = ({ children }) => {
   // Handle welcome screen completion
   const handleWelcomeComplete = () => {
     setShowWelcome(false)
+    // Mark that user has seen the welcome screen
+    localStorage.setItem('hasSeenWelcome', 'true')
+  }
+
+  // Reset welcome screen (for testing or clearing cache)
+  const resetWelcomeScreen = () => {
+    localStorage.removeItem('hasSeenWelcome')
+    setShowWelcome(true)
   }
 
   // Ensure welcome screen shows for exactly 5 seconds
@@ -136,6 +148,8 @@ export const DataProvider = ({ children }) => {
     // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
     const welcomeTimer = setTimeout(() => {
       setShowWelcome(false)
+      // Mark that user has seen the welcome screen
+      localStorage.setItem('hasSeenWelcome', 'true')
     }, 5000)
 
     return () => clearTimeout(welcomeTimer)
@@ -158,7 +172,8 @@ export const DataProvider = ({ children }) => {
     fetchSkills,
     fetchStats,
     getProject,
-    submitContact
+    submitContact,
+    resetWelcomeScreen
   }
 
   return (
