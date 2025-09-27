@@ -20,9 +20,9 @@ export const DataProvider = ({ children }) => {
   const [stats, setStats] = useState({})
   const [loading, setLoading] = useState(true)
   const [showWelcome, setShowWelcome] = useState(() => {
-    // Check if user has seen welcome screen before
-    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome')
-    return !hasSeenWelcome // Show welcome only if not seen before
+    // Check if user has seen welcome screen in this session
+    const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome')
+    return !hasSeenWelcome // Show welcome only if not seen in this session
   })
   const [dataLoaded, setDataLoaded] = useState(false)
 
@@ -131,13 +131,13 @@ export const DataProvider = ({ children }) => {
   // Handle welcome screen completion
   const handleWelcomeComplete = () => {
     setShowWelcome(false)
-    // Mark that user has seen the welcome screen
-    localStorage.setItem('hasSeenWelcome', 'true')
+    // Mark that user has seen the welcome screen in this session
+    sessionStorage.setItem('hasSeenWelcome', 'true')
   }
 
   // Reset welcome screen (for testing or clearing cache)
   const resetWelcomeScreen = () => {
-    localStorage.removeItem('hasSeenWelcome')
+    sessionStorage.removeItem('hasSeenWelcome')
     setShowWelcome(true)
   }
 
@@ -148,8 +148,8 @@ export const DataProvider = ({ children }) => {
     // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
     const welcomeTimer = setTimeout(() => {
       setShowWelcome(false)
-      // Mark that user has seen the welcome screen
-      localStorage.setItem('hasSeenWelcome', 'true')
+      // Mark that user has seen the welcome screen in this session
+      sessionStorage.setItem('hasSeenWelcome', 'true')
     }, 5000)
 
     return () => clearTimeout(welcomeTimer)

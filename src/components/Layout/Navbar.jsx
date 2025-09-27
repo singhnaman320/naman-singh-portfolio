@@ -68,10 +68,14 @@ const Navbar = () => {
             {/* Logo */}
             <Link
               to="/"
-              className="text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200 relative z-10 leading-relaxed py-1 focus:outline-none focus:ring-0 focus:border-0"
+              className="hover:scale-105 transition-transform duration-200 relative z-10 focus:outline-none focus:ring-0 focus:border-0"
               onClick={(e) => e.stopPropagation()}
             >
-              Naman Kumar Singh
+              <img
+                src="/images/naman-logo.png"
+                alt="Naman Kumar Singh"
+                className="h-14 w-auto sm:h-16 md:h-19 object-contain"
+              />
             </Link>
 
             {/* Desktop Navigation */}

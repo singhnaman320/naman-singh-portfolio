@@ -47,9 +47,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold text-gradient mb-4">
-              Naman Kumar Singh
-            </h3>
+            <div className="mb-4">
+              <img
+                src="/images/naman-logo.png"
+                alt="Naman Kumar Singh"
+                className="h-14 w-auto sm:h-16 md:h-19 object-contain"
+              />
+            </div>
             <p className="text-gray-300 dark:text-gray-400 mb-6 max-w-md">
               Full-Stack Developer passionate about creating innovative solutions 
               and building amazing user experiences with modern technologies.
