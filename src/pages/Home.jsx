@@ -126,27 +126,27 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="flex flex-row gap-2 sm:gap-4 justify-center lg:justify-start"
+                className="flex flex-row gap-2 sm:gap-5 justify-center lg:justify-start"
               >
                 {/* Location Card */}
-                <div className="flex items-center bg-white dark:bg-gray-800 px-3 sm:px-6 py-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 flex-1">
+                <div className="flex items-center bg-white dark:bg-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 flex-1 sm:flex-none sm:w-[180px] lg:w-[200px]">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</p>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{about?.location || 'India'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">{about?.location || 'India'}</p>
                   </div>
                 </div>
 
                 {/* Availability Card */}
-                <div className="flex items-center bg-green-50 dark:bg-green-900/20 px-3 sm:px-6 py-3 rounded-xl shadow-lg border border-green-200 dark:border-green-800 hover:shadow-xl transition-shadow duration-300 flex-1">
+                <div className="flex items-center bg-green-50 dark:bg-green-900/20 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-lg border border-green-200 dark:border-green-800 hover:shadow-xl transition-shadow duration-300 flex-1 sm:flex-none sm:w-[160px] lg:w-[190px]">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-green-600 dark:text-green-400 uppercase tracking-wide">Status</p>
-                    <p className="text-sm font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{about?.availability || 'Available'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{about?.availability || 'Available'}</p>
                   </div>
                 </div>
               </motion.div>
@@ -319,7 +319,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={statsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center gap-6 sm:gap-8 lg:gap-10 max-w-md mx-auto"
+            className="flex flex-col lg:flex-row lg:justify-center items-center gap-6 sm:gap-8 lg:gap-16 max-w-md lg:max-w-4xl mx-auto"
           >
             {[
               { label: 'Projects', value: stats.projects || 0 },
@@ -333,10 +333,10 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center w-full"
               >
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 min-w-[120px] flex justify-center">
+                <div className="text-2xl sm:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 lg:mb-4 min-w-[120px] flex justify-center">
                   {stat.value}
                 </div>
-                <div className="text-base sm:text-lg text-gray-600 dark:text-gray-300 font-medium mb-6 sm:mb-8">
+                <div className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 font-medium mb-6 sm:mb-8 lg:mb-0">
                   {stat.label}
                 </div>
               </motion.div>

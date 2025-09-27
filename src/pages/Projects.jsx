@@ -54,24 +54,24 @@ const Projects = () => {
             </p>
             
             {/* Search and Filter */}
-            <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-6 max-w-2xl mx-auto">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="input pl-10 w-full"
+                  className="input pl-12 pr-4 w-full"
                 />
               </div>
               
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative md:min-w-[220px]">
+                <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <select
                   value={selectedTech}
                   onChange={(e) => setSelectedTech(e.target.value)}
-                  className="input pl-10 pr-8 appearance-none bg-white cursor-pointer min-w-[200px]"
+                  className="input pl-12 pr-10 appearance-none bg-white dark:bg-gray-800 cursor-pointer w-full"
                 >
                   <option value="">All Technologies</option>
                   {allTechnologies.map(tech => (
