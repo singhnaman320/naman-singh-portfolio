@@ -31,7 +31,7 @@ const Home = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-24 sm:pt-28 pb-20 sm:pb-24 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-24 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-4 sm:left-20 w-32 h-32 sm:w-72 sm:h-72 bg-primary-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
@@ -40,7 +40,7 @@ const Home = () => {
         </div>
 
         <div className="container-max section-padding w-full relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
             
             {/* Content */}
             <motion.div
@@ -48,7 +48,7 @@ const Home = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8 }}
-              className="text-center lg:text-left space-y-4 sm:space-y-10 lg:space-y-8"
+              className="text-center lg:text-left space-y-3 sm:space-y-6 lg:space-y-8 order-2 lg:order-1"
             >
               {/* Greeting Text */}
               <motion.div
@@ -89,7 +89,7 @@ const Home = () => {
                   </motion.span>
                 </h1>
                 <motion.div 
-                  className="h-1 w-24 bg-gradient-to-r from-primary-500 to-blue-500 rounded-full"
+                  className="h-1 w-24 bg-gradient-to-r from-primary-500 to-blue-500 rounded-full mx-auto lg:mx-0"
                   initial={{ width: 0 }}
                   animate={heroInView ? { width: "6rem" } : {}}
                   transition={{ duration: 1, delay: 0.8 }}
@@ -126,27 +126,27 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
+                className="flex flex-row gap-2 sm:gap-4 justify-center lg:justify-start"
               >
                 {/* Location Card */}
-                <div className="flex items-center bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
+                <div className="flex items-center bg-white dark:bg-gray-800 px-3 sm:px-6 py-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</p>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{about?.location || 'India'}</p>
                   </div>
                 </div>
 
                 {/* Availability Card */}
-                <div className="flex items-center bg-green-50 dark:bg-green-900/20 px-4 sm:px-6 py-3 rounded-xl shadow-lg border border-green-200 dark:border-green-800 hover:shadow-xl transition-shadow duration-300">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-3">
+                <div className="flex items-center bg-green-50 dark:bg-green-900/20 px-3 sm:px-6 py-3 rounded-xl shadow-lg border border-green-200 dark:border-green-800 hover:shadow-xl transition-shadow duration-300 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="text-xs text-green-600 dark:text-green-400 uppercase tracking-wide">Status</p>
-                    <p className="text-sm font-semibold text-green-700 dark:text-green-300">{about?.availability || 'Available for work'}</p>
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{about?.availability || 'Available'}</p>
                   </div>
                 </div>
               </motion.div>
@@ -187,7 +187,7 @@ const Home = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={heroInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 1, delay: 0.4 }}
-                className="relative flex justify-center lg:justify-end p-8 lg:p-12"
+                className="relative flex justify-center lg:justify-end p-4 sm:p-6 lg:p-12 order-1 lg:order-2"
               >
                 <div className="relative w-full max-w-md lg:max-w-lg">
                   {/* Floating Background Elements */}
@@ -209,7 +209,7 @@ const Home = () => {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="relative z-10 w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20"
+                    className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20"
                   >
                     <img
                       src={getImageUrl(about?.profileImage)}
@@ -312,14 +312,14 @@ const Home = () => {
       )}
 
       {/* Stats Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
         <div className="container-max section-padding">
           <motion.div
             ref={statsRef}
             initial={{ opacity: 0, y: 30 }}
             animate={statsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
+            className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
           >
             {[
               { label: 'Projects', value: stats.projects || 0 },
@@ -333,10 +333,10 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-1 sm:mb-2">
                   {stat.value}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300 font-medium">
+                <div className="text-sm sm:text-base text-gray-600 dark:text-gray-300 font-medium">
                   {stat.label}
                 </div>
               </motion.div>
