@@ -129,30 +129,17 @@ export const DataProvider = ({ children }) => {
     setShowWelcome(false)
   }
 
-  // Ensure welcome screen shows for at least 12 seconds
+  // Ensure welcome screen shows for exactly 5 seconds
   useEffect(() => {
     fetchAllData()
     
-    // Minimum 12 second display time for welcome screen
-    const minDisplayTimer = setTimeout(() => {
-      if (dataLoaded) {
-        setShowWelcome(false)
-      }
-    }, 12000)
+    // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
+    const welcomeTimer = setTimeout(() => {
+      setShowWelcome(false)
+    }, 4000)
 
-    return () => clearTimeout(minDisplayTimer)
+    return () => clearTimeout(welcomeTimer)
   }, [])
-
-  // Hide welcome screen when data is loaded and minimum time has passed
-  useEffect(() => {
-    if (dataLoaded) {
-      const timer = setTimeout(() => {
-        setShowWelcome(false)
-      }, 100) // Small delay to ensure smooth transition
-      
-      return () => clearTimeout(timer)
-    }
-  }, [dataLoaded])
 
   const value = {
     // Data

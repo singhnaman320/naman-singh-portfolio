@@ -7,15 +7,15 @@ const WelcomeScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0)
 
   const steps = [
-    { icon: Terminal, text: "Initializing Portfolio...", color: "text-blue-500" },
-    { icon: Code, text: "Loading Projects...", color: "text-green-500" },
-    { icon: Cpu, text: "Compiling Skills...", color: "text-purple-500" },
-    { icon: Coffee, text: "Brewing Experience...", color: "text-amber-500" },
-    { icon: Zap, text: "Optimizing Performance...", color: "text-yellow-500" },
-    { icon: Code, text: "Configuring Components...", color: "text-cyan-500" },
-    { icon: Terminal, text: "Running Final Checks...", color: "text-pink-500" },
-    { icon: Rocket, text: "Preparing Launch...", color: "text-orange-500" },
-    { icon: Rocket, text: "Ready to Launch!", color: "text-red-500" }
+    { icon: Terminal, text: "Initializing Portfolio...", color: "text-slate-400" },
+    { icon: Code, text: "Loading Projects...", color: "text-slate-300" },
+    { icon: Cpu, text: "Compiling Skills...", color: "text-gray-400" },
+    { icon: Coffee, text: "Brewing Experience...", color: "text-slate-400" },
+    { icon: Zap, text: "Optimizing Performance...", color: "text-gray-300" },
+    { icon: Code, text: "Configuring Components...", color: "text-slate-300" },
+    { icon: Terminal, text: "Running Final Checks...", color: "text-gray-400" },
+    { icon: Rocket, text: "Preparing Launch...", color: "text-slate-300" },
+    { icon: Rocket, text: "Ready to Launch!", color: "text-white" }
   ]
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const WelcomeScreen = ({ onComplete }) => {
           setTimeout(() => onComplete(), 500)
           return 100
         }
-        return prev + 0.83
+        return prev + (100 / 50)
       })
-    }, 100) // 12 seconds total (100 / 0.83 = 120 steps, 120 * 100ms = 12000ms)
+    }, 100) // 5 seconds total (50 steps * 100ms = 5000ms, 100% / 50 steps = 2% per step)
 
     return () => clearInterval(timer)
   }, [onComplete])
@@ -42,7 +42,7 @@ const WelcomeScreen = ({ onComplete }) => {
         }
         return prev + 1
       })
-    }, 1300) // Change step every 1300ms (9 steps in ~11.7 seconds)
+    }, 550) // Change step every 550ms (9 steps in ~5 seconds)
 
     return () => clearInterval(stepTimer)
   }, [steps.length])
@@ -99,7 +99,7 @@ const WelcomeScreen = ({ onComplete }) => {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="fixed inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center z-50 overflow-hidden"
+        className="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center z-[9999] overflow-hidden"
       >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -135,12 +135,12 @@ const WelcomeScreen = ({ onComplete }) => {
           >
             <div className="relative">
               <motion.div
-                className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl"
+                className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-slate-700 to-gray-800 rounded-2xl flex items-center justify-center shadow-2xl border border-slate-600"
                 animate={{
                   boxShadow: [
-                    "0 0 20px rgba(59, 130, 246, 0.5)",
-                    "0 0 40px rgba(147, 51, 234, 0.5)",
-                    "0 0 20px rgba(59, 130, 246, 0.5)"
+                    "0 0 20px rgba(148, 163, 184, 0.3)",
+                    "0 0 30px rgba(203, 213, 225, 0.4)",
+                    "0 0 20px rgba(148, 163, 184, 0.3)"
                   ]
                 }}
                 transition={{
@@ -192,7 +192,7 @@ const WelcomeScreen = ({ onComplete }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent"
               >
                 Naman's Portfolio
               </motion.span>
@@ -203,7 +203,7 @@ const WelcomeScreen = ({ onComplete }) => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg sm:text-xl text-gray-300 max-w-lg mx-auto"
             >
-              Full-Stack Developer & Software Engineer
+              Full-Stack Developer
             </motion.p>
           </motion.div>
 
@@ -230,9 +230,9 @@ const WelcomeScreen = ({ onComplete }) => {
 
           {/* Progress Bar */}
           <motion.div variants={itemVariants} className="w-full max-w-md mx-auto">
-            <div className="bg-white/20 rounded-full h-2 overflow-hidden backdrop-blur-sm">
+            <div className="bg-slate-700/50 rounded-full h-2 overflow-hidden backdrop-blur-sm border border-slate-600/30">
               <motion.div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"
+                className="h-full bg-gradient-to-r from-slate-400 to-slate-200 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -250,10 +250,10 @@ const WelcomeScreen = ({ onComplete }) => {
 
           {/* Decorative Elements */}
           <motion.div
-            className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-xl"
+            className="absolute top-1/4 left-1/4 w-32 h-32 bg-slate-500/10 rounded-full blur-xl"
             animate={{
               scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3]
+              opacity: [0.2, 0.4, 0.2]
             }}
             transition={{
               duration: 4,
@@ -262,10 +262,10 @@ const WelcomeScreen = ({ onComplete }) => {
             }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-xl"
+            className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-gray-400/10 rounded-full blur-xl"
             animate={{
               scale: [1.2, 1, 1.2],
-              opacity: [0.6, 0.3, 0.6]
+              opacity: [0.4, 0.2, 0.4]
             }}
             transition={{
               duration: 4,
@@ -276,17 +276,6 @@ const WelcomeScreen = ({ onComplete }) => {
           />
         </div>
 
-        {/* Bottom Branding */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <p className="text-white/40 text-sm font-mono">
-            Crafted with ❤️ using React & Tailwind CSS
-          </p>
-        </motion.div>
       </motion.div>
     </AnimatePresence>
   )
