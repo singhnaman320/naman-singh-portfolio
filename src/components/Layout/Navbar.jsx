@@ -72,9 +72,9 @@ const Navbar = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src="/images/naman-logo.png"
+                src="/images/naman-logo.gif"
                 alt="Naman Kumar Singh"
-                className="h-14 w-auto sm:h-16 md:h-19 object-contain"
+                className="h-16 w-auto sm:h-20 md:h-24 object-contain rounded-lg"
               />
             </Link>
 
