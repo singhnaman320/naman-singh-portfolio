@@ -319,7 +319,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={statsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+            className="flex flex-col items-center gap-6 sm:gap-8 lg:gap-10 max-w-md mx-auto"
           >
             {[
               { label: 'Projects', value: stats.projects || 0 },
@@ -331,12 +331,12 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
+                className="text-center w-full"
               >
-                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-1 sm:mb-2">
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 min-w-[120px] flex justify-center">
                   {stat.value}
                 </div>
-                <div className="text-sm sm:text-base text-gray-600 dark:text-gray-300 font-medium">
+                <div className="text-base sm:text-lg text-gray-600 dark:text-gray-300 font-medium mb-6 sm:mb-8">
                   {stat.label}
                 </div>
               </motion.div>
