@@ -136,7 +136,7 @@ export const DataProvider = ({ children }) => {
     // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
     const welcomeTimer = setTimeout(() => {
       setShowWelcome(false)
-    }, 4000)
+    }, 5000)
 
     return () => clearTimeout(welcomeTimer)
   }, [])
