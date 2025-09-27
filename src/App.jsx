@@ -8,7 +8,7 @@ import { ThemeProvider } from './contexts/ThemeContext'
 // Layout Components
 import Layout from './components/Layout/Layout'
 import AdminLayout from './components/Layout/AdminLayout'
-import LandscapeRestriction from './components/LandscapeRestriction'
+import ForcePortraitMode from './components/LandscapeRestriction'
 
 // Public Pages
 import Home from './pages/Home'
@@ -39,7 +39,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <DataProvider>
-          <LandscapeRestriction />
+          <ForcePortraitMode />
           <div className="App">
             <Routes>
               {/* Public Routes */}
