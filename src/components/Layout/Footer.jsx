@@ -51,7 +51,7 @@ const Footer = () => {
               <img
                 src="/images/naman-logo.gif"
                 alt="Naman Kumar Singh"
-                className="h-16 w-auto sm:h-20 md:h-24 object-contain rounded-lg"
+                className="h-20 w-auto sm:h-20 md:h-24 object-contain rounded-lg"
               />
             </div>
             <p className="text-gray-300 dark:text-gray-400 mb-6 max-w-md">

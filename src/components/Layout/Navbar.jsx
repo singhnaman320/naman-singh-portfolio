@@ -74,7 +74,7 @@ const Navbar = () => {
               <img
                 src="/images/naman-logo.gif"
                 alt="Naman Kumar Singh"
-                className="h-16 w-auto sm:h-20 md:h-24 object-contain rounded-lg"
+                className="h-20 w-auto sm:h-20 md:h-24 object-contain rounded-lg"
               />
             </Link>
 
