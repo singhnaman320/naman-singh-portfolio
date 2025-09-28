@@ -29,7 +29,6 @@ export const DataProvider = ({ children }) => {
   // Fetch all public data
   const fetchAllData = async () => {
     try {
-      setLoading(true)
       const [
         aboutRes,
         projectsRes,
@@ -53,9 +52,8 @@ export const DataProvider = ({ children }) => {
     } catch (error) {
       console.error('Error fetching data:', error)
       setDataLoaded(true) // Still hide welcome screen even on error
-    } finally {
-      setLoading(false)
     }
+    // Note: Loading state is managed by useEffect, not here
   }
 
   // Fetch individual data sections
@@ -143,16 +141,26 @@ export const DataProvider = ({ children }) => {
 
   // Ensure welcome screen shows for exactly 5 seconds
   useEffect(() => {
-    fetchAllData()
+    const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome')
     
-    // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
-    const welcomeTimer = setTimeout(() => {
-      setShowWelcome(false)
-      // Mark that user has seen the welcome screen in this session
-      sessionStorage.setItem('hasSeenWelcome', 'true')
-    }, 5000)
+    if (hasSeenWelcome) {
+      // If user has seen welcome screen, load data quickly without loading state
+      setLoading(false)
+      fetchAllData()
+    } else {
+      // First time visit - show welcome screen and load data in background
+      fetchAllData()
+      
+      // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
+      const welcomeTimer = setTimeout(() => {
+        setShowWelcome(false)
+        setLoading(false) // Remove loading state after welcome screen
+        // Mark that user has seen the welcome screen in this session
+        sessionStorage.setItem('hasSeenWelcome', 'true')
+      }, 5000)
 
-    return () => clearTimeout(welcomeTimer)
+      return () => clearTimeout(welcomeTimer)
+    }
   }, [])
 
   const value = {

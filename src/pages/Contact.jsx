@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Instagram } from 'lucide-react'
 import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
 import toast from 'react-hot-toast'
@@ -62,20 +62,20 @@ const Contact = () => {
     {
       name: 'GitHub',
       icon: Github,
-      url: about?.socialLinks?.github,
-      color: 'hover:text-gray-900'
+      url: about?.socialLinks?.github || 'https://github.com/singhnaman320',
+      color: 'hover:text-gray-900 dark:hover:text-white'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: about?.socialLinks?.linkedin,
+      url: about?.socialLinks?.linkedin || 'https://linkedin.com/in/naman-kumar-singh',
       color: 'hover:text-blue-600'
     },
     {
-      name: 'Twitter',
-      icon: Twitter,
-      url: about?.socialLinks?.twitter,
-      color: 'hover:text-blue-400'
+      name: 'Instagram',
+      icon: Instagram,
+      url: about?.socialLinks?.instagram || 'https://instagram.com/namansingh',
+      color: 'hover:text-pink-500'
     }
   ]
 
@@ -159,7 +159,6 @@ const Contact = () => {
                 <div className="flex space-x-4">
                   {socialLinks.map((social) => {
                     const Icon = social.icon
-                    if (!social.url) return null
                     
                     return (
                       <a
@@ -167,14 +166,18 @@ const Contact = () => {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600 ${social.color}`}
+                        className={`group p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-110 hover:shadow-lg ${social.color}`}
                         aria-label={social.name}
+                        title={`Follow me on ${social.name}`}
                       >
-                        <Icon className="w-5 h-5" />
+                        <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                       </a>
                     )
                   })}
                 </div>
+                {/* <p className="text-xs text-gray-400 dark:text-gray-500 mt-3">
+                  Connect with me on social media for updates and insights!
+                </p> */}
               </div>
             </motion.div>
 

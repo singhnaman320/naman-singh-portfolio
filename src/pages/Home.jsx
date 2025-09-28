@@ -6,7 +6,7 @@ import { ArrowRight, MessageCircle, MapPin, Rocket, FolderOpen, Github, External
 import { Helmet } from 'react-helmet-async'
 import { useData } from '../contexts/DataContext'
 import { getImageUrl, handleImageError } from '../utils/imageUtils'
-import Loading from '../components/UI/Loading'
+import { SkeletonHero, SkeletonText, SkeletonCard } from '../components/UI/SkeletonLoader'
 
 const Home = () => {
   const { about, projects, stats, loading } = useData()
@@ -20,7 +20,55 @@ const Home = () => {
 
 
   if (loading) {
-    return <Loading />
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        {/* Hero Skeleton */}
+        <section className="section-padding py-20 lg:py-32">
+          <div className="container-max">
+            <SkeletonHero />
+          </div>
+        </section>
+
+        {/* About Skeleton */}
+        <section className="section-padding py-20">
+          <div className="container-max">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg mb-6 animate-pulse" />
+                <SkeletonText lines={4} />
+              </div>
+              <div className="w-full h-96 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+            </div>
+          </div>
+        </section>
+
+        {/* Stats Skeleton */}
+        <section className="section-padding py-20 bg-gray-50 dark:bg-gray-800">
+          <div className="container-max">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[...Array(4)].map((_, i) => (
+                <SkeletonCard key={i} className="text-center p-6" />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Skeleton */}
+        <section className="section-padding py-20">
+          <div className="container-max">
+            <div className="text-center mb-16">
+              <div className="w-48 h-8 bg-gray-200 dark:bg-gray-700 rounded-lg mx-auto mb-4 animate-pulse" />
+              <SkeletonText lines={2} className="max-w-2xl mx-auto" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(3)].map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    )
   }
 
   return (

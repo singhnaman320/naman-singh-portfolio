@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Github, Linkedin, Twitter, Mail, Heart, Home, User, FolderOpen, Briefcase, Code, MessageCircle } from 'lucide-react'
+import { Github, Linkedin, Instagram, Mail, Heart, Home, User, FolderOpen, Briefcase, Code, MessageCircle } from 'lucide-react'
 import { useData } from '../../contexts/DataContext'
 
 const Footer = () => {
@@ -19,12 +19,12 @@ const Footer = () => {
       url: about?.socialLinks?.linkedin,
       color: 'hover:text-blue-600'
     },
-    {
-      name: 'Twitter',
-      icon: Twitter,
-      url: about?.socialLinks?.twitter,
-      color: 'hover:text-blue-400'
-    },
+    /*{
+      name: 'Instagram',
+      icon: Instagram,
+      url: about?.socialLinks?.instagram,
+      color: 'hover:text-pink-500'
+    },*/
     {
       name: 'Email',
       icon: Mail,
@@ -87,9 +87,15 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       to={link.path}
-                      className="flex items-center text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200"
+                      onClick={() => {
+                        // Scroll to top when navigating to a new page
+                        setTimeout(() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' })
+                        }, 100)
+                      }}
+                      className="flex items-center text-gray-300 dark:text-gray-400 hover:text-white hover:text-primary-400 transition-colors duration-200 group"
                     >
-                      <Icon className="w-4 h-4 mr-2" />
+                      <Icon className="w-4 h-4 mr-2 group-hover:text-primary-400 transition-colors duration-200" />
                       {link.name}
                     </Link>
                   </li>
@@ -106,21 +112,33 @@ const Footer = () => {
               <li>Frontend Development</li>
               <li>Backend Development</li>
               <li>API Development</li>
-              <li>Database Design</li>
+              {/* <li>Database Design</li> */}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
-            <div className="space-y-2 text-gray-300 dark:text-gray-400">
+            <div className="space-y-3 text-gray-300 dark:text-gray-400">
               <p>Ready to start your project?</p>
-              <Link
-                to="/contact"
-                className="inline-block bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-              >
-                Contact Me
-              </Link>
+              <div className="space-y-3">
+                <Link
+                  to="/contact"
+                  onClick={() => {
+                    setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' })
+                    }, 100)
+                  }}
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 dark:from-primary-500 dark:to-primary-600 dark:hover:from-primary-600 dark:hover:to-primary-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                  Contact Me
+                  <span className="ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                    →
+                  </span>
+                </Link>
+                {/* <p className="text-sm text-gray-400 dark:text-gray-500">Let's discuss your next project!</p> */}
+              </div>
             </div>
           </div>
         </div>
