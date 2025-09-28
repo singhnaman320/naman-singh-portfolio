@@ -43,7 +43,7 @@ export const authAPI = {
 
 // Public API endpoints
 export const publicAPI = {
-  getAbout: () => api.get('/public/about'),
+  getHome: () => api.get('/public/home'),
   getProjects: (featured = false) => api.get(`/public/projects${featured ? '?featured=true' : ''}`),
   getProject: (id) => api.get(`/public/projects/${id}`),
   getExperiences: () => api.get('/public/experiences'),
@@ -55,10 +55,8 @@ export const publicAPI = {
 // Admin API endpoints
 export const adminAPI = {
   // Home page endpoints
-  getAbout: () => api.get('/admin/home'),
-  updateAbout: (formData) => api.post('/admin/home', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
+  getHome: () => api.get('/admin/home'),
+  updateHome: (homeData) => api.post('/admin/home', homeData),
 
   // Projects endpoints
   getProjects: () => api.get('/admin/projects'),

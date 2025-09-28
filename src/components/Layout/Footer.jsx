@@ -3,32 +3,32 @@ import { Github, Linkedin, Instagram, Mail, Heart, Home, User, FolderOpen, Brief
 import { useData } from '../../contexts/DataContext'
 
 const Footer = () => {
-  const { about } = useData()
+  const { home } = useData()
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
     {
       name: 'GitHub',
       icon: Github,
-      url: about?.socialLinks?.github,
+      url: home?.socialLinks?.github,
       color: 'hover:text-gray-900'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: about?.socialLinks?.linkedin,
+      url: home?.socialLinks?.linkedin,
       color: 'hover:text-blue-600'
     },
-    /*{
+    {
       name: 'Instagram',
       icon: Instagram,
-      url: about?.socialLinks?.instagram,
+      url: home?.socialLinks?.instagram,
       color: 'hover:text-pink-500'
-    },*/
+    },
     {
       name: 'Email',
       icon: Mail,
-      url: `mailto:${about?.email || 'contact@namanportfolio.com'}`,
+      url: `mailto:${home?.email || 'contact@namanportfolio.com'}`,
       color: 'hover:text-red-500'
     }
   ]

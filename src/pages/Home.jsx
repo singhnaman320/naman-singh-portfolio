@@ -9,9 +9,9 @@ import { getImageUrl, handleImageError } from '../utils/imageUtils'
 import { SkeletonHero, SkeletonText, SkeletonCard } from '../components/UI/SkeletonLoader'
 
 const Home = () => {
-  const { about, projects, stats, loading } = useData()
+  const { home, projects, stats, loading } = useData()
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
-  const [aboutRef, aboutInView] = useInView({ threshold: 0.1, triggerOnce: true })
+  const [homeRef, homeInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [highlightsRef, highlightsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [projectsRef, projectsInView] = useInView({ threshold: 0.1, triggerOnce: true })
@@ -74,8 +74,8 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{about?.name || 'Naman Kumar Singh'} - {about?.title || 'Full Stack Developer'}</title>
-        <meta name="description" content={about?.tagline || "Full-Stack Developer specializing in scalable web applications and innovative solutions"} />
+        <title>{home?.name || 'Naman Kumar Singh'} - {home?.title || 'Full Stack Developer'}</title>
+        <meta name="description" content={home?.tagline || "Full-Stack Developer specializing in scalable web applications and innovative solutions"} />
       </Helmet>
 
       {/* Hero Section */}
@@ -133,7 +133,7 @@ const Home = () => {
                       lineHeight: "1.2"
                     }}
                   >
-                    {about?.name || 'Naman Kumar Singh'}
+                    {home?.name || 'Naman Kumar Singh'}
                   </motion.span>
                 </h1>
                 <motion.div 
@@ -157,7 +157,7 @@ const Home = () => {
                   animate={heroInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  {about?.title || 'Full-Stack Developer'}
+                  {home?.title || 'Full-Stack Developer'}
                 </motion.h2>
                 <motion.p 
                   className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
@@ -165,7 +165,7 @@ const Home = () => {
                   animate={heroInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                  {about?.tagline || 'Specializing in scalable web applications and modern technologies. Passionate about creating innovative solutions that make a difference.'}
+                  {home?.tagline || 'Specializing in scalable web applications and modern technologies. Passionate about creating innovative solutions that make a difference.'}
                 </motion.p>
               </motion.div>
 
@@ -183,7 +183,7 @@ const Home = () => {
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</p>
-                    <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">{about?.location || 'India'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">{home?.location || 'India'}</p>
                   </div>
                 </div>
 
@@ -194,7 +194,7 @@ const Home = () => {
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-green-600 dark:text-green-400 uppercase tracking-wide">Status</p>
-                    <p className="text-sm sm:text-base font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{about?.availability || 'Available'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{home?.availability || 'Available'}</p>
                   </div>
                 </div>
               </motion.div>
@@ -260,8 +260,8 @@ const Home = () => {
                     className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20"
                   >
                     <img
-                      src={getImageUrl(about?.profileImage)}
-                      alt={about?.name || 'Profile'}
+                      src={getImageUrl(home?.profileImage)}
+                      alt={home?.name || 'Profile'}
                       className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
                       style={{ objectPosition: '50% 20%' }}
                       onError={handleImageError}
@@ -276,20 +276,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About/Bio Section */}
-      {/* Debug: Check if about data exists */}
-      {console.log('About data:', about)}
-      {console.log('Profile Image URL:', getImageUrl(about?.profileImage))}
-      {about && (
-        <section className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-800">
-          <div className="container-max section-padding">
-            <motion.div
-              ref={aboutRef}
-              initial={{ opacity: 0, y: 30 }}
-              animate={aboutInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto"
-            >
+      {/* My Story Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-800">
+        <div className="container-max section-padding">
+          <motion.div
+            ref={homeRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={homeInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
+          >
               <div className="text-center mb-8 sm:mb-12 lg:mb-16">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                   My <span className="text-gradient">Story</span>
@@ -303,13 +299,13 @@ const Home = () => {
                 {/* Bio Content */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
-                  animate={aboutInView ? { opacity: 1, y: 0 } : {}}
+                  animate={homeInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="text-center space-y-8"
                 >
                   <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 mx-auto px-4">
-                    {about?.bio ? (
-                      about.bio.split('\n').map((paragraph, index) => (
+                    {home?.bio ? (
+                      home.bio.split('\n').map((paragraph, index) => (
                         <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
                           {paragraph}
                         </p>
@@ -322,11 +318,11 @@ const Home = () => {
                   </div>
 
                   {/* Social Links */}
-                  {about?.socialLinks && (
+                  {home?.socialLinks && (
                     <div className="flex flex-wrap justify-center gap-4 pt-8">
-                      {about.socialLinks.github && (
+                      {home.socialLinks.github && (
                         <motion.a
-                          href={about.socialLinks.github}
+                          href={home.socialLinks.github}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
@@ -337,9 +333,9 @@ const Home = () => {
                           GitHub
                         </motion.a>
                       )}
-                      {about.socialLinks.linkedin && (
+                      {home.socialLinks.linkedin && (
                         <motion.a
-                          href={about.socialLinks.linkedin}
+                          href={home.socialLinks.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center px-6 py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
@@ -357,7 +353,6 @@ const Home = () => {
             </motion.div>
           </div>
         </section>
-      )}
 
       {/* Stats Section */}
       <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
@@ -394,7 +389,7 @@ const Home = () => {
       </section>
 
       {/* Highlights Section */}
-      {about?.highlights && about.highlights.length > 0 && (
+      {home?.highlights && home.highlights.length > 0 && (
         <section className="py-20 bg-white dark:bg-gray-800">
           <div className="container-max section-padding">
             <motion.div
@@ -413,7 +408,7 @@ const Home = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {about.highlights.map((highlight, index) => (
+              {home.highlights.map((highlight, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}

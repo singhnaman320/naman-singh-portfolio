@@ -13,7 +13,7 @@ export const useData = () => {
 }
 
 export const DataProvider = ({ children }) => {
-  const [about, setAbout] = useState(null)
+  const [home, setHome] = useState(null)
   const [projects, setProjects] = useState([])
   const [experiences, setExperiences] = useState([])
   const [skills, setSkills] = useState({})
@@ -30,20 +30,20 @@ export const DataProvider = ({ children }) => {
   const fetchAllData = async () => {
     try {
       const [
-        aboutRes,
+        homeRes,
         projectsRes,
         experiencesRes,
         skillsRes,
         statsRes
       ] = await Promise.all([
-        publicAPI.getAbout(),
+        publicAPI.getHome(),
         publicAPI.getProjects(),
         publicAPI.getExperiences(),
         publicAPI.getSkills(),
         publicAPI.getStats()
       ])
 
-      setAbout(aboutRes.data)
+      setHome(homeRes.data)
       setProjects(projectsRes.data)
       setExperiences(experiencesRes.data)
       setSkills(skillsRes.data)
@@ -57,12 +57,12 @@ export const DataProvider = ({ children }) => {
   }
 
   // Fetch individual data sections
-  const fetchAbout = async () => {
+  const fetchHome = async () => {
     try {
-      const response = await publicAPI.getAbout()
-      setAbout(response.data)
+      const response = await publicAPI.getHome()
+      setHome(response.data)
     } catch (error) {
-      console.error('Error fetching about:', error)
+      console.error('Error fetching home:', error)
     }
   }
 
@@ -165,7 +165,7 @@ export const DataProvider = ({ children }) => {
 
   const value = {
     // Data
-    about,
+    home,
     projects,
     experiences,
     skills,
@@ -174,14 +174,17 @@ export const DataProvider = ({ children }) => {
     
     // Methods
     fetchAllData,
-    fetchAbout,
+    fetchHome,
     fetchProjects,
     fetchExperiences,
     fetchSkills,
     fetchStats,
     getProject,
     submitContact,
-    resetWelcomeScreen
+    resetWelcomeScreen,
+    
+    // Admin methods
+    refreshHome: fetchHome
   }
 
   return (

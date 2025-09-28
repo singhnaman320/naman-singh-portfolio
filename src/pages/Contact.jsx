@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer'
 import toast from 'react-hot-toast'
 
 const Contact = () => {
-  const { about, submitContact } = useData()
+  const { home, submitContact } = useData()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [formRef, formInView] = useInView({ threshold: 0.1, triggerOnce: true })
@@ -62,19 +62,19 @@ const Contact = () => {
     {
       name: 'GitHub',
       icon: Github,
-      url: about?.socialLinks?.github || 'https://github.com/singhnaman320',
+      url: home?.socialLinks?.github || 'https://github.com/singhnaman320',
       color: 'hover:text-gray-900 dark:hover:text-white'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: about?.socialLinks?.linkedin || 'https://linkedin.com/in/naman-kumar-singh',
+      url: home?.socialLinks?.linkedin || 'https://linkedin.com/in/naman-kumar-singh',
       color: 'hover:text-blue-600'
     },
     {
       name: 'Instagram',
       icon: Instagram,
-      url: about?.socialLinks?.instagram || 'https://instagram.com/namansingh',
+      url: home?.socialLinks?.instagram || 'https://instagram.com/namansingh',
       color: 'hover:text-pink-500'
     }
   ]

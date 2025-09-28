@@ -25,7 +25,7 @@ import Signup from './pages/Auth/Signup'
 
 // Admin Pages
 import Dashboard from './pages/Admin/Dashboard'
-import AdminHome from './pages/Admin/About'
+import AdminHome from './pages/Admin/Home'
 import AdminProjects from './pages/Admin/Projects'
 import AdminExperience from './pages/Admin/Experience'
 import AdminSkills from './pages/Admin/Skills'
