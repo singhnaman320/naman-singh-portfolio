@@ -2,19 +2,18 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { ArrowRight, MessageCircle, MapPin, Rocket, FolderOpen, Github, ExternalLink } from 'lucide-react'
+import { ArrowRight, MessageCircle, MapPin, Rocket, Github, ExternalLink } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useData } from '../contexts/DataContext'
 import { getImageUrl, handleImageError } from '../utils/imageUtils'
 import { SkeletonHero, SkeletonText, SkeletonCard } from '../components/UI/SkeletonLoader'
 
 const Home = () => {
-  const { home, projects, stats, loading } = useData()
+  const { home, stats, loading } = useData()
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [homeRef, homeInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [highlightsRef, highlightsInView] = useInView({ threshold: 0.1, triggerOnce: true })
-  const [projectsRef, projectsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const Home = () => {
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
-  const featuredProjects = projects.filter(project => project.featured).slice(0, 3)
 
 
   if (loading) {
@@ -451,112 +449,6 @@ const Home = () => {
         </section>
       )}
 
-      {/* Featured Projects */}
-      {featuredProjects.length > 0 && (
-        <section className="py-20 bg-gray-50 dark:bg-gray-900">
-          <div className="container-max section-padding">
-            <motion.div
-              ref={projectsRef}
-              initial={{ opacity: 0, y: 30 }}
-              animate={projectsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
-                Featured Projects
-              </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
-                Here are some of my recent projects that showcase my skills and experience
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProjects.map((project, index) => (
-                <motion.div
-                  key={project._id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={projectsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="card hover:shadow-large transition-all duration-300 group"
-                >
-                  {project.images?.[0] && (
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={project.images[0].url}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-200">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.techStack.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.techStack.length > 3 && (
-                        <span className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
-                          +{project.techStack.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Link
-                        to={`/projects/${project._id}`}
-                        className="text-primary-600 hover:text-primary-700 font-medium flex items-center group"
-                      >
-                        Learn More
-                        <ExternalLink className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" />
-                      </Link>
-                      
-                      {project.links?.github && (
-                        <a
-                          href={project.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-                          aria-label="View on GitHub"
-                        >
-                          <Github className="w-5 h-5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={projectsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center mt-12"
-            >
-              <Link
-                to="/projects"
-                className="btn-primary text-lg px-8 py-3 group"
-              >
-                View All Projects
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
-            </motion.div>
-          </div>
-        </section>
-      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-primary-600 dark:bg-primary-700 text-white">
@@ -574,20 +466,13 @@ const Home = () => {
               I'm always interested in new opportunities and exciting projects. 
               Let's create something amazing together!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 Start a Project
-              </Link>
-              <Link
-                to="/projects"
-                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
-              >
-                <FolderOpen className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
-                View My Work
               </Link>
             </div>
           </motion.div>

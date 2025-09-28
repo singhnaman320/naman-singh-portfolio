@@ -40,17 +40,115 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Project Not Found</h2>
-          <p className="text-gray-600 mb-6">The project you're looking for doesn't exist.</p>
-          <Link to="/projects" className="btn-primary">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
-          </Link>
+      <>
+        <Helmet>
+          <title>Project Not Found - Naman Kumar Singh</title>
+          <meta name="description" content="The requested project could not be found." />
+        </Helmet>
+        
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-20 left-20 w-72 h-72 bg-primary-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+            <div className="absolute top-40 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-20 left-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center relative z-10 max-w-2xl mx-auto px-6"
+          >
+            {/* Animated Icon */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-8xl mb-8"
+            >
+              🔍
+            </motion.div>
+
+            {/* Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6"
+            >
+              Project Not Found
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+            >
+              Oops! The project you're looking for seems to have wandered off into the digital void. 
+              It might have been moved, renamed, or is taking a coffee break.
+            </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link 
+                to="/projects" 
+                className="btn-primary group"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
+                Back to Projects
+              </Link>
+              
+              <Link 
+                to="/" 
+                className="btn-secondary group"
+              >
+                <Target className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
+                Go Home
+              </Link>
+            </motion.div>
+
+            {/* Helpful Suggestions */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="mt-12 p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700"
+            >
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                What you can do:
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="flex items-center text-gray-600 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
+                    <Zap className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <span>Check the URL for typos</span>
+                </div>
+                <div className="flex items-center text-gray-600 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
+                    <Target className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <span>Browse all projects</span>
+                </div>
+                <div className="flex items-center text-gray-600 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
+                    <Award className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <span>Explore featured work</span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </>
     )
   }
 
@@ -58,7 +156,7 @@ const ProjectDetail = () => {
     <>
       <Helmet>
         <title>{project.title} - Naman Kumar Singh</title>
-        <meta name="description" content={project.description} />
+        <meta name="description" content={project.shortDescription} />
       </Helmet>
 
       {/* Hero Section */}

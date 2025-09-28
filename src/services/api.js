@@ -60,12 +60,8 @@ export const adminAPI = {
 
   // Projects endpoints
   getProjects: () => api.get('/admin/projects'),
-  createProject: (formData) => api.post('/admin/projects', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  updateProject: (id, formData) => api.put(`/admin/projects/${id}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
+  createProject: (projectData) => api.post('/admin/projects', projectData),
+  updateProject: (id, projectData) => api.put(`/admin/projects/${id}`, projectData),
   deleteProject: (id) => api.delete(`/admin/projects/${id}`),
 
   // Experience endpoints
