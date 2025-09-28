@@ -15,6 +15,18 @@ const Home = () => {
   const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [highlightsRef, highlightsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [projectsRef, projectsInView] = useInView({ threshold: 0.1, triggerOnce: true })
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   const featuredProjects = projects.filter(project => project.featured).slice(0, 3)
 
@@ -306,7 +318,17 @@ const Home = () => {
                   <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 mx-auto px-4">
                     {home?.bio ? (
                       home.bio.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-justify max-w-4xl mx-auto" style={{ textAlign: 'justify', textJustify: 'inter-word' }}>
+                        <p 
+                          key={index} 
+                          className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-justify max-w-4xl mx-auto"
+                          style={{
+                            textAlign: 'justify',
+                            textJustify: 'inter-word',
+                            wordSpacing: isMobile ? '0.15em' : 'normal',
+                            hyphens: 'auto',
+                            textAlignLast: 'center'
+                          }}
+                        >
                           {paragraph}
                         </p>
                       ))
