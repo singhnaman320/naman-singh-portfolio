@@ -306,12 +306,12 @@ const Home = () => {
                   <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 mx-auto px-4">
                     {home?.bio ? (
                       home.bio.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
+                        <p key={index} className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-justify max-w-4xl mx-auto" style={{ textAlign: 'justify', textJustify: 'inter-word' }}>
                           {paragraph}
                         </p>
                       ))
                     ) : (
-                      <p className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-gray-500 dark:text-gray-400 italic">
+                      <p className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-gray-500 dark:text-gray-400 italic text-center">
                         Bio content is not available. Please add your story in the admin panel.
                       </p>
                     )}
