@@ -21,7 +21,7 @@ body {
 }
 
 .card {
-  @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft dark:shadow-none border border-gray-100 dark:border-gray-700 hover:shadow-medium dark:hover:border-gray-600 transition-all duration-300;
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft dark:shadow-none border-2 border-gray-200/60 dark:border-gray-600/40 hover:shadow-medium hover:border-gray-300/80 dark:hover:border-gray-500/60 transition-all duration-300;
 }
 
 .input {

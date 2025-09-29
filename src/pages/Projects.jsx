@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X } from 'lucide-react'
 import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
 import { LoadingPage } from '../components/UI/Loading'
@@ -12,6 +12,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
 
   // Sample images for slideshow
   const projectImages = [
@@ -29,65 +31,97 @@ const ProjectCard = ({ project, index, projectsInView }) => {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlaying, isHovered, projectImages.length])
+  }, [isAutoPlaying, isHovered, projectImages.length, index])
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % projectImages.length)
+    // Temporarily pause auto-play, then resume after 3 seconds
     setIsAutoPlaying(false)
+    setTimeout(() => setIsAutoPlaying(true), 3000)
   }
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
+    // Temporarily pause auto-play, then resume after 3 seconds
     setIsAutoPlaying(false)
+    setTimeout(() => setIsAutoPlaying(true), 3000)
   }
 
-  const goToImage = (index) => {
-    setCurrentImageIndex(index)
+  const goToImage = (imageIndex) => {
+    setCurrentImageIndex(imageIndex)
+    // Temporarily pause auto-play, then resume after 3 seconds
     setIsAutoPlaying(false)
+    setTimeout(() => setIsAutoPlaying(true), 3000)
   }
+
+  // Transform value for image carousel
+  const transformValue = `translateX(-${currentImageIndex * 100}%)`
+
+  // Lightbox functions
+  const openLightbox = (imageIndex) => {
+    setLightboxImageIndex(imageIndex)
+    setIsLightboxOpen(true)
+    setIsAutoPlaying(false) // Pause slideshow when lightbox opens
+  }
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false)
+    setTimeout(() => setIsAutoPlaying(true), 1000) // Resume slideshow after 1 second
+  }
+
+  const nextLightboxImage = () => {
+    setLightboxImageIndex((prev) => (prev + 1) % projectImages.length)
+  }
+
+  const prevLightboxImage = () => {
+    setLightboxImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length)
+  }
+
+  // Handle escape key to close lightbox
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isLightboxOpen) {
+        closeLightbox()
+      }
+    }
+    
+    if (isLightboxOpen) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden' // Prevent background scrolling
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isLightboxOpen])
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, rotateX: 10 }}
-      animate={projectsInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+      initial={{ opacity: 0, y: 30 }}
+      animate={projectsInView ? { opacity: 1, y: 0 } : {}}
       transition={{ 
-        duration: 0.8, 
-        delay: index * 0.15,
-        type: "spring",
-        stiffness: 100,
-        damping: 15
+        duration: 0.6, 
+        delay: index * 0.1
       }}
-      whileHover={{ 
-        y: -10, 
-        rotateY: 2,
-        transition: { duration: 0.3 }
-      }}
-      className="relative group perspective-1000"
+      className="card hover:shadow-large transition-all duration-300 group overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Animated Background Glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 via-purple-600 to-blue-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-all duration-500 animate-pulse" />
-      
-      {/* Main Card */}
-      <div className="relative bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm">
         
-        {/* Floating Featured Badge */}
-        {project.featured && (
-          <motion.div 
-            className="absolute -top-2 -right-2 z-20"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: index * 0.1 + 0.5, type: "spring" }}
-          >
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg transform rotate-12">
-              ⭐ FEATURED
-            </div>
-          </motion.div>
-        )}
-
         {/* Image Slideshow with Advanced Effects */}
-        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
+        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
+          
+          {/* Featured Badge - Shows on hover */}
+          {project.featured && (
+            <div className="absolute top-3 left-3 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-lg text-xs font-semibold shadow-lg">
+                ⭐ FEATURED
+              </div>
+            </div>
+          )}
           
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -98,26 +132,49 @@ const ProjectCard = ({ project, index, projectsInView }) => {
           </div>
 
           {/* Image Carousel */}
-          <motion.div 
-            className="flex h-full transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.3 }}
+          <div 
+            className="flex h-full"
+            style={{ 
+              transform: transformValue,
+              transition: 'transform 0.7s ease-out'
+            }}
           >
             {projectImages.map((image, imgIndex) => (
-              <div key={imgIndex} className="w-full h-full flex-shrink-0 relative">
+              <div 
+                key={imgIndex} 
+                className={`w-full h-full flex-shrink-0 relative ${
+                  imgIndex === currentImageIndex ? 'cursor-pointer group/image' : ''
+                }`}
+                onClick={(e) => {
+                  if (imgIndex === currentImageIndex) {
+                    e.stopPropagation()
+                    openLightbox(currentImageIndex)
+                  }
+                }}
+              >
                 <img
                   src={image}
                   alt={`${project.title} - Image ${imgIndex + 1}`}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-transform duration-300 ${
+                    imgIndex === currentImageIndex ? 'hover:scale-105' : ''
+                  }`}
                   onError={(e) => {
                     e.target.src = '/images/default-project.jpg'
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Expand icon - only show on currently visible image */}
+                {imgIndex === currentImageIndex && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                    <div className="bg-white/20 backdrop-blur-md text-white p-3 rounded-full">
+                      <Expand className="w-6 h-6 drop-shadow-lg" />
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Advanced Navigation */}
           <motion.button
@@ -173,12 +230,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
           </div>
         </div>
 
-        {/* Content Section with Floating Elements */}
-        <div className="relative p-6 space-y-5">
-          
-          {/* Floating Decorative Elements */}
-          <div className="absolute -top-3 left-6 w-6 h-6 bg-gradient-to-r from-primary-400 to-blue-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-          <div className="absolute -top-1 right-8 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+        {/* Content Section */}
+        <div className="relative p-5 space-y-4">
 
           {/* Title with Gradient Effect */}
           <motion.div
@@ -186,7 +239,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
           >
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent group-hover:from-primary-600 group-hover:to-blue-600 transition-all duration-500">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent group-hover:from-primary-600 group-hover:to-blue-600 transition-all duration-500">
               {project.title}
             </h3>
           </motion.div>
@@ -198,7 +251,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
           >
-            <div className="p-2 bg-gradient-to-r from-primary-100 to-blue-100 dark:from-primary-900/30 dark:to-blue-900/30 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-primary-100 to-blue-100 dark:from-primary-900/30 dark:to-blue-900/30 rounded-xl">
               <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
             </div>
             <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-3 py-1 rounded-full">
@@ -228,7 +281,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
           >
-            <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-3 uppercase tracking-wide">Tech Stack</h4>
+            <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-2 uppercase tracking-wide">Tech Stack</h4>
             <div className="flex flex-wrap gap-2">
               {project.techStack?.map((tech, techIndex) => (
                 <motion.span
@@ -257,7 +310,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
 
           {/* Action Buttons with Advanced Animations */}
           <motion.div 
-            className="flex space-x-4 pt-4"
+            className="flex space-x-3 pt-3"
             initial={{ opacity: 0, y: 20 }}
             animate={projectsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.8 }}
@@ -267,7 +320,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
@@ -285,7 +338,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-primary-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
@@ -299,13 +352,106 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             )}
           </motion.div>
         </div>
-      </div>
+
+        {/* Lightbox Modal */}
+        {isLightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 dark:bg-black/95 backdrop-blur-sm"
+            onClick={closeLightbox}
+          >
+            <div className="relative max-w-4xl max-h-[90vh] w-full mx-4">
+              {/* Close button */}
+              <button
+                onClick={closeLightbox}
+                className="absolute top-4 right-4 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 z-10 shadow-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Main image */}
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="relative bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={projectImages[lightboxImageIndex]}
+                  alt={`${project.title} - Image ${lightboxImageIndex + 1}`}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                  onError={(e) => {
+                    e.target.src = '/images/default-project.jpg'
+                  }}
+                />
+
+                {/* Navigation arrows */}
+                {projectImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevLightboxImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    
+                    <button
+                      onClick={nextLightboxImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
+                  </>
+                )}
+
+                {/* Image counter */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-3 py-1 rounded-full text-sm shadow-lg">
+                  {lightboxImageIndex + 1} / {projectImages.length}
+                </div>
+
+                {/* Project title */}
+                <div className="absolute top-4 left-4 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-3 py-2 rounded-lg shadow-lg">
+                  <h3 className="font-semibold">{project.title}</h3>
+                </div>
+              </motion.div>
+
+              {/* Thumbnail navigation */}
+              {projectImages.length > 1 && (
+                <div className="flex justify-center mt-4 space-x-2">
+                  {projectImages.map((image, imgIndex) => (
+                    <button
+                      key={imgIndex}
+                      onClick={() => setLightboxImageIndex(imgIndex)}
+                      className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                        imgIndex === lightboxImageIndex
+                          ? 'border-white dark:border-gray-300 scale-110'
+                          : 'border-white/30 dark:border-gray-600/50 hover:border-white/60 dark:hover:border-gray-400/70'
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`Thumbnail ${imgIndex + 1}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = '/images/default-project.jpg'
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
     </motion.div>
   )
 }
 
 const Projects = () => {
-  const { projects, loading } = useData()
+  const { projects, loading, dataLoaded } = useData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTech, setSelectedTech] = useState('')
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -313,11 +459,6 @@ const Projects = () => {
   const [projectsRef, projectsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const filterRef = useRef(null)
 
-  // Debug: Log projects data
-  useEffect(() => {
-    console.log('Projects data:', projects)
-    console.log('Projects length:', projects.length)
-  }, [projects])
 
   // Available tech stacks for filtering
   const availableTechStacks = [
@@ -480,30 +621,43 @@ const Projects = () => {
       <section className="py-20 bg-white dark:bg-gray-800">
         <div className="container-max section-padding">
           {filteredProjects.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center py-16"
-            >
+            dataLoaded ? (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-center py-16"
+              >
               <div className="text-6xl mb-4">
-                {projects.length === 0 ? '📁' : '🔍'}
+                {dataLoaded && projects.length === 0 ? '📁' : '🔍'}
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                {projects.length === 0 ? 'No projects yet' : 'No projects found'}
+                {dataLoaded && projects.length === 0 ? 'No projects yet' : 'No projects found'}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {projects.length === 0 
+                {dataLoaded && projects.length === 0 
                   ? 'Projects will appear here once they are added to the database'
                   : 'Try adjusting your search or filter criteria'
                 }
               </p>
-              {projects.length === 0 && (
+              {dataLoaded && projects.length === 0 && (
                 <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
                   <p>Debug info: Total projects in database: {projects.length}</p>
                 </div>
               )}
             </motion.div>
+            ) : (
+              // Show nothing while data is loading to prevent "No projects" flash
+              <div className="text-center py-16">
+                <div className="animate-pulse">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-xl h-96 animate-pulse"></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
           ) : (
             <motion.div
               ref={projectsRef}

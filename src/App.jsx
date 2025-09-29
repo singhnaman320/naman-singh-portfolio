@@ -9,6 +9,7 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import Layout from './components/Layout/Layout'
 import AdminLayout from './components/Layout/AdminLayout'
 import ForcePortraitMode from './components/LandscapeRestriction'
+import ScrollToTopOnRouteChange from './components/UI/ScrollToTopOnRouteChange'
 
 // Public Pages
 import Home from './pages/Home'
@@ -41,6 +42,7 @@ function App() {
         <DataProvider>
           <ForcePortraitMode />
           <div className="App">
+            <ScrollToTopOnRouteChange />
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Layout />}>

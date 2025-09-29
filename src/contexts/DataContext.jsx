@@ -139,28 +139,32 @@ export const DataProvider = ({ children }) => {
     setShowWelcome(true)
   }
 
-  // Ensure welcome screen shows for exactly 5 seconds
+  // Load all data during welcome screen period
   useEffect(() => {
     const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome')
+    const startTime = Date.now()
     
-    if (hasSeenWelcome) {
-      // If user has seen welcome screen, load data quickly without loading state
-      setLoading(false)
-      fetchAllData()
-    } else {
-      // First time visit - show welcome screen and load data in background
-      fetchAllData()
+    // Always start loading data immediately
+    const loadData = async () => {
+      await fetchAllData()
       
-      // Always hide welcome screen after exactly 5 seconds, regardless of data loading status
-      const welcomeTimer = setTimeout(() => {
+      // Calculate how long data loading took
+      const loadTime = Date.now() - startTime
+      const minWelcomeTime = hasSeenWelcome ? 2000 : 5000 // 2s for returning users, 5s for first time
+      
+      // Ensure welcome screen shows for minimum time
+      const remainingTime = Math.max(0, minWelcomeTime - loadTime)
+      
+      setTimeout(() => {
         setShowWelcome(false)
-        setLoading(false) // Remove loading state after welcome screen
-        // Mark that user has seen the welcome screen in this session
-        sessionStorage.setItem('hasSeenWelcome', 'true')
-      }, 5000)
-
-      return () => clearTimeout(welcomeTimer)
+        setLoading(false)
+        if (!hasSeenWelcome) {
+          sessionStorage.setItem('hasSeenWelcome', 'true')
+        }
+      }, remainingTime)
     }
+    
+    loadData()
   }, [])
 
   const value = {
@@ -171,6 +175,7 @@ export const DataProvider = ({ children }) => {
     skills,
     stats,
     loading,
+    dataLoaded,
     
     // Methods
     fetchAllData,
