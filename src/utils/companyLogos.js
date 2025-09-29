@@ -2,9 +2,6 @@
 export const getCompanyLogo = (companyName) => {
   if (!companyName) return '/images/company-placeholder.jpg'
   
-  // Debug: Show exact company name (remove this later)
-  console.log(`Looking for logo for: "${companyName}"`)
-  
   // Direct mapping - no processing, exact match only
   const logoMap = {
     // Exact company names from your database
@@ -13,11 +10,8 @@ export const getCompanyLogo = (companyName) => {
     'Masai School': '/images/masai-logo.png'
   }
 
-  const result = logoMap[companyName] || '/images/company-placeholder.jpg'
-  console.log(`Result: ${result}`)
-  
   // Return logo if exact match found, otherwise placeholder
-  return result
+  return logoMap[companyName] || '/images/company-placeholder.jpg'
 }
 
 // List of available company logos for reference

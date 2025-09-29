@@ -66,14 +66,44 @@ const Experience = () => {
                 transition={{ duration: 0.8 }}
                 className="relative"
               >
-                {/* Blue Timeline Line - Desktop Horizontal */}
-                <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-600 transform -translate-x-1/2 rounded-full" />
-                
-                {/* Blue Timeline Line - Mobile/Tablet Vertical */}
-                <div className="lg:hidden absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-600 rounded-full" />
+                {/* Animated Timeline Line with Glow Effect */}
+                <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-1 lg:transform lg:-translate-x-1/2">
+                  {/* Base timeline */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 rounded-full opacity-30" />
+                  
+                  {/* Animated progress line with glow */}
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={timelineInView ? { height: '100%' } : { height: 0 }}
+                    transition={{ duration: 2, ease: "easeInOut" }}
+                    className="absolute inset-0 bg-gradient-to-b from-primary-400 via-primary-500 to-primary-600 rounded-full shadow-lg"
+                    style={{
+                      boxShadow: '0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.4), 0 0 60px rgba(59, 130, 246, 0.2)'
+                    }}
+                  />
+                  
+                  {/* Moving light effect */}
+                  <motion.div
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={timelineInView ? { 
+                      y: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+                      opacity: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+                    } : {}}
+                    transition={{ 
+                      duration: 3, 
+                      delay: 0.5,
+                      ease: "easeInOut",
+                      times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+                    }}
+                    className="absolute w-6 h-6 -left-2.5 bg-white rounded-full"
+                    style={{
+                      boxShadow: '0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(59, 130, 246, 0.6), 0 0 90px rgba(59, 130, 246, 0.4)'
+                    }}
+                  />
+                </div>
 
                 {/* Experience Items */}
-                <div className="space-y-16 lg:space-y-24">
+                <div className="space-y-20 lg:space-y-32">
                   {experiences
                     .sort((a, b) => {
                       // Helper function to extract year from date string
@@ -138,91 +168,198 @@ const Experience = () => {
                     .map((experience, index) => (
                     <motion.div
                       key={experience._id}
-                      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                      animate={timelineInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className={`relative ${
-                        // Desktop: Alternating sides, Mobile/Tablet: All left
-                        index % 2 === 0 
-                          ? 'lg:flex-row lg:text-right' 
-                          : 'lg:flex-row-reverse lg:text-left'
-                      }`}
+                      initial={{ opacity: 0, y: 100, scale: 0.8 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ 
+                        duration: 0.8, 
+                        delay: index * 0.2,
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 15
+                      }}
+                      className="relative"
                     >
-                      {/* Timeline Dot */}
-                      <div className="absolute left-6 lg:left-1/2 w-6 h-6 bg-primary-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg lg:transform lg:-translate-x-1/2 z-10">
-                        <div className="absolute inset-1 bg-primary-400 rounded-full animate-pulse" />
-                      </div>
+                      {/* Enhanced Timeline Dot */}
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ 
+                          duration: 0.6, 
+                          delay: index * 0.2 + 0.3,
+                          type: "spring",
+                          stiffness: 200
+                        }}
+                        className="absolute left-5 lg:left-1/2 lg:transform lg:-translate-x-1/2 top-8 z-20"
+                      >
+                        <div className="relative">
+                          {/* Outer glow ring */}
+                          <motion.div 
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute inset-0 w-8 h-8 -m-1 bg-primary-400 rounded-full opacity-20" 
+                          />
+                          
+                          {/* Main dot */}
+                          <div className="w-6 h-6 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full border-4 border-white dark:border-gray-900 shadow-xl relative overflow-hidden">
+                            {/* Inner shine effect */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent rounded-full" />
+                          </div>
+                          
+                          {/* Ripple effect */}
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0.6 }}
+                            animate={{ scale: 4, opacity: 0 }}
+                            transition={{ 
+                              duration: 3, 
+                              repeat: Infinity, 
+                              delay: index * 0.8,
+                              ease: "easeOut"
+                            }}
+                            className="absolute inset-0 w-6 h-6 bg-primary-400 rounded-full"
+                          />
+                        </div>
+                      </motion.div>
 
                       {/* Content Container */}
-                      <div className={`lg:flex lg:items-center lg:w-full ${
+                      <div className={`lg:flex lg:items-start lg:w-full ${
                         index % 2 === 0 ? 'lg:justify-end' : 'lg:justify-start'
                       }`}>
                         {/* Experience Card */}
-                        <div className={`ml-16 lg:ml-0 lg:w-5/12 ${
-                          index % 2 === 0 ? 'lg:mr-8' : 'lg:ml-8'
-                        }`}>
-                          <div className="card p-6 hover:shadow-large transition-all duration-300 group">
-                            {/* Company Logo and Header */}
-                            <div className="flex items-start space-x-4 mb-4">
-                              <div className="flex-shrink-0">
-                                <img
-                                  src={getCompanyLogo(experience.company)}
-                                  alt={experience.company}
-                                  className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-colors duration-300"
-                                  onError={(e) => {
-                                    e.target.src = '/images/company-placeholder.jpg'
-                                  }}
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
-                                  {experience.company}
-                                </h3>
-                                <p className="text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2">
-                                  {experience.position}
-                                </p>
-                                <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                                  <div className="flex items-center">
-                                    <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
-                                    <span>{experience.startDate} - {experience.endDate || 'Present'}</span>
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.03,
+                            y: -8,
+                            rotateY: index % 2 === 0 ? -2 : 2,
+                          }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                          className={`ml-16 lg:ml-0 lg:w-6/12 xl:w-5/12 ${
+                            index % 2 === 0 ? 'lg:mr-8 xl:mr-12' : 'lg:ml-8 xl:ml-12'
+                          }`}
+                        >
+                          <div className="relative overflow-hidden rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-2xl hover:shadow-3xl transition-all duration-700 group border border-gray-200/50 dark:border-gray-700/50">
+                            {/* Animated background gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-purple-500/5 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                            
+                            {/* Shine effect on hover */}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                              <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform rotate-12 group-hover:animate-pulse" />
+                            </div>
+                            
+                            {/* Content */}
+                            <div className="relative p-8 lg:p-6 xl:p-8">
+                              {/* Company Logo and Header */}
+                              <div className="flex items-start space-x-5 mb-6">
+                                <motion.div 
+                                  whileHover={{ scale: 1.1, rotate: 5 }}
+                                  transition={{ type: "spring", stiffness: 300 }}
+                                  className="flex-shrink-0"
+                                >
+                                  <div className="relative">
+                                    <img
+                                      src={getCompanyLogo(experience.company)}
+                                      alt={experience.company}
+                                      className="w-32 h-12 lg:w-32 lg:h-12 xl:w-32 xl:h-12 rounded-2xl object-cover border-3 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-all duration-500 shadow-lg group-hover:shadow-xl"
+                                      onError={(e) => {
+                                        e.target.src = '/images/company-placeholder.jpg'
+                                      }}
+                                    />
+                                    {/* Logo glow effect */}
+                                    <div className="absolute inset-0 rounded-2xl bg-primary-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                   </div>
-                                  {experience.location && (
+                                </motion.div>
+                                
+                                <div className="flex-1 min-w-0">
+                                  <motion.h3 
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.1 + 0.2 }}
+                                    className="text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+                                  >
+                                    {experience.company}
+                                  </motion.h3>
+                                  
+                                  <motion.p 
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.1 + 0.3 }}
+                                    className="text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-3 leading-snug"
+                                  >
+                                    {experience.position}
+                                  </motion.p>
+                                  
+                                  <motion.div 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 + 0.4 }}
+                                    className="flex flex-col space-y-2 text-sm text-gray-600 dark:text-gray-300"
+                                  >
                                     <div className="flex items-center">
-                                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                                      <span>{experience.location}</span>
+                                      <Calendar className="w-4 h-4 mr-3 flex-shrink-0 text-primary-500" />
+                                      <span className="font-medium">{experience.startDate} - {experience.endDate || 'Present'}</span>
                                     </div>
-                                  )}
+                                    {experience.location && (
+                                      <div className="flex items-center">
+                                        <MapPin className="w-4 h-4 mr-3 flex-shrink-0 text-primary-500" />
+                                        <span className="font-medium">{experience.location}</span>
+                                      </div>
+                                    )}
+                                  </motion.div>
                                 </div>
                               </div>
+
+                              {/* Description */}
+                              {experience.description && (
+                                <motion.div
+                                  initial={{ opacity: 0, y: 20 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: index * 0.1 + 0.5 }}
+                                >
+                                  <p className="text-gray-700 dark:text-gray-300 mb-6 text-base leading-relaxed text-justify">
+                                    {experience.description}
+                                  </p>
+                                </motion.div>
+                              )}
+
+                              {/* Technologies */}
+                              {experience.technologies && experience.technologies.length > 0 && (
+                                <motion.div
+                                  initial={{ opacity: 0, y: 20 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: index * 0.1 + 0.6 }}
+                                  className="space-y-3"
+                                >
+                                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Technologies Used</h4>
+                                  <div className="flex flex-wrap gap-3">
+                                    {experience.technologies.slice(0, 6).map((tech, techIndex) => (
+                                      <motion.span
+                                        key={tech}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: index * 0.1 + 0.7 + techIndex * 0.1 }}
+                                        whileHover={{ scale: 1.1, y: -2 }}
+                                        className="px-3 py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
+                                      >
+                                        {tech}
+                                      </motion.span>
+                                    ))}
+                                    {experience.technologies.length > 6 && (
+                                      <motion.span 
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: index * 0.1 + 1.3 }}
+                                        className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm rounded-full font-medium"
+                                      >
+                                        +{experience.technologies.length - 6} more
+                                      </motion.span>
+                                    )}
+                                  </div>
+                                </motion.div>
+                              )}
                             </div>
-
-                            {/* Description */}
-                            {experience.description && (
-                              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
-                                {experience.description}
-                              </p>
-                            )}
-
-                            {/* Technologies */}
-                            {experience.technologies && experience.technologies.length > 0 && (
-                              <div className="flex flex-wrap gap-2">
-                                {experience.technologies.slice(0, 4).map((tech) => (
-                                  <span
-                                    key={tech}
-                                    className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs rounded-full font-medium"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                                {experience.technologies.length > 4 && (
-                                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-full font-medium">
-                                    +{experience.technologies.length - 4} more
-                                  </span>
-                                )}
-                              </div>
-                            )}
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
                     </motion.div>
                   ))}
