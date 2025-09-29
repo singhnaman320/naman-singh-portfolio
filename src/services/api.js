@@ -66,12 +66,8 @@ export const adminAPI = {
 
   // Experience endpoints
   getExperiences: () => api.get('/admin/experiences'),
-  createExperience: (formData) => api.post('/admin/experiences', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  updateExperience: (id, formData) => api.put(`/admin/experiences/${id}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
+  createExperience: (data) => api.post('/admin/experiences', data),
+  updateExperience: (id, data) => api.put(`/admin/experiences/${id}`, data),
   deleteExperience: (id) => api.delete(`/admin/experiences/${id}`),
 
   // Skills endpoints

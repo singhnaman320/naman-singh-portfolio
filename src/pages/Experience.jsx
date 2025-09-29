@@ -4,6 +4,7 @@ import { Calendar, MapPin, ExternalLink, MessageCircle, FolderOpen } from 'lucid
 import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
 import { formatDateRange } from '../utils'
+import { getCompanyLogo } from '../utils/companyLogos'
 import { LoadingPage } from '../components/UI/Loading'
 
 const Experience = () => {
@@ -57,7 +58,7 @@ const Experience = () => {
               <p className="text-gray-600 dark:text-gray-300">I'm currently building my professional experience. Check back soon!</p>
             </motion.div>
           ) : (
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <motion.div
                 ref={timelineRef}
                 initial={{ opacity: 0, y: 30 }}
@@ -65,98 +66,162 @@ const Experience = () => {
                 transition={{ duration: 0.8 }}
                 className="relative"
               >
-                {/* Timeline Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200 hidden md:block" />
+                {/* Blue Timeline Line - Desktop Horizontal */}
+                <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-600 transform -translate-x-1/2 rounded-full" />
+                
+                {/* Blue Timeline Line - Mobile/Tablet Vertical */}
+                <div className="lg:hidden absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-600 rounded-full" />
 
                 {/* Experience Items */}
-                <div className="space-y-12">
-                  {experiences.map((experience, index) => (
+                <div className="space-y-16 lg:space-y-24">
+                  {experiences
+                    .sort((a, b) => {
+                      // Helper function to extract year from date string
+                      const extractYear = (dateStr) => {
+                        if (!dateStr || dateStr === 'Present') return new Date().getFullYear()
+                        
+                        // Extract 4-digit year from string
+                        const yearMatch = dateStr.match(/(\d{4})/)
+                        return yearMatch ? parseInt(yearMatch[1]) : 0
+                      }
+                      
+                      // Helper function to extract month number (for same year sorting)
+                      const extractMonth = (dateStr) => {
+                        if (!dateStr || dateStr === 'Present') return 12
+                        
+                        const monthMap = {
+                          'jan': 1, 'january': 1, 'feb': 2, 'february': 2,
+                          'mar': 3, 'march': 3, 'apr': 4, 'april': 4,
+                          'may': 5, 'jun': 6, 'june': 6, 'jul': 7, 'july': 7,
+                          'aug': 8, 'august': 8, 'sep': 9, 'september': 9,
+                          'oct': 10, 'october': 10, 'nov': 11, 'november': 11,
+                          'dec': 12, 'december': 12
+                        }
+                        
+                        const lowerDate = dateStr.toLowerCase()
+                        for (const [month, num] of Object.entries(monthMap)) {
+                          if (lowerDate.includes(month)) return num
+                        }
+                        return 1 // Default to January if no month found
+                      }
+                      
+                      // Sort by end date first (most recent experience on top)
+                      const aEndYear = extractYear(a.endDate)
+                      const bEndYear = extractYear(b.endDate)
+                      
+                      if (aEndYear !== bEndYear) {
+                        return bEndYear - aEndYear // Most recent end year first
+                      }
+                      
+                      // If same end year, sort by end month
+                      const aEndMonth = extractMonth(a.endDate)
+                      const bEndMonth = extractMonth(b.endDate)
+                      
+                      if (aEndMonth !== bEndMonth) {
+                        return bEndMonth - aEndMonth
+                      }
+                      
+                      // If same end date, sort by start date (most recent start first)
+                      const aStartYear = extractYear(a.startDate)
+                      const bStartYear = extractYear(b.startDate)
+                      
+                      if (aStartYear !== bStartYear) {
+                        return bStartYear - aStartYear
+                      }
+                      
+                      // If same start year, sort by start month
+                      const aStartMonth = extractMonth(a.startDate)
+                      const bStartMonth = extractMonth(b.startDate)
+                      
+                      return bStartMonth - aStartMonth
+                    })
+                    .map((experience, index) => (
                     <motion.div
                       key={experience._id}
-                      initial={{ opacity: 0, x: -30 }}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                       animate={timelineInView ? { opacity: 1, x: 0 } : {}}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className="relative"
+                      className={`relative ${
+                        // Desktop: Alternating sides, Mobile/Tablet: All left
+                        index % 2 === 0 
+                          ? 'lg:flex-row lg:text-right' 
+                          : 'lg:flex-row-reverse lg:text-left'
+                      }`}
                     >
                       {/* Timeline Dot */}
-                      <div className="absolute left-6 w-4 h-4 bg-primary-600 rounded-full border-4 border-white shadow-medium hidden md:block" />
+                      <div className="absolute left-6 lg:left-1/2 w-6 h-6 bg-primary-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg lg:transform lg:-translate-x-1/2 z-10">
+                        <div className="absolute inset-1 bg-primary-400 rounded-full animate-pulse" />
+                      </div>
 
-                      {/* Content */}
-                      <div className="md:ml-20">
-                        <div className="card p-8 hover:shadow-large transition-all duration-300">
-                          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-                            <div className="flex-1">
-                              <div className="flex items-center mb-2">
-                                {experience.companyLogo && (
-                                  <img
-                                    src={experience.companyLogo}
-                                    alt={experience.company}
-                                    className="w-12 h-12 rounded-lg object-cover mr-4"
-                                  />
-                                )}
-                                <div>
-                                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                    {experience.position}
-                                  </h3>
-                                  <p className="text-primary-600 dark:text-primary-400 font-medium mb-2">
-                                    {experience.company}
-                                  </p>
-                                </div>
+                      {/* Content Container */}
+                      <div className={`lg:flex lg:items-center lg:w-full ${
+                        index % 2 === 0 ? 'lg:justify-end' : 'lg:justify-start'
+                      }`}>
+                        {/* Experience Card */}
+                        <div className={`ml-16 lg:ml-0 lg:w-5/12 ${
+                          index % 2 === 0 ? 'lg:mr-8' : 'lg:ml-8'
+                        }`}>
+                          <div className="card p-6 hover:shadow-large transition-all duration-300 group">
+                            {/* Company Logo and Header */}
+                            <div className="flex items-start space-x-4 mb-4">
+                              <div className="flex-shrink-0">
+                                <img
+                                  src={getCompanyLogo(experience.company)}
+                                  alt={experience.company}
+                                  className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-colors duration-300"
+                                  onError={(e) => {
+                                    e.target.src = '/images/company-placeholder.jpg'
+                                  }}
+                                />
                               </div>
-
-                              <div className="flex flex-col sm:flex-row sm:items-center text-gray-600 dark:text-gray-300 mb-4 space-y-2 sm:space-y-0 sm:space-x-6">
-                                <div className="flex items-center">
-                                  <Calendar className="w-4 h-4 mr-2" />
-                                  <span>{formatDateRange(experience.startDate, experience.endDate)}</span>
-                                </div>
-                                <div className="flex items-center">
-                                  <MapPin className="w-4 h-4 mr-2" />
-                                  <span>{experience.location}</span>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+                                  {experience.company}
+                                </h3>
+                                <p className="text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2">
+                                  {experience.position}
+                                </p>
+                                <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                                  <div className="flex items-center">
+                                    <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
+                                    <span>{experience.startDate} - {experience.endDate || 'Present'}</span>
+                                  </div>
+                                  {experience.location && (
+                                    <div className="flex items-center">
+                                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                                      <span>{experience.location}</span>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>
-                          </div>
 
-                          {/* Description */}
-                          <div className="prose max-w-none text-gray-700 dark:text-gray-300 mb-6">
-                            <p>{experience.description}</p>
-                          </div>
+                            {/* Description */}
+                            {experience.description && (
+                              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                                {experience.description}
+                              </p>
+                            )}
 
-                          {/* Achievements */}
-                          {experience.achievements && experience.achievements.length > 0 && (
-                            <div className="mb-6">
-                              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                                Key Achievements
-                              </h4>
-                              <ul className="space-y-2">
-                                {experience.achievements.map((achievement, idx) => (
-                                  <li key={idx} className="flex items-start">
-                                    <span className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0" />
-                                    <p className="text-gray-700 dark:text-gray-300 mb-4">{achievement}</p>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* Technologies */}
-                          {experience.technologies && experience.technologies.length > 0 && (
-                            <div>
-                              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                                Technologies Used
-                              </h4>
+                            {/* Technologies */}
+                            {experience.technologies && experience.technologies.length > 0 && (
                               <div className="flex flex-wrap gap-2">
-                                {experience.technologies.map((tech) => (
+                                {experience.technologies.slice(0, 4).map((tech) => (
                                   <span
                                     key={tech}
-                                    className="px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full"
+                                    className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs rounded-full font-medium"
                                   >
                                     {tech}
                                   </span>
                                 ))}
+                                {experience.technologies.length > 4 && (
+                                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-full font-medium">
+                                    +{experience.technologies.length - 4} more
+                                  </span>
+                                )}
                               </div>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     </motion.div>
