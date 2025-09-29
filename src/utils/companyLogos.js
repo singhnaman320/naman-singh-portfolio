@@ -9,7 +9,7 @@ export const getCompanyLogo = (companyName) => {
   const logoMap = {
     // Exact company names from your database
     'Acme In Tech Pvt. Ltd.': '/images/acmeInTech-logo.png',
-    'Wizcure Pharma Pvt. Ltd.': '/images/wizcure-logo.png',
+    'Wizcure Pharmaa Pvt. Ltd.': '/images/wizcure-logo.png',
     'Masai School': '/images/masai-logo.png'
   }
 
@@ -23,6 +23,6 @@ export const getCompanyLogo = (companyName) => {
 // List of available company logos for reference
 export const availableLogos = [
   'Acme In Tech Pvt. Ltd.',
-  'Wizcure Pharma Pvt. Ltd.', 
+  'Wizcure Pharmaa Pvt. Ltd.', 
   'Masai School'
 ]
