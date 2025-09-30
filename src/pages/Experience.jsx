@@ -14,6 +14,7 @@ const Experience = () => {
   const [timelineRef, timelineInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [expandedTech, setExpandedTech] = useState({})
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const timelineContainerRef = useRef(null)
 
   // Function to normalize text spacing
@@ -28,6 +29,18 @@ const Experience = () => {
       [experienceId]: !prev[experienceId]
     }))
   }
+
+  // Mobile detection for text spacing
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Scroll progress tracking for timeline animation
   useEffect(() => {
@@ -192,7 +205,7 @@ const Experience = () => {
                 </div>
 
                 {/* Experience Items */}
-                <div className="space-y-12 lg:space-y-24 px-4 lg:px-0">
+                <div className="space-y-8 sm:space-y-12 lg:space-y-24 px-4 lg:px-0">
                   {experiences
                     .sort((a, b) => {
                       // Helper function to extract year from date string
@@ -334,66 +347,89 @@ const Experience = () => {
                             </div>
                             
                             {/* Content */}
-                            <div className="relative p-6 lg:p-8">
-                              {/* Company Header with Logo on Right */}
-                              <div className="flex items-start justify-between mb-4">
-                                {/* Content on Left */}
-                                <div className="flex-1 min-w-0 pr-4">
-                                  <motion.h3 
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 + 0.2 }}
-                                    className="text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
-                                  >
-                                    {experience.company}
-                                  </motion.h3>
+                            <div className="relative p-4 sm:p-5 lg:p-8">
+                              {/* Header Section */}
+                              <div className="mb-3 sm:mb-4">
+                                {/* Company Name and Position */}
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2">
+                                  <div className="flex-1 min-w-0 sm:pr-4">
+                                    <motion.h3 
+                                      initial={{ opacity: 0, x: -20 }}
+                                      whileInView={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: index * 0.1 + 0.2 }}
+                                      className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+                                    >
+                                      {experience.company}
+                                    </motion.h3>
+                                    
+                                    <motion.p 
+                                      initial={{ opacity: 0, x: -20 }}
+                                      whileInView={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: index * 0.1 + 0.3 }}
+                                      className="text-base sm:text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2 sm:mb-3 leading-snug"
+                                    >
+                                      {experience.position}
+                                    </motion.p>
+                                  </div>
                                   
-                                  <motion.p 
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 + 0.3 }}
-                                    className="text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-3 leading-snug"
-                                  >
-                                    {experience.position}
-                                  </motion.p>
-                                  
+                                  {/* Logo - Desktop Only */}
                                   <motion.div 
-                                    initial={{ opacity: 0, y: 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1 + 0.4 }}
-                                    className="flex flex-col space-y-2 text-sm text-gray-600 dark:text-gray-300"
+                                    whileHover={{ scale: 1.05, rotate: 2 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
+                                    className="hidden sm:flex flex-shrink-0 self-start"
                                   >
-                                    <div className="flex items-center">
-                                      <Calendar className="w-4 h-4 mr-3 flex-shrink-0 text-primary-500" />
-                                      <span className="font-medium">{experience.startDate} - {experience.endDate || 'Present'}</span>
+                                    <div className="relative">
+                                      <img
+                                        src={getCompanyLogo(experience.company)}
+                                        alt={experience.company}
+                                        className="w-24 h-10 lg:w-32 lg:h-12 rounded object-cover border-2 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-all duration-500 shadow-md group-hover:shadow-lg"
+                                        onError={(e) => {
+                                          e.target.src = '/images/company-placeholder.jpg'
+                                        }}
+                                      />
+                                      {/* Logo glow effect */}
+                                      <div className="absolute inset-0 rounded bg-primary-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     </div>
-                                    {experience.location && (
-                                      <div className="flex items-center">
-                                        <MapPin className="w-4 h-4 mr-3 flex-shrink-0 text-primary-500" />
-                                        <span className="font-medium">{experience.location}</span>
-                                      </div>
-                                    )}
                                   </motion.div>
                                 </div>
                                 
-                                {/* Logo on Right */}
+                                {/* Date/Location and Logo - Mobile Inline */}
                                 <motion.div 
-                                  whileHover={{ scale: 1.1, rotate: 5 }}
-                                  transition={{ type: "spring", stiffness: 300 }}
-                                  className="flex-shrink-0"
+                                  initial={{ opacity: 0, y: 10 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: index * 0.1 + 0.4 }}
+                                  className="flex items-center justify-between"
                                 >
-                                  <div className="relative">
-                                    <img
-                                      src={getCompanyLogo(experience.company)}
-                                      alt={experience.company}
-                                      className="w-32 h-12 lg:w-32 lg:h-12 xl:w-32 xl:h-12 rounded object-cover border-3 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-all duration-500 shadow-lg group-hover:shadow-xl"
-                                      onError={(e) => {
-                                        e.target.src = '/images/company-placeholder.jpg'
-                                      }}
-                                    />
-                                    {/* Logo glow effect */}
-                                    <div className="absolute inset-0 rounded-2xl bg-primary-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                  <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                                    <div className="flex items-center">
+                                      <Calendar className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
+                                      <span className="font-medium text-xs sm:text-sm">{experience.startDate} - {experience.endDate || 'Present'}</span>
+                                    </div>
+                                    {experience.location && (
+                                      <div className="flex items-center">
+                                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
+                                        <span className="font-medium text-xs sm:text-sm">{experience.location}</span>
+                                      </div>
+                                    )}
                                   </div>
+                                  
+                                  {/* Logo - Mobile Inline */}
+                                  <motion.div 
+                                    whileHover={{ scale: 1.05 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
+                                    className="sm:hidden flex-shrink-0"
+                                  >
+                                    <div className="relative">
+                                      <img
+                                        src={getCompanyLogo(experience.company)}
+                                        alt={experience.company}
+                                        className="w-16 h-6 rounded object-cover border border-gray-200 dark:border-gray-600 shadow-sm"
+                                        onError={(e) => {
+                                          e.target.src = '/images/company-placeholder.jpg'
+                                        }}
+                                      />
+                                    </div>
+                                  </motion.div>
                                 </motion.div>
                               </div>
 
@@ -404,8 +440,17 @@ const Experience = () => {
                                   whileInView={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.1 + 0.5 }}
                                 >
-                                  <p className="text-gray-700 dark:text-gray-300 mb-6 text-base leading-relaxed text-justify">
-                                    {experience.description}
+                                  <p className={`text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed hyphens-auto ${
+                                       isMobile ? 'text-left' : 'text-justify'
+                                     }`}
+                                     style={{ 
+                                       wordSpacing: isMobile ? '-0.08em' : 'normal', 
+                                       letterSpacing: isMobile ? '0.003em' : '0.01em',
+                                       lineHeight: isMobile ? '1.4' : '1.625',
+                                       textRendering: 'optimizeLegibility',
+                                       WebkitFontSmoothing: 'antialiased'
+                                     }}>
+                                    {normalizeText(experience.description)}
                                   </p>
                                 </motion.div>
                               )}
@@ -416,10 +461,10 @@ const Experience = () => {
                                   initial={{ opacity: 0, y: 20 }}
                                   whileInView={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.1 + 0.6 }}
-                                  className="space-y-3"
+                                  className="space-y-2 sm:space-y-3"
                                 >
-                                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Technologies Used</h4>
-                                  <div className="flex flex-wrap gap-3">
+                                  <h4 className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Technologies Used</h4>
+                                  <div className="flex flex-wrap gap-2 sm:gap-3">
                                     <AnimatePresence mode="popLayout">
                                       {(expandedTech[experience._id] 
                                         ? experience.technologies 
@@ -445,7 +490,7 @@ const Experience = () => {
                                             damping: 30
                                           }}
                                           whileHover={{ scale: 1.1, y: -2 }}
-                                          className="px-3 py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
+                                          className="px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-xs sm:text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
                                         >
                                           {tech}
                                         </motion.span>
@@ -460,7 +505,7 @@ const Experience = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => toggleTechExpansion(experience._id)}
-                                        className="px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 text-sm rounded-full font-medium transition-all duration-300 cursor-pointer"
+                                        className="px-2 py-1 sm:px-3 sm:py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 text-xs sm:text-sm rounded-full font-medium transition-all duration-300 cursor-pointer"
                                       >
                                         {expandedTech[experience._id] 
                                           ? 'Show Less' 
