@@ -6,13 +6,15 @@ import { useInView } from 'react-intersection-observer'
 import { formatDateRange } from '../utils'
 import { getCompanyLogo } from '../utils/companyLogos'
 import { LoadingPage } from '../components/UI/Loading'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const Experience = () => {
   const { experiences, loading } = useData()
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [timelineRef, timelineInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [expandedTech, setExpandedTech] = useState({})
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const timelineContainerRef = useRef(null)
 
   // Function to normalize text spacing
   const normalizeText = (text) => {
@@ -26,6 +28,73 @@ const Experience = () => {
       [experienceId]: !prev[experienceId]
     }))
   }
+
+  // Scroll progress tracking for timeline animation
+  useEffect(() => {
+    let animationFrameId = null
+    
+    const handleScroll = () => {
+      // Cancel previous frame
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+      
+      animationFrameId = requestAnimationFrame(() => {
+        const timelineElement = timelineContainerRef.current
+        if (!timelineElement) {
+          setScrollProgress(0)
+          return
+        }
+
+        const rect = timelineElement.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        const elementHeight = rect.height
+        
+        let progress = 0
+        
+        // Check if timeline is in viewport
+        if (rect.bottom > 0 && rect.top < windowHeight) {
+          // Timeline is visible
+          if (rect.top <= 0) {
+            // Timeline has started scrolling past the top
+            const scrolledPastTop = Math.abs(rect.top)
+            const maxScrollDistance = elementHeight - windowHeight
+            
+            if (maxScrollDistance > 0) {
+              progress = Math.min(1, scrolledPastTop / maxScrollDistance)
+            } else {
+              // Timeline is shorter than viewport
+              progress = scrolledPastTop > 0 ? 1 : 0
+            }
+          } else {
+            // Timeline is entering from bottom
+            const entryProgress = (windowHeight - rect.top) / windowHeight
+            progress = Math.max(0, Math.min(0.2, entryProgress * 0.2))
+          }
+        } else if (rect.top >= windowHeight) {
+          // Timeline is below viewport - no progress
+          progress = 0
+        } else if (rect.bottom <= 0) {
+          // Timeline has completely scrolled past - keep at 100%
+          progress = 1
+        }
+        
+        // Clamp between 0 and 1
+        progress = Math.max(0, Math.min(1, progress))
+        setScrollProgress(progress)
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial call
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   if (loading) {
     return <LoadingPage message="Loading experience..." />
@@ -75,44 +144,49 @@ const Experience = () => {
           ) : (
             <div className="max-w-6xl mx-auto">
               <motion.div
-                ref={timelineRef}
+                ref={(el) => {
+                  timelineRef(el)
+                  timelineContainerRef.current = el
+                }}
                 initial={{ opacity: 0, y: 30 }}
                 animate={timelineInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8 }}
                 className="relative"
               >
-                {/* Animated Timeline Line with Glow Effect - Hidden on Mobile */}
+                {/* Scroll-Based Bright Light Timeline - Hidden on Mobile */}
                 <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 transform -translate-x-1/2">
-                  {/* Base timeline */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 rounded-full opacity-30" />
+                  {/* Base timeline - subtle background */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-full opacity-20" />
                   
-                  {/* Animated progress line with glow */}
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={timelineInView ? { height: '100%' } : { height: 0 }}
-                    transition={{ duration: 2, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-gradient-to-b from-primary-400 via-primary-500 to-primary-600 rounded-full shadow-lg"
-                    style={{
-                      boxShadow: '0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.4), 0 0 60px rgba(59, 130, 246, 0.2)'
-                    }}
-                  />
+                  {/* Starting dot at the beginning of timeline */}
+                  {scrollProgress > 0.02 && (
+                    <div
+                      className="absolute w-3 h-3 -left-1 top-0 rounded-full z-20"
+                      style={{
+                        background: 'radial-gradient(circle, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)',
+                        boxShadow: `
+                          0 0 10px rgba(59, 130, 246, 0.8),
+                          0 0 20px rgba(59, 130, 246, 0.5),
+                          0 0 30px rgba(59, 130, 246, 0.3)
+                        `,
+                        transition: 'all 0.3s ease-out'
+                      }}
+                    />
+                  )}
                   
-                  {/* Moving light effect */}
-                  <motion.div
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={timelineInView ? { 
-                      y: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
-                      opacity: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
-                    } : {}}
-                    transition={{ 
-                      duration: 3, 
-                      delay: 0.5,
-                      ease: "easeInOut",
-                      times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-                    }}
-                    className="absolute w-6 h-6 -left-2.5 bg-white rounded-full"
+                  {/* Scroll-based bright blue light line */}
+                  <div
+                    className="absolute left-0 top-0 w-full rounded-full z-10"
                     style={{
-                      boxShadow: '0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(59, 130, 246, 0.6), 0 0 90px rgba(59, 130, 246, 0.4)'
+                      height: `${scrollProgress * 100}%`,
+                      background: scrollProgress > 0.01 ? 'linear-gradient(to bottom, #60a5fa, #3b82f6, #2563eb, #1d4ed8)' : 'transparent',
+                      boxShadow: scrollProgress > 0.01 ? `
+                        0 0 20px rgba(59, 130, 246, 0.8),
+                        0 0 40px rgba(59, 130, 246, 0.6),
+                        0 0 60px rgba(59, 130, 246, 0.4),
+                        0 0 80px rgba(59, 130, 246, 0.2)
+                      ` : 'none',
+                      transition: 'all 0.1s ease-out'
                     }}
                   />
                 </div>
