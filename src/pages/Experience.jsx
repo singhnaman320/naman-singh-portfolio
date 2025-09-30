@@ -334,7 +334,7 @@ const Experience = () => {
                             y: -5,
                           }}
                           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                          className={`w-full max-w-2xl mx-auto ${
+                          className={`w-full max-w-none sm:max-w-2xl mx-auto px-2 sm:px-0 ${
                             index % 2 === 0 
                               ? 'lg:ml-0 lg:mr-auto lg:max-w-lg' 
                               : 'lg:mr-0 lg:ml-auto lg:max-w-lg'
@@ -357,7 +357,7 @@ const Experience = () => {
                                       initial={{ opacity: 0, x: -20 }}
                                       whileInView={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.1 + 0.2 }}
-                                      className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+                                      className="text-2xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
                                     >
                                       {experience.company}
                                     </motion.h3>
@@ -366,7 +366,7 @@ const Experience = () => {
                                       initial={{ opacity: 0, x: -20 }}
                                       whileInView={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.1 + 0.3 }}
-                                      className="text-base sm:text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2 sm:mb-3 leading-snug"
+                                      className="text-lg sm:text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2 sm:mb-3 leading-snug"
                                     >
                                       {experience.position}
                                     </motion.p>
@@ -398,38 +398,41 @@ const Experience = () => {
                                   initial={{ opacity: 0, y: 10 }}
                                   whileInView={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.1 + 0.4 }}
-                                  className="flex items-center justify-between"
+                                  className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-300"
                                 >
-                                  <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                                  {/* Duration Row with Logo - Mobile */}
+                                  <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                       <Calendar className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
-                                      <span className="font-medium text-xs sm:text-sm">{experience.startDate} - {experience.endDate || 'Present'}</span>
+                                      <span className="font-medium text-sm sm:text-sm">{experience.startDate} - {experience.endDate || 'Present'}</span>
                                     </div>
-                                    {experience.location && (
-                                      <div className="flex items-center">
-                                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
-                                        <span className="font-medium text-xs sm:text-sm">{experience.location}</span>
+                                    
+                                    {/* Logo - Mobile Inline with Duration */}
+                                    <motion.div 
+                                      whileHover={{ scale: 1.05 }}
+                                      transition={{ type: "spring", stiffness: 300 }}
+                                      className="sm:hidden flex-shrink-0 ml-3"
+                                    >
+                                      <div className="relative">
+                                        <img
+                                          src={getCompanyLogo(experience.company)}
+                                          alt={experience.company}
+                                          className="w-16 h-6 rounded object-cover border border-gray-200 dark:border-gray-600 shadow-sm"
+                                          onError={(e) => {
+                                            e.target.src = '/images/company-placeholder.jpg'
+                                          }}
+                                        />
                                       </div>
-                                    )}
+                                    </motion.div>
                                   </div>
                                   
-                                  {/* Logo - Mobile Inline */}
-                                  <motion.div 
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ type: "spring", stiffness: 300 }}
-                                    className="sm:hidden flex-shrink-0"
-                                  >
-                                    <div className="relative">
-                                      <img
-                                        src={getCompanyLogo(experience.company)}
-                                        alt={experience.company}
-                                        className="w-16 h-6 rounded object-cover border border-gray-200 dark:border-gray-600 shadow-sm"
-                                        onError={(e) => {
-                                          e.target.src = '/images/company-placeholder.jpg'
-                                        }}
-                                      />
+                                  {/* Location Row - Mobile */}
+                                  {experience.location && (
+                                    <div className="flex items-center">
+                                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
+                                      <span className="font-medium text-sm sm:text-sm">{experience.location}</span>
                                     </div>
-                                  </motion.div>
+                                  )}
                                 </motion.div>
                               </div>
 
@@ -440,7 +443,7 @@ const Experience = () => {
                                   whileInView={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.1 + 0.5 }}
                                 >
-                                  <p className={`text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed hyphens-auto ${
+                                  <p className={`text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-base sm:text-base leading-relaxed hyphens-auto ${
                                        isMobile ? 'text-left' : 'text-justify'
                                      }`}
                                      style={{ 
@@ -463,7 +466,7 @@ const Experience = () => {
                                   transition={{ delay: index * 0.1 + 0.6 }}
                                   className="space-y-2 sm:space-y-3"
                                 >
-                                  <h4 className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Technologies Used</h4>
+                                  <h4 className="text-sm sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Technologies Used</h4>
                                   <div className="flex flex-wrap gap-2 sm:gap-3">
                                     <AnimatePresence mode="popLayout">
                                       {(expandedTech[experience._id] 
@@ -490,7 +493,7 @@ const Experience = () => {
                                             damping: 30
                                           }}
                                           whileHover={{ scale: 1.1, y: -2 }}
-                                          className="px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-xs sm:text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
+                                          className="px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-sm sm:text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
                                         >
                                           {tech}
                                         </motion.span>
@@ -505,7 +508,7 @@ const Experience = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => toggleTechExpansion(experience._id)}
-                                        className="px-2 py-1 sm:px-3 sm:py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 text-xs sm:text-sm rounded-full font-medium transition-all duration-300 cursor-pointer"
+                                        className="px-2 py-1 sm:px-3 sm:py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 text-sm sm:text-sm rounded-full font-medium transition-all duration-300 cursor-pointer"
                                       >
                                         {expandedTech[experience._id] 
                                           ? 'Show Less' 
