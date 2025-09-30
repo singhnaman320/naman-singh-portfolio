@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
@@ -7,6 +7,63 @@ import { Helmet } from 'react-helmet-async'
 import { useData } from '../contexts/DataContext'
 import { getImageUrl, handleImageError } from '../utils/imageUtils'
 import { SkeletonHero, SkeletonText, SkeletonCard } from '../components/UI/SkeletonLoader'
+
+// Animated Counter Component
+const AnimatedCounter = ({ end, duration = 2000, suffix = '', prefix = '', inView }) => {
+  const [count, setCount] = useState(0)
+  const countRef = useRef(0)
+  const animationRef = useRef(null)
+
+  useEffect(() => {
+    if (!inView) return
+
+    // Extract numeric value from end (handle cases like "3+" or "5")
+    const numericEnd = typeof end === 'string' ? parseInt(end.replace(/[^0-9]/g, '')) : end
+    
+    if (numericEnd === 0) {
+      setCount(0)
+      return
+    }
+
+    const startTime = Date.now()
+    
+    const animate = () => {
+      const currentTime = Date.now()
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      
+      // Easing function for smooth animation
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+      const currentCount = Math.floor(easeOutCubic * numericEnd)
+      
+      countRef.current = currentCount
+      setCount(currentCount)
+      
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate)
+      } else {
+        setCount(numericEnd)
+      }
+    }
+    
+    animationRef.current = requestAnimationFrame(animate)
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [end, duration, inView])
+
+  // Format the display value
+  const displayValue = `${prefix}${count}${suffix}`
+  
+  return (
+    <span className="tabular-nums">
+      {displayValue}
+    </span>
+  )
+}
 
 const Home = () => {
   const { home, stats, loading } = useData()
@@ -385,20 +442,45 @@ const Home = () => {
             className="flex flex-col lg:flex-row lg:justify-center items-center gap-6 sm:gap-8 lg:gap-16 max-w-md lg:max-w-4xl mx-auto"
           >
             {[
-              { label: 'Projects', value: stats.projects || 0 },
-              { label: 'Experience', value: `${stats.experiences || 0}+` },
-              { label: 'Technologies', value: stats.skills || 0 }
+              { 
+                label: 'Projects', 
+                value: stats.projects || 0,
+                suffix: '',
+                duration: 800
+              },
+              { 
+                label: 'Experience', 
+                value: stats.experiences || 0,
+                suffix: '+',
+                duration: 600
+              },
+              { 
+                label: 'Technologies', 
+                value: stats.skills || 0,
+                suffix: '',
+                duration: 900
+              }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.4 }}
                 className="text-center w-full"
               >
-                <div className="text-2xl sm:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 lg:mb-4 min-w-[120px] flex justify-center">
-                  {stat.value}
-                </div>
+                <motion.div 
+                  className="text-2xl sm:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 lg:mb-4 min-w-[120px] flex justify-center"
+                  initial={{ scale: 0.8 }}
+                  animate={statsInView ? { scale: 1 } : {}}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AnimatedCounter
+                    end={stat.value}
+                    suffix={stat.suffix}
+                    duration={stat.duration}
+                    inView={statsInView}
+                  />
+                </motion.div>
                 <div className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 font-medium mb-6 sm:mb-8 lg:mb-0">
                   {stat.label}
                 </div>
