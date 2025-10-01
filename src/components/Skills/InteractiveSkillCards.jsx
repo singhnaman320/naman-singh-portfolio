@@ -1,12 +1,28 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, X, Code, Database, Cloud, Wrench, Layers, Zap, Star, Calendar, TrendingUp } from 'lucide-react'
+import { Search, Filter, X, Code, Database, Cloud, Wrench, Layers, Zap, Star, Calendar, TrendingUp, ChevronDown } from 'lucide-react'
 import './SkillCards.css'
 
 const InteractiveSkillCards = ({ skills }) => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('name')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   // Category configuration
   const categoryConfig = {
@@ -105,7 +121,7 @@ const InteractiveSkillCards = ({ skills }) => {
             placeholder="Search skills..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="mobile-search-input w-full pl-10 md:pl-10 pr-4 py-3 md:py-3 border border-gray-200 dark:border-gray-700 rounded-xl md:rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-all duration-200"
+            className="mobile-search-input w-full pl-9 md:pl-10 pr-4 py-3 md:py-3 border border-gray-200 dark:border-gray-700 rounded-xl md:rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-all duration-200"
           />
           {searchTerm && (
             <button
@@ -119,7 +135,62 @@ const InteractiveSkillCards = ({ skills }) => {
 
         {/* Category Filters */}
         <div className="mobile-filters-container">
-          <div className="mobile-filter-buttons flex flex-wrap justify-center gap-3 md:justify-center md:gap-3">
+          {/* Mobile Dropdown */}
+          <div className="mobile-filter-dropdown md:hidden" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="mobile-filter-trigger"
+            >
+              <div className="flex items-center gap-2">
+                {selectedCategory !== 'All' && categoryConfig[selectedCategory] && (() => {
+                  const IconComponent = categoryConfig[selectedCategory].icon
+                  return <IconComponent className="w-4 h-4 text-blue-500" />
+                })()}
+                <span>{selectedCategory}</span>
+                <span className="mobile-filter-dropdown-item-count">
+                  {categories.find(cat => cat.name === selectedCategory)?.count || 0}
+                </span>
+              </div>
+              <ChevronDown className={`w-4 h-4 transition-transform text-blue-500 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="mobile-filter-dropdown-content"
+                >
+                  {categories.map((category) => {
+                    const CategoryIcon = category.name !== 'All' && categoryConfig[category.name] ? categoryConfig[category.name].icon : null
+                    return (
+                      <div
+                        key={category.name}
+                        onClick={() => {
+                          setSelectedCategory(category.name)
+                          setIsDropdownOpen(false)
+                        }}
+                        className={`mobile-filter-dropdown-item ${selectedCategory === category.name ? 'active' : ''}`}
+                      >
+                        <div className="mobile-filter-dropdown-item-left">
+                          {CategoryIcon && <CategoryIcon className="w-4 h-4 text-blue-500" />}
+                          <span>{category.name}</span>
+                        </div>
+                        <span className="mobile-filter-dropdown-item-count">
+                          {category.count}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Desktop Filter Buttons */}
+          <div className="hidden md:flex mobile-filter-buttons flex-wrap justify-center gap-3">
           {categories.map((category) => {
             const CategoryIcon = category.name !== 'All' && categoryConfig[category.name] ? categoryConfig[category.name].icon : null
             return (
@@ -128,15 +199,15 @@ const InteractiveSkillCards = ({ skills }) => {
                 onClick={() => setSelectedCategory(category.name)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`mobile-filter-button px-4 py-2 md:px-4 md:py-2 rounded-full md:rounded-full font-medium transition-all duration-200 flex items-center gap-2 md:gap-2 ${
+                className={`px-4 py-2 rounded-full font-medium transition-all duration-200 flex items-center gap-2 ${
                   selectedCategory === category.name
                     ? 'bg-primary-600 text-white shadow-lg'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
-                {CategoryIcon && <CategoryIcon className="filter-icon w-4 h-4 md:w-4 md:h-4" />}
+                {CategoryIcon && <CategoryIcon className="w-4 h-4" />}
                 {category.name}
-                <span className={`filter-count text-xs px-2 py-0.5 md:px-2 md:py-0.5 rounded-full ${
+                <span className={`text-xs px-2 py-0.5 rounded-full ${
                   selectedCategory === category.name
                     ? 'bg-white/20 text-white'
                     : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-400'
