@@ -62,19 +62,19 @@ const Contact = () => {
     {
       name: 'GitHub',
       icon: Github,
-      url: home?.socialLinks?.github || 'https://github.com/singhnaman320',
+      url: 'https://github.com/singhnaman320',
       color: 'hover:text-gray-900 dark:hover:text-white'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: home?.socialLinks?.linkedin || 'https://linkedin.com/in/naman-kumar-singh',
+      url: 'https://www.linkedin.com/in/namankumarsingh-dev/',
       color: 'hover:text-blue-600'
     },
     {
       name: 'Instagram',
       icon: Instagram,
-      url: home?.socialLinks?.instagram || 'https://instagram.com/namansingh',
+      url: 'https://www.instagram.com/im_singhnaman/?next=%2F&hl=en',
       color: 'hover:text-pink-500'
     }
   ]

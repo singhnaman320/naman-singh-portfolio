@@ -10,25 +10,25 @@ const Footer = () => {
     {
       name: 'GitHub',
       icon: Github,
-      url: home?.socialLinks?.github,
+      url: 'https://github.com/singhnaman320',
       color: 'hover:text-gray-900'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: home?.socialLinks?.linkedin,
+      url: 'https://www.linkedin.com/in/namankumarsingh-dev/',
       color: 'hover:text-blue-600'
     },
     {
       name: 'Instagram',
       icon: Instagram,
-      url: home?.socialLinks?.instagram,
+      url: 'https://www.instagram.com/im_singhnaman/?next=%2F&hl=en',
       color: 'hover:text-pink-500'
     },
     {
       name: 'Email',
       icon: Mail,
-      url: `mailto:${home?.email || 'contact@namanportfolio.com'}`,
+      url: 'mailto:singhnaman320@gmail.com',
       color: 'hover:text-red-500'
     }
   ]
@@ -64,7 +64,7 @@ const Footer = () => {
                 return (
                   <a
                     key={link.name}
-                    href={link.href}
+                    href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 bg-gray-800 dark:bg-gray-900 rounded-lg flex items-center justify-center text-gray-300 dark:text-gray-400 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-500 transition-all duration-200"
