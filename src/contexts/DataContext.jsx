@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { publicAPI } from '../services/api'
 import WelcomeScreen from '../components/WelcomeScreen'
+import { getFallbackData } from '../utils/fallbackData'
+import { loadMultipleWithFastFallback } from '../utils/fastLoader'
 
 const DataContext = createContext()
 
@@ -26,43 +28,79 @@ export const DataProvider = ({ children }) => {
   })
   const [dataLoaded, setDataLoaded] = useState(false)
 
-  // Fetch all public data
+  // Fast data loading with quick fallbacks
   const fetchAllData = async () => {
     try {
-      const [
-        homeRes,
-        projectsRes,
-        experiencesRes,
-        skillsRes,
-        statsRes
-      ] = await Promise.all([
-        publicAPI.getHome(),
-        publicAPI.getProjects(),
-        publicAPI.getExperiences(),
-        publicAPI.getSkills(),
-        publicAPI.getStats()
+      // Load all data in parallel with fast fallbacks (3 second timeout per call)
+      const results = await loadMultipleWithFastFallback([
+        { 
+          apiCall: publicAPI.getHome, 
+          fallbackData: getFallbackData('home'),
+          timeout: 3000 
+        },
+        { 
+          apiCall: publicAPI.getProjects, 
+          fallbackData: getFallbackData('projects'),
+          timeout: 3000 
+        },
+        { 
+          apiCall: publicAPI.getExperiences, 
+          fallbackData: getFallbackData('experiences'),
+          timeout: 3000 
+        },
+        { 
+          apiCall: publicAPI.getSkills, 
+          fallbackData: getFallbackData('skills'),
+          timeout: 3000 
+        },
+        { 
+          apiCall: publicAPI.getStats, 
+          fallbackData: getFallbackData('stats'),
+          timeout: 3000 
+        }
       ])
 
-      setHome(homeRes.data)
-      setProjects(projectsRes.data)
-      setExperiences(experiencesRes.data)
-      setSkills(skillsRes.data)
-      setStats(statsRes.data)
+      // Set data from results (either API or fallback)
+      const [homeResult, projectsResult, experiencesResult, skillsResult, statsResult] = results
+
+      setHome(homeResult.data)
+      setProjects(projectsResult.data)
+      setExperiences(experiencesResult.data)
+      setSkills(skillsResult.data)
+      setStats(statsResult.data)
+
       setDataLoaded(true)
+      
+      // Log which data came from API vs fallback (for debugging)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Data sources:', {
+          home: homeResult.source,
+          projects: projectsResult.source,
+          experiences: experiencesResult.source,
+          skills: skillsResult.source,
+          stats: statsResult.source
+        })
+      }
     } catch (error) {
-      console.error('Error fetching data:', error)
-      setDataLoaded(true) // Still hide welcome screen even on error
+      // This should rarely happen, but handle it gracefully
+      console.warn('Unexpected error during fast data fetch, using all fallbacks')
+      setHome(getFallbackData('home'))
+      setProjects(getFallbackData('projects'))
+      setExperiences(getFallbackData('experiences'))
+      setSkills(getFallbackData('skills'))
+      setStats(getFallbackData('stats'))
+      setDataLoaded(true)
     }
-    // Note: Loading state is managed by useEffect, not here
   }
 
-  // Fetch individual data sections
+  // Fetch individual data sections with graceful error handling
   const fetchHome = async () => {
     try {
       const response = await publicAPI.getHome()
       setHome(response.data)
     } catch (error) {
-      console.error('Error fetching home:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to refresh home data')
     }
   }
 
@@ -71,7 +109,8 @@ export const DataProvider = ({ children }) => {
       const response = await publicAPI.getProjects(featured)
       setProjects(response.data)
     } catch (error) {
-      console.error('Error fetching projects:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to refresh projects data')
     }
   }
 
@@ -80,7 +119,8 @@ export const DataProvider = ({ children }) => {
       const response = await publicAPI.getExperiences()
       setExperiences(response.data)
     } catch (error) {
-      console.error('Error fetching experiences:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to refresh experiences data')
     }
   }
 
@@ -89,17 +129,18 @@ export const DataProvider = ({ children }) => {
       const response = await publicAPI.getSkills()
       setSkills(response.data)
     } catch (error) {
-      console.error('Error fetching skills:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to refresh skills data')
     }
   }
-
 
   const fetchStats = async () => {
     try {
       const response = await publicAPI.getStats()
       setStats(response.data)
     } catch (error) {
-      console.error('Error fetching stats:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to refresh stats data')
     }
   }
 
@@ -109,7 +150,8 @@ export const DataProvider = ({ children }) => {
       const response = await publicAPI.getProject(id)
       return response.data
     } catch (error) {
-      console.error('Error fetching project:', error)
+      // Silently handle error, don't show to user
+      console.warn('Failed to load project details')
       return null
     }
   }
@@ -150,7 +192,7 @@ export const DataProvider = ({ children }) => {
       
       // Calculate how long data loading took
       const loadTime = Date.now() - startTime
-      const minWelcomeTime = hasSeenWelcome ? 2000 : 5000 // 2s for returning users, 5s for first time
+      const minWelcomeTime = hasSeenWelcome ? 1000 : 2500 // 1s for returning users, 2.5s for first time
       
       // Ensure welcome screen shows for minimum time
       const remainingTime = Math.max(0, minWelcomeTime - loadTime)

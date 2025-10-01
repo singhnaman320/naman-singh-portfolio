@@ -136,7 +136,7 @@ const AdminProjects = () => {
       </Helmet>
 
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Projects</h1>
             <p className="text-gray-600 dark:text-gray-300 mt-2">
@@ -145,10 +145,10 @@ const AdminProjects = () => {
           </div>
           <button 
             onClick={() => setShowForm(true)}
-            className="btn-primary"
+            className="btn-primary w-full sm:w-auto flex-shrink-0 flex items-center justify-center whitespace-nowrap"
           >
-            <Plus className="w-5 h-5 mr-2" />
-            Add Project
+            <Plus className="w-5 h-5 mr-2 flex-shrink-0" />
+            <span>Add Project</span>
           </button>
         </div>
 

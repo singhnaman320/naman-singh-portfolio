@@ -23,7 +23,9 @@ export const AuthProvider = ({ children }) => {
       const response = await authAPI.checkAdmin()
       setAdminExists(response.data.adminExists)
     } catch (error) {
-      console.error('Error checking admin:', error)
+      // Silently handle error, assume no admin exists
+      console.warn('Failed to check admin status, assuming no admin exists')
+      setAdminExists(false)
     }
   }
 
@@ -39,8 +41,10 @@ export const AuthProvider = ({ children }) => {
       const response = await authAPI.getMe()
       setAdmin(response.data.admin)
     } catch (error) {
-      console.error('Error loading admin:', error)
+      // Silently handle error, clear invalid token
+      console.warn('Failed to verify admin token, clearing session')
       localStorage.removeItem('adminToken')
+      setAdmin(null)
     } finally {
       setLoading(false)
     }

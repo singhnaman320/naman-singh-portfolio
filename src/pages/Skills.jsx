@@ -5,6 +5,8 @@ import { useData } from '../contexts/DataContext'
 import { useInView } from 'react-intersection-observer'
 import { LoadingPage } from '../components/UI/Loading'
 import { useState } from 'react'
+import InteractiveSkillCards from '../components/Skills/InteractiveSkillCards'
+import '../components/Skills/SkillCards.css'
 
 const Skills = () => {
   const { skills, loading } = useData()
@@ -28,6 +30,19 @@ const Skills = () => {
     'Tools': Wrench,
     'Languages': Layers,
     'Other': Zap
+  }
+
+  // Define the order of categories to display with descriptions
+  const categoryOrder = ['Frontend', 'Backend', 'Database', 'DevOps/Cloud', 'Tools', 'Languages', 'Other']
+  
+  const categoryDescriptions = {
+    'Frontend': 'User interface and client-side technologies',
+    'Backend': 'Server-side development and APIs',
+    'Database': 'Data storage and management systems',
+    'DevOps/Cloud': 'Deployment, infrastructure, and cloud services',
+    'Tools': 'Development tools and utilities',
+    'Languages': 'Programming and markup languages',
+    'Other': 'Additional technologies and frameworks'
   }
 
   const proficiencyColors = {
@@ -145,80 +160,8 @@ const Skills = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={skillsInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
-              className="space-y-16"
             >
-              {Object.entries(skills).map(([category, categorySkills], categoryIndex) => {
-                const Icon = categoryIcons[category] || Code
-                
-                return (
-                  <motion.div
-                    key={category}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={skillsInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                  >
-                    {/* Category Header */}
-                    <div className="flex items-center mb-8">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                        <Icon className="w-6 h-6 text-primary-600" />
-                      </div>
-                      <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{category}</h2>
-                        <p className="text-gray-600 dark:text-gray-300">{categorySkills.length} skills</p>
-                      </div>
-                    </div>
-
-                    {/* Skills Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {categorySkills.map((skill, skillIndex) => (
-                        <motion.div
-                          key={skill._id}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={skillsInView ? { opacity: 1, scale: 1 } : {}}
-                          transition={{ duration: 0.4, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) }}
-                          className="card p-6 hover:shadow-large transition-all duration-300 group"
-                        >
-                          <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 transition-colors duration-200">
-                              {skill.name}
-                            </h3>
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full border ${proficiencyColors[skill.proficiency]}`}>
-                              {skill.proficiency}
-                            </span>
-                          </div>
-
-                          {/* Proficiency Bar */}
-                          <div className="mb-4">
-                            <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300 mb-2">
-                              <span>Proficiency</span>
-                              <span>{proficiencyLevels[skill.proficiency]}%</span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                              <motion.div
-                                initial={{ width: 0 }}
-                                animate={skillsInView ? { width: `${proficiencyLevels[skill.proficiency]}%` } : {}}
-                                transition={{ duration: 1, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) + 0.5 }}
-                                className="bg-primary-600 h-2 rounded-full"
-                              />
-                            </div>
-                          </div>
-
-                          {/* Skill Icon */}
-                          {skill.icon && (
-                            <div className="text-center">
-                              <img
-                                src={skill.icon}
-                                alt={skill.name}
-                                className="w-8 h-8 mx-auto opacity-60 group-hover:opacity-100 transition-opacity duration-200"
-                              />
-                            </div>
-                          )}
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )
-              })}
+              <InteractiveSkillCards skills={skills} />
             </motion.div>
           )}
         </div>
