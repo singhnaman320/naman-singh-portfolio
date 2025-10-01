@@ -248,6 +248,17 @@
     padding: 1.25rem;
   }
 
+  /* Smooth grid transitions */
+  .skills-grid-container {
+    will-change: transform, opacity;
+  }
+
+  .skill-card-enhanced {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   /* Mobile search bar improvements */
   .mobile-search-container {
     padding: 0 1rem;

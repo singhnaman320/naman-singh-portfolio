@@ -322,12 +322,15 @@ const InteractiveSkillCards = ({ skills }) => {
       </div>
 
       {/* Skills Grid */}
-      <AnimatePresence mode="wait">
-        {filteredSkills.length === 0 ? (
+      <div className="min-h-[400px] skills-grid-container">
+        <AnimatePresence mode="wait">
+          {filteredSkills.length === 0 ? (
           <motion.div
+            key="no-results"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
             className="text-center py-16"
           >
             <div className="text-6xl mb-4">🔍</div>
@@ -340,10 +343,15 @@ const InteractiveSkillCards = ({ skills }) => {
           </motion.div>
         ) : (
           <motion.div
+            key="skills-grid"
             layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 px-4 md:px-0"
           >
-            <AnimatePresence>
+            <AnimatePresence mode="popLayout">
               {filteredSkills.map((skill, index) => (
                 <SkillCard
                   key={skill._id || skill.name}
@@ -358,6 +366,7 @@ const InteractiveSkillCards = ({ skills }) => {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   )
 }
@@ -419,15 +428,13 @@ const SkillCard = ({ skill, index, categoryConfig, getProficiencyColor, getProfi
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 30, rotateX: -15 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      exit={{ opacity: 0, y: -30, rotateX: 15 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 
-        duration: 0.6, 
-        delay: index * 0.1,
-        type: "spring",
-        stiffness: 100,
-        damping: 15
+        duration: 0.4, 
+        ease: "easeOut",
+        layout: { duration: 0.3, ease: "easeInOut" }
       }}
       whileHover={{ 
         y: -8, 
