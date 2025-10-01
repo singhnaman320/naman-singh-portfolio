@@ -82,19 +82,14 @@ const AdminContacts = () => {
               View and respond to messages from your portfolio visitors
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              Total: <span className="font-semibold">{contacts.length}</span>
+          {unreadCount > 0 && (
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <span className="text-sm text-red-600 dark:text-red-400 font-semibold">
+                {unreadCount} unread
+              </span>
             </div>
-            {unreadCount > 0 && (
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <span className="text-sm text-red-600 dark:text-red-400 font-semibold">
-                  {unreadCount} unread
-                </span>
-              </div>
-            )}
-          </div>
+          )}
         </div>
 
         {contacts.length === 0 ? (
@@ -179,7 +174,7 @@ const AdminContacts = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+              className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
               onClick={closeModal}
             >
               <motion.div

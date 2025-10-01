@@ -8,13 +8,18 @@ const InteractiveSkillCards = ({ skills }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('name')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const sortDropdownRef = useRef(null)
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false)
+      }
+      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target)) {
+        setIsSortDropdownOpen(false)
       }
     }
 
@@ -34,6 +39,13 @@ const InteractiveSkillCards = ({ skills }) => {
     'Languages': { icon: Layers, color: 'from-red-500 to-pink-500', bgColor: 'bg-red-50 dark:bg-red-900/20' },
     'Other': { icon: Zap, color: 'from-gray-500 to-slate-500', bgColor: 'bg-gray-50 dark:bg-gray-900/20' }
   }
+
+  // Sort options configuration
+  const sortOptions = [
+    { value: 'name', label: 'Name', icon: Layers },
+    { value: 'level', label: 'Level', icon: TrendingUp },
+    { value: 'experience', label: 'Experience', icon: Calendar }
+  ]
 
   // Get all categories with skill counts
   const categories = useMemo(() => {
@@ -222,21 +234,69 @@ const InteractiveSkillCards = ({ skills }) => {
 
         {/* Sort Options */}
         <div className="mobile-sort-container">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4">
+          {/* Mobile Sort Dropdown */}
+          <div className="mobile-sort-dropdown md:hidden" ref={sortDropdownRef}>
+            <button
+              onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+              className="mobile-sort-trigger"
+            >
+              <div className="flex items-center gap-2">
+                {(() => {
+                  const selectedOption = sortOptions.find(option => option.value === sortBy)
+                  const IconComponent = selectedOption?.icon
+                  return (
+                    <>
+                      {IconComponent && <IconComponent className="w-4 h-4 text-blue-500" />}
+                      <span>Sort by: {selectedOption?.label}</span>
+                    </>
+                  )
+                })()}
+              </div>
+              <ChevronDown className={`w-4 h-4 transition-transform text-blue-500 ${isSortDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <AnimatePresence>
+              {isSortDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="mobile-sort-dropdown-content"
+                >
+                  {sortOptions.map((option) => {
+                    const OptionIcon = option.icon
+                    return (
+                      <div
+                        key={option.value}
+                        onClick={() => {
+                          setSortBy(option.value)
+                          setIsSortDropdownOpen(false)
+                        }}
+                        className={`mobile-sort-dropdown-item ${sortBy === option.value ? 'active' : ''}`}
+                      >
+                        <OptionIcon className="w-4 h-4" />
+                        <span>{option.label}</span>
+                      </div>
+                    )
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Desktop Sort Buttons */}
+          <div className="hidden md:flex flex-row justify-center items-center gap-4">
             <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
               <Filter className="w-4 h-4" />
               Sort by:
             </span>
-            <div className="mobile-sort-buttons flex gap-2 md:gap-2 w-full md:w-auto">
-            {[
-              { value: 'name', label: 'Name', icon: Layers },
-              { value: 'level', label: 'Level', icon: TrendingUp },
-              { value: 'experience', label: 'Experience', icon: Calendar }
-            ].map((option) => (
+            <div className="flex gap-2">
+            {sortOptions.map((option) => (
               <button
                 key={option.value}
                 onClick={() => setSortBy(option.value)}
-                className={`mobile-sort-button px-3 py-1.5 md:px-3 md:py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5 justify-center md:justify-start ${
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
                   sortBy === option.value
                     ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'

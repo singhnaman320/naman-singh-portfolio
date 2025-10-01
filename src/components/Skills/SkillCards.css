@@ -430,10 +430,114 @@
     justify-content: center;
   }
 
-  /* Mobile sort options */
+  /* Mobile sort dropdown */
   .mobile-sort-container {
     padding: 0 1rem;
     margin-bottom: 0.75rem;
+  }
+
+  .mobile-sort-dropdown {
+    position: relative;
+    width: 100%;
+  }
+
+  .mobile-sort-trigger {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .dark .mobile-sort-trigger {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+
+  .mobile-sort-trigger:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .mobile-sort-trigger svg {
+    color: #3b82f6;
+  }
+
+  .mobile-sort-dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    z-index: 50;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mobile-sort-dropdown-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dark .mobile-sort-dropdown-content {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .mobile-sort-dropdown-item {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .dark .mobile-sort-dropdown-item {
+    color: #d1d5db;
+    border-bottom-color: #374151;
+  }
+
+  .mobile-sort-dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-sort-dropdown-item:hover {
+    background: #f9fafb;
+  }
+
+  .dark .mobile-sort-dropdown-item:hover {
+    background: #374151;
+  }
+
+  .mobile-sort-dropdown-item.active {
+    background: #3b82f6;
+    color: white;
+  }
+
+  .mobile-sort-dropdown-item svg {
+    color: #3b82f6;
+  }
+
+  .mobile-sort-dropdown-item.active svg {
+    color: white !important;
   }
 
   .mobile-sort-buttons {
