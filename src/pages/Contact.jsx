@@ -41,14 +41,14 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'contact@namanportfolio.com',
-      href: 'mailto:contact@namanportfolio.com'
+      value: 'singhnaman320@gmail.com',
+      href: 'mailto:singhnaman320@gmail.com'
     },
     {
       icon: Phone,
       label: 'Phone',
-      value: '+91 XXXXX XXXXX',
-      href: 'tel:+91XXXXXXXXX'
+      value: '+91 70172 25589',
+      href: 'tel:+917017225589'
     },
     {
       icon: MapPin,
