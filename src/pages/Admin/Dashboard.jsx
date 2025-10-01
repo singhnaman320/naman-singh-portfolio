@@ -45,8 +45,8 @@ const Dashboard = () => {
           unreadContacts: contactsRes.data.filter(contact => !contact.isRead).length
         })
 
-        // Get recent contacts (last 5)
-        setRecentContacts(contactsRes.data.slice(0, 5))
+        // Get recent contacts (last 2)
+        setRecentContacts(contactsRes.data.slice(0, 2))
         
       } catch (error) {
         console.error('Error fetching dashboard data:', error)
@@ -240,14 +240,24 @@ const Dashboard = () => {
                   {recentContacts.map((contact) => (
                     <div
                       key={contact._id}
-                      className={`p-4 rounded-lg border ${
+                      className={`p-4 rounded-lg border relative ${
                         contact.isRead 
                           ? 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700' 
                           : 'border-primary-200 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20'
                       }`}
                     >
+                      {!contact.isRead && (
+                        <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full"></div>
+                      )}
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100">{contact.name}</h4>
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-medium text-gray-900 dark:text-gray-100">{contact.name}</h4>
+                          {!contact.isRead && (
+                            <span className="inline-block px-2 py-1 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-300 text-xs font-medium rounded-full">
+                              New
+                            </span>
+                          )}
+                        </div>
                         <span className="text-xs text-gray-500 dark:text-gray-400">
                           {new Date(contact.createdAt).toLocaleDateString()}
                         </span>
@@ -256,11 +266,6 @@ const Dashboard = () => {
                       <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
                         {contact.message}
                       </p>
-                      {!contact.isRead && (
-                        <span className="inline-block mt-2 px-2 py-1 bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 text-xs font-medium rounded-full">
-                          New
-                        </span>
-                      )}
                     </div>
                   ))}
                 </div>
