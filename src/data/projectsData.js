@@ -2,28 +2,27 @@
 export const projectsData = [
   {
     _id: "1",
-    title: "Meeting Booking Application",
-    description: "Developed using MERN stack and created a responsive UI",
+    title: "Tisane Labs",
+    description: "Built and deployed AI-driven text analysis APIs with sentiment and contextual insights, alongside a secure role-based authentication system for controlled data access.",
     fullDescription: "A comprehensive meeting booking application built with the MERN stack. This application allows users to schedule, manage, and track meetings efficiently. Features include real-time availability checking, automated email notifications, calendar integration, and a responsive dashboard for both users and administrators.",
     techStack: [
-      "React",
+      "React.js",
       "Node.js", 
       "Express",
-      "MongoDB",
-      "JavaScript",
-      "HTML5",
-      "CSS3",
+      "PostgreSQL",
+      "AWS",
       "Tailwind CSS"
     ],
-    category: "Full Stack Development",
+    category: "Full-Stack Developer",
     status: "Completed",
     featured: true,
     images: [
-      "/images/project-1-1.jpg",
-      "/images/project-1-2.jpg", 
-      "/images/project-1-3.jpg"
+      "/images/Tisane-Labs-One.png",
+      "/images/Tisane-Labs-Two.png", 
+      "/images/Tisane-Labs-Three.png",
+      "/images/Tisane-Labs-Four.png"
     ],
-    demoUrl: "https://meeting-booking-demo.vercel.app",
+    demoUrl: "https://tisane.ai/home",
     githubUrl: "https://github.com/singhnaman320/meeting-booking-app",
     features: [
       "Real-time meeting scheduling",
@@ -50,8 +49,8 @@ export const projectsData = [
   },
   {
     _id: "2", 
-    title: "E-Commerce Platform",
-    description: "Full-featured online shopping platform with modern UI/UX",
+    title: "Hush Application",
+    description: "Developed a high-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features, supported by a scalable backend architecture.",
     fullDescription: "A complete e-commerce solution built with React and Node.js. Features include product catalog, shopping cart, secure payment processing, order management, and admin panel. The platform supports multiple payment methods and provides a seamless shopping experience across all devices.",
     techStack: [
       "React",
@@ -61,15 +60,16 @@ export const projectsData = [
       "JavaScript",
       "Tailwind CSS"
     ],
-    category: "Full Stack Development",
+    category: "Backend Developer",
     status: "Completed",
     featured: true,
     images: [
-      "/images/ecommerce-1.jpg",
-      "/images/ecommerce-2.jpg",
-      "/images/ecommerce-3.jpg"
+      "/images/Hush-One.png",
+      "/images/Hush-Two.png",
+      "/images/Hush-Three.png",
+      "/images/Hush-Four.png"
     ],
-    demoUrl: "https://ecommerce-platform-demo.vercel.app",
+    demoUrl: "https://play.google.com/store/apps/details?id=ac.hush.app&hl=en-US",
     githubUrl: "https://github.com/singhnaman320/ecommerce-platform",
     features: [
       "Product catalog with search and filters",
