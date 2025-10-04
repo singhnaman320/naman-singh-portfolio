@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Github, Linkedin, Instagram, Mail, Heart, Home, User, FolderOpen, Briefcase, Code, MessageCircle } from 'lucide-react'
-import { useData } from '../../contexts/DataContext'
 
 const Footer = () => {
-  const { home } = useData()
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [

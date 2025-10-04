@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, MapPin, ExternalLink, MessageCircle, FolderOpen } from 'lucide-react'
-import { useData } from '../contexts/DataContext'
+import { experienceData, getCompanyLogo, formatExperienceDate } from '../data/experienceData'
 import { useInView } from 'react-intersection-observer'
-import { formatDateRange } from '../utils'
-import { getCompanyLogo } from '../utils/companyLogos'
-import { LoadingPage } from '../components/UI/Loading'
 import { useState, useEffect, useRef } from 'react'
 
 const Experience = () => {
-  const { experiences, loading } = useData()
+  // Use frontend data instead of backend
+  const experiences = experienceData
+  const loading = false // No loading needed for frontend data
+  
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [timelineRef, timelineInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [expandedTech, setExpandedTech] = useState({})
@@ -109,9 +109,7 @@ const Experience = () => {
     }
   }, [])
 
-  if (loading) {
-    return <LoadingPage message="Loading experience..." />
-  }
+  // Remove loading state since we're using frontend data
 
   return (
     <>
@@ -208,64 +206,14 @@ const Experience = () => {
                 <div className="space-y-8 sm:space-y-12 lg:space-y-24 px-4 lg:px-0">
                   {experiences
                     .sort((a, b) => {
-                      // Helper function to extract year from date string
-                      const extractYear = (dateStr) => {
-                        if (!dateStr || dateStr === 'Present') return new Date().getFullYear()
-                        
-                        // Extract 4-digit year from string
-                        const yearMatch = dateStr.match(/(\d{4})/)
-                        return yearMatch ? parseInt(yearMatch[1]) : 0
-                      }
+                      // Sort by current position first, then by start date (most recent first)
+                      if (a.current && !b.current) return -1
+                      if (!a.current && b.current) return 1
                       
-                      // Helper function to extract month number (for same year sorting)
-                      const extractMonth = (dateStr) => {
-                        if (!dateStr || dateStr === 'Present') return 12
-                        
-                        const monthMap = {
-                          'jan': 1, 'january': 1, 'feb': 2, 'february': 2,
-                          'mar': 3, 'march': 3, 'apr': 4, 'april': 4,
-                          'may': 5, 'jun': 6, 'june': 6, 'jul': 7, 'july': 7,
-                          'aug': 8, 'august': 8, 'sep': 9, 'september': 9,
-                          'oct': 10, 'october': 10, 'nov': 11, 'november': 11,
-                          'dec': 12, 'december': 12
-                        }
-                        
-                        const lowerDate = dateStr.toLowerCase()
-                        for (const [month, num] of Object.entries(monthMap)) {
-                          if (lowerDate.includes(month)) return num
-                        }
-                        return 1 // Default to January if no month found
-                      }
-                      
-                      // Sort by end date first (most recent experience on top)
-                      const aEndYear = extractYear(a.endDate)
-                      const bEndYear = extractYear(b.endDate)
-                      
-                      if (aEndYear !== bEndYear) {
-                        return bEndYear - aEndYear // Most recent end year first
-                      }
-                      
-                      // If same end year, sort by end month
-                      const aEndMonth = extractMonth(a.endDate)
-                      const bEndMonth = extractMonth(b.endDate)
-                      
-                      if (aEndMonth !== bEndMonth) {
-                        return bEndMonth - aEndMonth
-                      }
-                      
-                      // If same end date, sort by start date (most recent start first)
-                      const aStartYear = extractYear(a.startDate)
-                      const bStartYear = extractYear(b.startDate)
-                      
-                      if (aStartYear !== bStartYear) {
-                        return bStartYear - aStartYear
-                      }
-                      
-                      // If same start year, sort by start month
-                      const aStartMonth = extractMonth(a.startDate)
-                      const bStartMonth = extractMonth(b.startDate)
-                      
-                      return bStartMonth - aStartMonth
+                      // Both current or both not current - sort by start date
+                      const aDate = new Date(a.startDate)
+                      const bDate = new Date(b.startDate)
+                      return bDate - aDate // Most recent start date first
                     })
                     .map((experience, index) => (
                     <motion.div
@@ -404,7 +352,7 @@ const Experience = () => {
                                   <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                       <Calendar className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
-                                      <span className="font-medium text-sm sm:text-sm">{experience.startDate} - {experience.endDate || 'Present'}</span>
+                                      <span className="font-medium text-sm sm:text-sm">{formatExperienceDate(experience.startDate, experience.endDate, experience.current)}</span>
                                     </div>
                                     
                                     {/* Logo - Mobile Inline with Duration */}

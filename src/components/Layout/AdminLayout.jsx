@@ -4,12 +4,8 @@ import {
   Menu, 
   X,
   Home, 
-  User, 
-  FolderOpen, 
-  Briefcase, 
-  Code, 
-  Mail, 
   MessageCircle,
+  BarChart3,
   LogOut,
   ExternalLink
 } from 'lucide-react'
@@ -26,11 +22,8 @@ const AdminLayout = () => {
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: Home },
-    { name: 'Home Page', href: '/admin/home', icon: User },
-    { name: 'Projects', href: '/admin/projects', icon: FolderOpen },
-    { name: 'Experience', href: '/admin/experience', icon: Briefcase },
-    { name: 'Skills', href: '/admin/skills', icon: Code },
-    { name: 'Contacts', href: '/admin/contacts', icon: MessageCircle }
+    { name: 'Contacts', href: '/admin/contacts', icon: MessageCircle },
+    { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 }
   ]
 
   const isActiveLink = (href) => {

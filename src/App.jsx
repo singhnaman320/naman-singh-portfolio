@@ -26,11 +26,8 @@ import Signup from './pages/Auth/Signup'
 
 // Admin Pages
 import Dashboard from './pages/Admin/Dashboard'
-import AdminHome from './pages/Admin/Home'
-import AdminProjects from './pages/Admin/Projects'
-import AdminExperience from './pages/Admin/Experience'
-import AdminSkills from './pages/Admin/Skills'
 import AdminContacts from './pages/Admin/Contacts'
+import Analytics from './pages/Admin/Analytics'
 
 // Route Protection
 import ProtectedRoute from './components/Auth/ProtectedRoute'
@@ -68,11 +65,8 @@ function App() {
                 }
               >
                 <Route index element={<Dashboard />} />
-                <Route path="home" element={<AdminHome />} />
-                <Route path="projects" element={<AdminProjects />} />
-                <Route path="experience" element={<AdminExperience />} />
-                <Route path="skills" element={<AdminSkills />} />
                 <Route path="contacts" element={<AdminContacts />} />
+                <Route path="analytics" element={<Analytics />} />
               </Route>
 
               {/* 404 Route */}

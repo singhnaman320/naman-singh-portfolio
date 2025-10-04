@@ -1,15 +1,17 @@
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Code, Database, Cloud, Wrench, Layers, Zap, Rocket, FolderOpen, Award, Eye, X } from 'lucide-react'
-import { useData } from '../contexts/DataContext'
+import { skillsData, getCategorizedSkills, categoryOrder } from '../data/skillsData'
 import { useInView } from 'react-intersection-observer'
-import { LoadingPage } from '../components/UI/Loading'
 import { useState } from 'react'
 import InteractiveSkillCards from '../components/Skills/InteractiveSkillCards'
 import '../components/Skills/SkillCards.css'
 
 const Skills = () => {
-  const { skills, loading } = useData()
+  // Use frontend data instead of backend
+  const skills = getCategorizedSkills() // Get categorized skills object
+  const loading = false // No loading needed for frontend data
+  
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [skillsRef, skillsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [certificationsRef, certificationsInView] = useInView({ threshold: 0.1, triggerOnce: true })
@@ -18,9 +20,7 @@ const Skills = () => {
   const [showAllCertifications, setShowAllCertifications] = useState(false)
   const [selectedCertificate, setSelectedCertificate] = useState(null)
 
-  if (loading) {
-    return <LoadingPage message="Loading skills..." />
-  }
+  // Remove loading state since we're using frontend data
 
   const categoryIcons = {
     'Frontend': Code,
@@ -32,8 +32,7 @@ const Skills = () => {
     'Other': Zap
   }
 
-  // Define the order of categories to display with descriptions
-  const categoryOrder = ['Frontend', 'Backend', 'Database', 'DevOps/Cloud', 'Tools', 'Languages', 'Other']
+  // Use imported categoryOrder from skillsData
   
   const categoryDescriptions = {
     'Frontend': 'User interface and client-side technologies',

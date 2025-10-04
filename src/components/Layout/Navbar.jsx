@@ -4,13 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, User, Download } from 'lucide-react'
 import { cn } from '../../utils'
 import ThemeToggle from '../UI/ThemeToggle'
-import { useData } from '../../contexts/DataContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
-  const { about } = useData()
 
   // Handle scroll effect
   useEffect(() => {

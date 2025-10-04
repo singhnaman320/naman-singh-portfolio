@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X } from 'lucide-react'
-import { useData } from '../contexts/DataContext'
+import { projectsData } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
-import { LoadingPage } from '../components/UI/Loading'
 
 // Advanced ProjectCard Component with Unique Design
 const ProjectCard = ({ project, index, projectsInView }) => {
@@ -15,12 +14,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
 
-  // Sample images for slideshow
-  const projectImages = [
-    `/images/project-${(index % 3) + 1}-1.jpg`,
-    `/images/project-${(index % 3) + 1}-2.jpg`,
-    `/images/project-${(index % 3) + 1}-3.jpg`
-  ]
+  // Use project images from data
+  const projectImages = project.images || []
 
   // Auto-play slideshow
   useEffect(() => {
@@ -255,7 +250,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
               <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
             </div>
             <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-3 py-1 rounded-full">
-              {project.role}
+              {project.category || 'Full Stack Developer'}
             </span>
           </motion.div>
 
@@ -270,7 +265,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             <div className="pl-4">
               <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-2 uppercase tracking-wide">Description</h4>
               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                {project.shortDescription}
+                {project.description}
               </p>
             </div>
           </motion.div>
@@ -333,9 +328,9 @@ const ProjectCard = ({ project, index, projectsInView }) => {
               </motion.a>
             )}
             
-            {project.liveUrl && (
+            {project.demoUrl && (
               <motion.a
-                href={project.liveUrl}
+                href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-primary-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
@@ -451,7 +446,11 @@ const ProjectCard = ({ project, index, projectsInView }) => {
 }
 
 const Projects = () => {
-  const { projects, loading, dataLoaded } = useData()
+  // Use frontend data instead of backend
+  const projects = projectsData
+  const loading = false // No loading needed for frontend data
+  const dataLoaded = true // Data is always loaded from frontend
+  
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTech, setSelectedTech] = useState('')
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -492,9 +491,7 @@ const Projects = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  if (loading) {
-    return <LoadingPage message="Loading projects..." />
-  }
+  // Remove loading state since we're using frontend data
 
   // Get all unique technologies from projects
   const allTechnologies = [...new Set(projects.flatMap(project => project.techStack))].sort()
@@ -502,7 +499,7 @@ const Projects = () => {
   // Filter projects
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (project.shortDescription && project.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()))
+                         (project.description && project.description.toLowerCase().includes(searchTerm.toLowerCase()))
     
     if (selectedTech === '' || selectedTech === 'All Technologies') {
       return matchesSearch

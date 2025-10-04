@@ -3,40 +3,25 @@ import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Github, ExternalLink, Calendar, User, Zap, Target, Award } from 'lucide-react'
-import { useData } from '../contexts/DataContext'
+import { getProjectById } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
-import { LoadingPage } from '../components/UI/Loading'
 
 const ProjectDetail = () => {
   const { id } = useParams()
-  const { getProject } = useData()
+  // Use frontend data instead of backend
   const [project, setProject] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false) // No loading needed for frontend data
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [contentRef, contentInView] = useInView({ threshold: 0.1, triggerOnce: true })
 
   useEffect(() => {
-    const fetchProject = async () => {
-      setLoading(true)
-      try {
-        const projectData = await getProject(id)
-        setProject(projectData)
-      } catch (error) {
-        console.error('Error fetching project:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+    // Get project from frontend data
+    const projectData = getProjectById(id)
+    setProject(projectData)
+  }, [id])
 
-    if (id) {
-      fetchProject()
-    }
-  }, [id, getProject])
-
-  if (loading) {
-    return <LoadingPage message="Loading project details..." />
-  }
+  // Remove loading state since we're using frontend data
 
   if (!project) {
     return (
@@ -156,7 +141,7 @@ const ProjectDetail = () => {
     <>
       <Helmet>
         <title>{project.title} - Naman Kumar Singh</title>
-        <meta name="description" content={project.shortDescription} />
+        <meta name="description" content={project.description} />
       </Helmet>
 
       {/* Hero Section */}
@@ -211,9 +196,9 @@ const ProjectDetail = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  {project.links?.live && (
+                  {project.demoUrl && (
                     <a
-                      href={project.links.live}
+                      href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-primary group"
@@ -223,9 +208,9 @@ const ProjectDetail = () => {
                     </a>
                   )}
                   
-                  {project.links?.github && (
+                  {project.githubUrl && (
                     <a
-                      href={project.links.github}
+                      href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-outline group"
@@ -242,8 +227,8 @@ const ProjectDetail = () => {
                 <div className="space-y-4">
                   <div className="aspect-video rounded-xl overflow-hidden shadow-large">
                     <img
-                      src={project.images[currentImageIndex].url}
-                      alt={project.images[currentImageIndex].caption || project.title}
+                      src={project.images[currentImageIndex]}
+                      alt={`${project.title} - Image ${currentImageIndex + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -261,8 +246,8 @@ const ProjectDetail = () => {
                           }`}
                         >
                           <img
-                            src={image.url}
-                            alt={image.caption || `${project.title} ${index + 1}`}
+                            src={image}
+                            alt={`${project.title} ${index + 1}`}
                             className="w-full h-full object-cover"
                           />
                         </button>

@@ -4,9 +4,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ArrowRight, MessageCircle, MapPin, Rocket, Github, ExternalLink } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
-import { useData } from '../contexts/DataContext'
+import { homeData, statsData } from '../data/homeData'
 import { getImageUrl, handleImageError } from '../utils/imageUtils'
-import { SkeletonHero, SkeletonText, SkeletonCard } from '../components/UI/SkeletonLoader'
 
 // Animated Counter Component
 const AnimatedCounter = ({ end, duration = 2000, suffix = '', prefix = '', inView }) => {
@@ -66,7 +65,11 @@ const AnimatedCounter = ({ end, duration = 2000, suffix = '', prefix = '', inVie
 }
 
 const Home = () => {
-  const { home, stats, loading } = useData()
+  // Use frontend data instead of backend
+  const home = homeData
+  const stats = statsData
+  const loading = false // No loading needed for frontend data
+  
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [homeRef, homeInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
@@ -84,9 +87,8 @@ const Home = () => {
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
-
-
-  if (loading) {
+  // Remove loading state since we're using frontend data
+  if (false) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
         {/* Hero Skeleton */}
@@ -141,8 +143,8 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{home?.name || 'Naman Kumar Singh'} - {home?.title || 'Full Stack Developer'}</title>
-        <meta name="description" content={home?.tagline || "Full-Stack Developer specializing in scalable web applications and innovative solutions"} />
+        <title>{home.name} - {home.title}</title>
+        <meta name="description" content={home.tagline} />
       </Helmet>
 
       {/* Hero Section */}
@@ -200,7 +202,7 @@ const Home = () => {
                       lineHeight: "1.2"
                     }}
                   >
-                    {home?.name || 'Naman Kumar Singh'}
+                    {home.name}
                   </motion.span>
                 </h1>
                 <motion.div 
@@ -224,7 +226,7 @@ const Home = () => {
                   animate={heroInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  {home?.title || 'Full-Stack Developer'}
+                  {home.title}
                 </motion.h2>
                 <motion.p 
                   className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
@@ -232,7 +234,7 @@ const Home = () => {
                   animate={heroInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                  {home?.tagline || 'Specializing in scalable web applications and modern technologies. Passionate about creating innovative solutions that make a difference.'}
+                  {home.tagline}
                 </motion.p>
               </motion.div>
 
@@ -250,7 +252,7 @@ const Home = () => {
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</p>
-                    <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">{home?.location || 'India'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100">{home.location}</p>
                   </div>
                 </div>
 
@@ -261,7 +263,7 @@ const Home = () => {
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-green-600 dark:text-green-400 uppercase tracking-wide">Status</p>
-                    <p className="text-sm sm:text-base font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{home?.availability || 'Available'}</p>
+                    <p className="text-sm sm:text-base font-semibold text-green-700 dark:text-green-300 whitespace-nowrap">{home.availability}</p>
                   </div>
                 </div>
               </motion.div>
@@ -371,60 +373,23 @@ const Home = () => {
                   className="text-center space-y-8"
                 >
                   <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 mx-auto px-4">
-                    {home?.bio ? (
-                      home.bio.split('\n').map((paragraph, index) => (
-                        <p 
-                          key={index} 
-                          className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-justify max-w-4xl mx-auto"
-                          style={{
-                            textAlign: 'justify',
-                            textJustify: 'inter-word',
-                            wordSpacing: isMobile ? '0.15em' : 'normal',
-                            hyphens: 'auto',
-                            textAlignLast: 'center'
-                          }}
-                        >
-                          {paragraph}
-                        </p>
-                      ))
-                    ) : (
-                      <p className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-gray-500 dark:text-gray-400 italic text-center">
-                        Bio content is not available. Please add your story in the admin panel.
+                    {home.bio.split('\n').map((paragraph, index) => (
+                      <p 
+                        key={index} 
+                        className="mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg text-justify max-w-4xl mx-auto"
+                        style={{
+                          textAlign: 'justify',
+                          textJustify: 'inter-word',
+                          wordSpacing: isMobile ? '0.15em' : 'normal',
+                          hyphens: 'auto',
+                          textAlignLast: 'center'
+                        }}
+                      >
+                        {paragraph}
                       </p>
-                    )}
+                    ))}
                   </div>
 
-                  {/* Social Links */}
-                  {home?.socialLinks && (
-                    <div className="flex flex-wrap justify-center gap-4 pt-8">
-                      {home.socialLinks.github && (
-                        <motion.a
-                          href={home.socialLinks.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Github className="w-5 h-5 mr-2" />
-                          GitHub
-                        </motion.a>
-                      )}
-                      {home.socialLinks.linkedin && (
-                        <motion.a
-                          href={home.socialLinks.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center px-6 py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <ExternalLink className="w-5 h-5 mr-2" />
-                          LinkedIn
-                        </motion.a>
-                      )}
-                    </div>
-                  )}
                 </motion.div>
               </div>
             </motion.div>
@@ -444,19 +409,19 @@ const Home = () => {
             {[
               { 
                 label: 'Projects', 
-                value: stats.projects || 0,
+                value: stats.projects,
                 suffix: '',
                 duration: 800
               },
               { 
                 label: 'Experience', 
-                value: stats.experiences || 0,
+                value: stats.experiences,
                 suffix: '+',
                 duration: 600
               },
               { 
                 label: 'Technologies', 
-                value: stats.skills || 0,
+                value: stats.skills,
                 suffix: '',
                 duration: 900
               }
@@ -491,7 +456,7 @@ const Home = () => {
       </section>
 
       {/* Highlights Section */}
-      {home?.highlights && home.highlights.length > 0 && (
+      {home.highlights && home.highlights.length > 0 && (
         <section className="py-20 bg-white dark:bg-gray-800">
           <div className="container-max section-padding">
             <motion.div
@@ -521,8 +486,11 @@ const Home = () => {
                   <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <ArrowRight className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                   </div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    {highlight.title}
+                  </h3>
                   <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {highlight}
+                    {highlight.description}
                   </p>
                 </motion.div>
               ))}

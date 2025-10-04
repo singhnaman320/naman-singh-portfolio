@@ -3,15 +3,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { 
-  Users, 
-  FolderOpen, 
-  Briefcase, 
-  Code, 
   Mail, 
-  FileText, 
+  MessageCircle,
   Eye, 
-  TrendingUp,
-  Calendar,
   Activity
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
@@ -29,18 +23,10 @@ const Dashboard = () => {
       try {
         setLoading(true)
         
-        // Fetch basic stats
-        const [projectsRes, experiencesRes, skillsRes, contactsRes] = await Promise.all([
-          adminAPI.getProjects(),
-          adminAPI.getExperiences(),
-          adminAPI.getSkills(),
-          adminAPI.getContacts()
-        ])
+        // Fetch contact data only
+        const contactsRes = await adminAPI.getContacts()
 
         setStats({
-          projects: projectsRes.data.length,
-          experiences: experiencesRes.data.length,
-          skills: skillsRes.data.length,
           contacts: contactsRes.data.length,
           unreadContacts: contactsRes.data.filter(contact => !contact.isRead).length
         })
@@ -60,64 +46,62 @@ const Dashboard = () => {
 
   const quickActions = [
     {
-      name: 'Manage Home',
-      description: 'Update your personal information and home page content',
-      href: '/admin/home',
-      icon: Users,
-      color: 'bg-blue-500'
+      name: 'Manage Messages',
+      description: 'View and respond to contact messages',
+      href: '/admin/contacts',
+      icon: Mail,
+      color: 'bg-red-500'
     },
     {
-      name: 'Add Project',
-      description: 'Showcase a new project in your portfolio',
-      href: '/admin/projects',
-      icon: FolderOpen,
+      name: 'Contact Analytics',
+      description: 'View detailed message statistics and trends',
+      href: '/admin/analytics',
+      icon: Activity,
       color: 'bg-green-500'
     },
     {
-      name: 'Update Experience',
-      description: 'Add or edit your work experience',
-      href: '/admin/experience',
-      icon: Briefcase,
-      color: 'bg-purple-500'
-    },
-    {
-      name: 'Manage Skills',
-      description: 'Update your technical skills and expertise',
-      href: '/admin/skills',
-      icon: Code,
-      color: 'bg-orange-500'
+      name: 'View Portfolio',
+      description: 'Check how your portfolio looks to visitors',
+      href: '/',
+      icon: Eye,
+      color: 'bg-blue-500',
+      external: true
     }
   ]
 
   const statCards = [
     {
-      name: 'Total Projects',
-      value: stats.projects || 0,
-      icon: FolderOpen,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100'
-    },
-    {
-      name: 'Work Experience',
-      value: stats.experiences || 0,
-      icon: Briefcase,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100'
-    },
-    {
-      name: 'Skills',
-      value: stats.skills || 0,
-      icon: Code,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
-    },
-    {
-      name: 'Messages',
+      name: 'Total Messages',
       value: stats.contacts || 0,
       icon: Mail,
       color: 'text-red-600',
       bgColor: 'bg-red-100',
-      badge: stats.unreadContacts > 0 ? stats.unreadContacts : null
+      badge: stats.unreadContacts > 0 ? stats.unreadContacts : null,
+      description: 'Contact form submissions'
+    },
+    {
+      name: 'Unread Messages',
+      value: stats.unreadContacts || 0,
+      icon: MessageCircle,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
+      description: 'Messages awaiting response'
+    },
+    {
+      name: 'Portfolio Status',
+      value: 'Live',
+      icon: Activity,
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
+      description: 'Frontend data active'
+    },
+    {
+      name: 'Last Updated',
+      value: new Date().toLocaleDateString(),
+      icon: Activity,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-100',
+      description: 'Dashboard refresh'
     }
   ]
 
@@ -167,6 +151,9 @@ const Dashboard = () => {
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.name}</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</p>
+                    {stat.description && (
+                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{stat.description}</p>
+                    )}
                   </div>
                   {stat.badge && (
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
@@ -191,11 +178,16 @@ const Dashboard = () => {
               <div className="space-y-4">
                 {quickActions.map((action, index) => {
                   const Icon = action.icon
+                  const ActionComponent = action.external ? 'a' : Link
+                  const linkProps = action.external 
+                    ? { href: action.href, target: '_blank', rel: 'noopener noreferrer' }
+                    : { to: action.href }
+                  
                   return (
-                    <Link
+                    <ActionComponent
                       key={action.name}
-                      to={action.href}
-                      className="flex items-center p-4 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all duration-200 group"
+                      {...linkProps}
+                      className="flex items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 group"
                     >
                       <div className={`p-2 rounded-lg ${action.color} text-white mr-4`}>
                         <Icon className="w-5 h-5" />
@@ -206,7 +198,12 @@ const Dashboard = () => {
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300">{action.description}</p>
                       </div>
-                    </Link>
+                      {action.external && (
+                        <div className="ml-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                          <Eye className="w-4 h-4" />
+                        </div>
+                      )}
+                    </ActionComponent>
                   )
                 })}
               </div>
@@ -273,58 +270,6 @@ const Dashboard = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Portfolio Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <div className="card p-5">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Portfolio Overview</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Eye className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Portfolio Visibility</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Your portfolio is live and accessible to visitors
-                </p>
-                <Link
-                  to="/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center mt-2 text-primary-600 hover:text-primary-700 text-sm font-medium"
-                >
-                  View Portfolio
-                  <Eye className="w-4 h-4 ml-1" />
-                </Link>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Content Status</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {stats.projects > 0 ? 'Portfolio content is ready' : 'Add content to get started'}
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Activity className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Last Updated</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {new Date().toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
       </div>
     </>

@@ -54,46 +54,17 @@ export const authAPI = {
   checkAdmin: withRetry(() => api.get('/auth/check-admin'), true),
 }
 
-// Public API endpoints (critical for initial load)
+// Public API endpoints (only for contact form now)
 export const publicAPI = {
-  getHome: withRetry(() => api.get('/public/home'), true),
-  getProjects: withRetry((featured = false) => api.get(`/public/projects${featured ? '?featured=true' : ''}`), true),
-  getProject: withRetry((id) => api.get(`/public/projects/${id}`)),
-  getExperiences: withRetry(() => api.get('/public/experiences'), true),
-  getSkills: withRetry(() => api.get('/public/skills'), true),
-  getStats: withRetry(() => api.get('/public/stats'), true),
   submitContact: withRetry((formData) => api.post('/public/contact', formData)),
 }
 
-// Admin API endpoints
+// Admin API endpoints (only for contacts now)
 export const adminAPI = {
-  // Home page endpoints
-  getHome: withRetry(() => api.get('/admin/home')),
-  updateHome: withRetry((homeData) => api.post('/admin/home', homeData)),
-
-  // Projects endpoints
-  getProjects: withRetry(() => api.get('/admin/projects')),
-  createProject: withRetry((projectData) => api.post('/admin/projects', projectData)),
-  updateProject: withRetry((id, projectData) => api.put(`/admin/projects/${id}`, projectData)),
-  deleteProject: withRetry((id) => api.delete(`/admin/projects/${id}`)),
-
-  // Experience endpoints
-  getExperiences: withRetry(() => api.get('/admin/experiences')),
-  createExperience: withRetry((data) => api.post('/admin/experiences', data)),
-  updateExperience: withRetry((id, data) => api.put(`/admin/experiences/${id}`, data)),
-  deleteExperience: withRetry((id) => api.delete(`/admin/experiences/${id}`)),
-
-  // Skills endpoints
-  getSkills: withRetry(() => api.get('/admin/skills')),
-  createSkill: withRetry((skillData) => api.post('/admin/skills', skillData)),
-  updateSkill: withRetry((id, skillData) => api.put(`/admin/skills/${id}`, skillData)),
-  deleteSkill: withRetry((id) => api.delete(`/admin/skills/${id}`)),
-
-  // Contacts endpoints
+  // Contacts endpoints - only backend functionality remaining
   getContacts: withRetry(() => api.get('/admin/contacts')),
   markContactRead: withRetry((id) => api.put(`/admin/contacts/${id}/read`)),
   replyContact: withRetry((id, reply) => api.put(`/admin/contacts/${id}/reply`, { reply })),
-
 }
 
 export default api
