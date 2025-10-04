@@ -6,6 +6,12 @@ import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, Chev
 import { projectsData } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
 
+// Function to get tech stack colors for dark/light mode
+const getTechColor = (tech) => {
+  // All tech stacks use the same blue color scheme
+  return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+}
+
 // Advanced ProjectCard Component with Unique Design
 const ProjectCard = ({ project, index, projectsInView }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -281,8 +287,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
               {project.techStack?.map((tech, techIndex) => (
                 <motion.span
                   key={tech}
-                  initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                  animate={projectsInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={projectsInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ 
                     duration: 0.5, 
                     delay: index * 0.1 + 0.7 + techIndex * 0.1,
@@ -290,14 +296,12 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                     stiffness: 200
                   }}
                   whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 5,
+                    scale: 1.05,
                     transition: { duration: 0.2 }
                   }}
-                  className="relative px-3 py-1.5 bg-gradient-to-r from-primary-500 to-blue-500 text-white text-xs font-bold rounded-full shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
+                  className={`px-3 py-1.5 ${getTechColor(tech)} text-xs font-semibold rounded-full shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer`}
                 >
-                  <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  <span className="relative z-10">{tech}</span>
+                  {tech}
                 </motion.span>
               ))}
             </div>

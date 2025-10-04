@@ -6,6 +6,12 @@ import { ArrowLeft, Github, ExternalLink, Calendar, User, Zap, Target, Award } f
 import { getProjectById } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
 
+// Function to get tech stack colors for dark/light mode (same as Projects page)
+const getTechColor = (tech) => {
+  // All tech stacks use the same blue color scheme
+  return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+}
+
 const ProjectDetail = () => {
   const { id } = useParams()
   // Use frontend data instead of backend
@@ -186,7 +192,7 @@ const ProjectDetail = () => {
                     {project.techStack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full"
+                        className={`px-3 py-1 ${getTechColor(tech)} text-sm font-semibold rounded-full shadow-sm hover:shadow-md transition-shadow duration-200`}
                       >
                         {tech}
                       </span>
@@ -387,8 +393,8 @@ const ProjectDetail = () => {
                   <div className="space-y-2">
                     {project.techStack.map((tech) => (
                       <div key={tech} className="flex items-center">
-                        <span className="w-2 h-2 bg-primary-600 rounded-full mr-3" />
-                        <span className="text-gray-700">{tech}</span>
+                        <div className={`w-3 h-3 rounded-full mr-3 shadow-sm ${getTechColor(tech).split(' ').slice(-2).join(' ')}`} />
+                        <span className="text-gray-700 dark:text-gray-300">{tech}</span>
                       </div>
                     ))}
                   </div>
