@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, X, Code, Database, Cloud, Wrench, Layers, Zap, Star, Calendar, TrendingUp, ChevronDown } from 'lucide-react'
+import { Search, Filter, X, Code, Database, Cloud, Wrench, Layers, Zap, Star, Calendar, TrendingUp, ChevronDown, Eye, EyeOff } from 'lucide-react'
 import './SkillCards.css'
 
 const InteractiveSkillCards = ({ skills }) => {
@@ -9,8 +9,10 @@ const InteractiveSkillCards = ({ skills }) => {
   const [sortBy, setSortBy] = useState('name')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false)
+  const [showAllSkills, setShowAllSkills] = useState(false)
   const dropdownRef = useRef(null)
   const sortDropdownRef = useRef(null)
+  const skillsGridRef = useRef(null)
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -100,6 +102,21 @@ const InteractiveSkillCards = ({ skills }) => {
     return allSkills
   }, [skills, selectedCategory, searchTerm, sortBy])
 
+  // Calculate skills to display (2 rows: 8 on desktop, 6 on mobile)
+  const skillsPerRow = {
+    mobile: 3, // 1 column on mobile becomes 3 per "row" for calculation
+    tablet: 4, // 2 columns on tablet  
+    desktop: 4 // 4 columns on desktop
+  }
+  
+  const maxSkillsToShow = skillsPerRow.desktop * 2 // 8 skills for 2 rows on desktop
+  const displayedSkills = useMemo(() => {
+    if (showAllSkills || searchTerm || selectedCategory !== 'All') {
+      return filteredSkills
+    }
+    return filteredSkills.slice(0, maxSkillsToShow)
+  }, [filteredSkills, showAllSkills, searchTerm, selectedCategory, maxSkillsToShow])
+
   // Proficiency colors
   const getProficiencyColor = (proficiency) => {
     const colors = {
@@ -119,6 +136,22 @@ const InteractiveSkillCards = ({ skills }) => {
       'Expert': 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300'
     }
     return colors[proficiency] || 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
+  }
+
+  // Handle toggle with smooth scrolling
+  const handleToggleSkills = () => {
+    setShowAllSkills(!showAllSkills)
+    
+    // Scroll to skills grid after a short delay to allow state update
+    setTimeout(() => {
+      if (skillsGridRef.current) {
+        skillsGridRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        })
+      }
+    }, 100)
   }
 
   return (
@@ -314,7 +347,10 @@ const InteractiveSkillCards = ({ skills }) => {
       {/* Skills Count */}
       <div className="mobile-results-text text-center">
         <p className="text-gray-600 dark:text-gray-400">
-          Showing <span className="font-semibold text-primary-600 dark:text-primary-400">{filteredSkills.length}</span> skills
+          Showing <span className="font-semibold text-primary-600 dark:text-primary-400">{displayedSkills.length}</span> 
+          {!showAllSkills && !searchTerm && selectedCategory === 'All' && filteredSkills.length > maxSkillsToShow && (
+            <span> of {filteredSkills.length}</span>
+          )} skills
           {selectedCategory !== 'All' && (
             <span> in <span className="font-semibold">{selectedCategory}</span></span>
           )}
@@ -322,7 +358,7 @@ const InteractiveSkillCards = ({ skills }) => {
       </div>
 
       {/* Skills Grid */}
-      <div className="min-h-[400px] skills-grid-container">
+      <div ref={skillsGridRef} className="min-h-[400px] skills-grid-container">
         <AnimatePresence mode="wait">
           {filteredSkills.length === 0 ? (
           <motion.div
@@ -352,7 +388,7 @@ const InteractiveSkillCards = ({ skills }) => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 px-4 md:px-0"
           >
             <AnimatePresence mode="popLayout">
-              {filteredSkills.map((skill, index) => (
+              {displayedSkills.map((skill, index) => (
                 <SkillCard
                   key={skill._id || skill.name}
                   skill={skill}
@@ -367,6 +403,35 @@ const InteractiveSkillCards = ({ skills }) => {
         )}
       </AnimatePresence>
       </div>
+
+      {/* View More/Less Button */}
+      {!searchTerm && selectedCategory === 'All' && filteredSkills.length > maxSkillsToShow && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-center mt-8"
+        >
+          <motion.button
+            onClick={handleToggleSkills}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 dark:from-primary-500 dark:to-blue-500 dark:hover:from-primary-600 dark:hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl dark:shadow-primary-500/25 transition-all duration-300 transform hover:-translate-y-1 group"
+          >
+            {showAllSkills ? (
+              <>
+                <EyeOff className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                <span>View Less Skills</span>
+              </>
+            ) : (
+              <>
+                <Eye className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                <span>View More Skills ({filteredSkills.length - maxSkillsToShow} more)</span>
+              </>
+            )}
+          </motion.button>
+        </motion.div>
+      )}
     </div>
   )
 }

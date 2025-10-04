@@ -34,7 +34,7 @@ export const homeData = {
 
 // Stats data for homepage
 export const statsData = {
-  projects: 1,
+  projects: 3,
   experiences: 3,
   skills: 21
 }
