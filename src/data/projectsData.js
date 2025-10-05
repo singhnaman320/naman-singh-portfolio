@@ -141,28 +141,27 @@ export const projectsData = [
   },
   {
     _id: "4",
-    title: "Task Management Dashboard",
-    description: "Comprehensive task management application with project organization, team collaboration, progress tracking, and intuitive interface for productivity.",
+    title: "Meal Prep Ottawa Admin Panel",
+    description: "Developed a personalized meal delivery application with custom meal selection, real-time order updates, push notifications, and scalable role-based user management.",
     fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
     techStack: [
-      "React",
+      "React.js",
       "Node.js",
-      "Express",
-      "PostgreSQL", 
-      "JavaScript",
-      "Tailwind CSS",
-      "JWT"
+      "Express.js",
+      "MongoDB", 
+      "Firebase",
     ],
-    category: "Full Stack Development",
+    category: "Full Stack Developer",
     status: "In Progress",
     featured: false,
     images: [
-      "/images/task-manager-1.jpg",
-      "/images/task-manager-2.jpg",
-      "/images/task-manager-3.jpg"
+      "/images/MealPrep-One.jpeg",
+      "/images/MealPrep-Two.jpeg",
+      "/images/MealPrep-Three.jpeg",
+      "/images/MealPrep-Four.jpeg"
     ],
     demoUrl: "https://task-manager-demo.vercel.app",
-    githubUrl: "https://github.com/singhnaman320/task-management-app",
+    /* githubUrl: "", */
     features: [
       "Project and task organization",
       "Team collaboration tools",
