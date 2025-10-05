@@ -96,26 +96,26 @@ export const projectsData = [
   {
     _id: "3",
     title: "Real-Time Chat Application", 
-    description: "Modern messaging platform with real-time communication capabilities, group chats, file sharing, and online status indicators for seamless user experience.",
+    description: "Built an insurance analytics platform with automated notifications, personalized communication, interactive dashboards, and optimized reporting performance.",
     fullDescription: "A real-time chat application built with React and Socket.io. Features include instant messaging, group chats, file sharing, emoji support, and online status indicators. The application provides a smooth and responsive messaging experience similar to popular chat platforms.",
     techStack: [
-      "React",
+      "React.js",
       "Node.js",
-      "Express",
+      "Express.js",
       "MongoDB",
-      "JavaScript",
       "Tailwind CSS"
     ],
-    category: "Full Stack Development",
+    category: "Full Stack Developer",
     status: "Completed",
     featured: false,
     images: [
-      "/images/chat-app-1.jpg",
-      "/images/chat-app-2.jpg",
-      "/images/chat-app-3.jpg"
+      "/images/Serenity-One.png",
+      "/images/Serenity-Two.png",
+      "/images/Serenity-Three.png",
+      "/images/Serenity-Four.png"
     ],
-    demoUrl: "https://realtime-chat-demo.vercel.app",
-    githubUrl: "https://github.com/singhnaman320/realtime-chat-app",
+    demoUrl: "https://www.serenityhp.com/",
+    /* githubUrl: "", */
     features: [
       "Real-time messaging",
       "Group chat functionality", 
