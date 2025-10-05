@@ -95,7 +95,7 @@ export const projectsData = [
   },
   {
     _id: "3",
-    title: "Real-Time Chat Application", 
+    title: "Serenity", 
     description: "Built an insurance analytics platform with automated notifications, personalized communication, interactive dashboards, and optimized reporting performance.",
     fullDescription: "A real-time chat application built with React and Socket.io. Features include instant messaging, group chats, file sharing, emoji support, and online status indicators. The application provides a smooth and responsive messaging experience similar to popular chat platforms.",
     techStack: [
