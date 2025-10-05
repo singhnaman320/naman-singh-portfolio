@@ -50,7 +50,7 @@ export const projectsData = [
   {
     _id: "2", 
     title: "Hush Application",
-    description: "Developed a high-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features, supported by a scalable backend architecture.",
+    description: "Developed a high-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features.",
     fullDescription: "A complete e-commerce solution built with React and Node.js. Features include product catalog, shopping cart, secure payment processing, order management, and admin panel. The platform supports multiple payment methods and provides a seamless shopping experience across all devices.",
     techStack: [
       "React",
@@ -97,7 +97,7 @@ export const projectsData = [
   {
     _id: "3",
     title: "Real-Time Chat Application", 
-    description: "Modern messaging platform with real-time communication",
+    description: "Modern messaging platform with real-time communication capabilities, group chats, file sharing, and online status indicators for seamless user experience.",
     fullDescription: "A real-time chat application built with React and Socket.io. Features include instant messaging, group chats, file sharing, emoji support, and online status indicators. The application provides a smooth and responsive messaging experience similar to popular chat platforms.",
     techStack: [
       "React",
@@ -143,7 +143,7 @@ export const projectsData = [
   {
     _id: "4",
     title: "Task Management Dashboard",
-    description: "Productivity app for managing tasks and projects",
+    description: "Comprehensive task management application with project organization, team collaboration, progress tracking, and intuitive interface for productivity.",
     fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
     techStack: [
       "React",

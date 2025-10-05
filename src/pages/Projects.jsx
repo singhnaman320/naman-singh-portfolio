@@ -107,7 +107,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
         duration: 0.6, 
         delay: index * 0.1
       }}
-      className="card hover:shadow-large transition-all duration-300 group overflow-hidden"
+      className="card hover:shadow-large transition-all duration-300 group overflow-hidden flex flex-col h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -232,7 +232,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
         </div>
 
         {/* Content Section */}
-        <div className="relative p-5 space-y-4">
+        <div className="relative p-5 space-y-4 flex-1 flex flex-col">
 
           {/* Title with Gradient Effect */}
           <motion.div
@@ -260,19 +260,21 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             </span>
           </motion.div>
 
-          {/* Description with Typewriter Effect */}
+          {/* Description with Consistent Height */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={projectsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.5 }}
-            className="relative"
+            className="relative flex-1"
           >
             <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-orange-500 to-amber-500 rounded-full opacity-30" />
-            <div className="pl-4">
+            <div className="pl-4 h-full flex flex-col">
               <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-2 uppercase tracking-wide">Description</h4>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                {project.description}
-              </p>
+              <div className="flex-1">
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-4">
+                  {project.description}
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -309,7 +311,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
 
           {/* Action Buttons with Advanced Animations */}
           <motion.div 
-            className="flex space-x-3 pt-3"
+            className="flex space-x-3 pt-3 mt-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={projectsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.8 }}
