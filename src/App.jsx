@@ -11,6 +11,10 @@ import AdminLayout from './components/Layout/AdminLayout'
 import ForcePortraitMode from './components/LandscapeRestriction'
 import ScrollToTopOnRouteChange from './components/UI/ScrollToTopOnRouteChange'
 
+// Welcome Screen
+import WelcomeScreen from './components/WelcomeScreen'
+import { useWelcomeScreen } from './hooks/useWelcomeScreen'
+
 // Public Pages
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -33,6 +37,18 @@ import Analytics from './pages/Admin/Analytics'
 import ProtectedRoute from './components/Auth/ProtectedRoute'
 
 function App() {
+  const { showWelcome, isLoading, handleWelcomeComplete } = useWelcomeScreen()
+
+  // Show welcome screen if it's the first visit
+  if (showWelcome && !isLoading) {
+    return (
+      <ThemeProvider>
+        <WelcomeScreen onComplete={handleWelcomeComplete} />
+      </ThemeProvider>
+    )
+  }
+
+  // Show main app after welcome screen or if not first visit
   return (
     <ThemeProvider>
       <AuthProvider>

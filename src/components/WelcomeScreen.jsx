@@ -135,12 +135,12 @@ const WelcomeScreen = ({ onComplete }) => {
           >
             <div className="relative">
               <motion.div
-                className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-slate-700 to-gray-800 rounded-2xl flex items-center justify-center shadow-2xl border border-slate-600"
+                className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-orange-600 to-amber-700 rounded-2xl flex items-center justify-center shadow-2xl border border-orange-500/30"
                 animate={{
                   boxShadow: [
-                    "0 0 20px rgba(148, 163, 184, 0.3)",
-                    "0 0 30px rgba(203, 213, 225, 0.4)",
-                    "0 0 20px rgba(148, 163, 184, 0.3)"
+                    "0 0 20px rgba(251, 146, 60, 0.4)",
+                    "0 0 30px rgba(245, 158, 11, 0.5)",
+                    "0 0 20px rgba(251, 146, 60, 0.4)"
                   ]
                 }}
                 transition={{
@@ -157,13 +157,13 @@ const WelcomeScreen = ({ onComplete }) => {
                     ease: "linear"
                   }}
                 >
-                  <CurrentIcon className={`w-12 h-12 sm:w-16 sm:h-16 text-white ${steps[currentStep]?.color || 'text-blue-500'}`} />
+                  <CurrentIcon className={`w-12 h-12 sm:w-16 sm:h-16 text-white ${steps[currentStep]?.color || 'text-orange-300'}`} />
                 </motion.div>
               </motion.div>
               
               {/* Pulse Ring */}
               <motion.div
-                className="absolute inset-0 rounded-2xl border-2 border-white/30"
+                className="absolute inset-0 rounded-2xl border-2 border-orange-300/40"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.5, 0, 0.5]
@@ -192,7 +192,7 @@ const WelcomeScreen = ({ onComplete }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-orange-300 via-amber-200 to-orange-400 bg-clip-text text-transparent"
               >
                 Naman's Portfolio
               </motion.span>
@@ -230,9 +230,9 @@ const WelcomeScreen = ({ onComplete }) => {
 
           {/* Progress Bar */}
           <motion.div variants={itemVariants} className="w-full max-w-md mx-auto">
-            <div className="bg-slate-700/50 rounded-full h-2 overflow-hidden backdrop-blur-sm border border-slate-600/30">
+            <div className="bg-orange-900/30 rounded-full h-2 overflow-hidden backdrop-blur-sm border border-orange-600/30">
               <motion.div
-                className="h-full bg-gradient-to-r from-slate-400 to-slate-200 rounded-full"
+                className="h-full bg-gradient-to-r from-orange-500 to-amber-400 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -250,7 +250,7 @@ const WelcomeScreen = ({ onComplete }) => {
 
           {/* Decorative Elements */}
           <motion.div
-            className="absolute top-1/4 left-1/4 w-32 h-32 bg-slate-500/10 rounded-full blur-xl"
+            className="absolute top-1/4 left-1/4 w-32 h-32 bg-orange-500/15 rounded-full blur-xl"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.2, 0.4, 0.2]
@@ -262,7 +262,7 @@ const WelcomeScreen = ({ onComplete }) => {
             }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-gray-400/10 rounded-full blur-xl"
+            className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-amber-400/15 rounded-full blur-xl"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.4, 0.2, 0.4]
