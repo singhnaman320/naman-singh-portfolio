@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X } from 'lucide-react'
+import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X, Lock } from 'lucide-react'
 import { projectsData } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
 
@@ -19,6 +19,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
+  const [showConfidentialityModal, setShowConfidentialityModal] = useState(false)
 
   // Use project images from data
   const projectImages = project.images || []
@@ -316,7 +317,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.8 }}
           >
-            {project.githubUrl && (
+            {/* Code Button - Always show, but handle differently based on githubUrl */}
+            {project.githubUrl ? (
               <motion.a
                 href={project.githubUrl}
                 target="_blank"
@@ -332,6 +334,20 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 <Github className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
                 <span className="relative z-10">Code</span>
               </motion.a>
+            ) : (
+              <motion.button
+                onClick={() => setShowConfidentialityModal(true)}
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group cursor-pointer"
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <Lock className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                <span className="relative z-10">Code</span>
+              </motion.button>
             )}
             
             {project.demoUrl && (
@@ -445,6 +461,56 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 </div>
               )}
             </div>
+          </motion.div>
+        )}
+
+        {/* Confidentiality Modal */}
+        {showConfidentialityModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 dark:bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowConfidentialityModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-white dark:bg-gray-800 rounded-2xl p-6 mx-4 max-w-md w-full shadow-2xl border border-gray-200 dark:border-gray-700"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setShowConfidentialityModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Modal content */}
+              <div className="text-center">
+                <div className="mx-auto flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4">
+                  <Lock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
+                </div>
+                
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                  Source Code Unavailable
+                </h3>
+                
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
+                  Source code unavailable due to company confidentiality policies and proprietary restrictions.
+                </p>
+                
+                <button
+                  onClick={() => setShowConfidentialityModal(false)}
+                  className="w-full px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg font-medium hover:from-orange-700 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Understood
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
     </motion.div>

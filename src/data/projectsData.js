@@ -8,7 +8,7 @@ export const projectsData = [
     techStack: [
       "React.js",
       "Node.js", 
-      "Express",
+      "Express.js",
       "PostgreSQL",
       "AWS",
       "Tailwind CSS"
@@ -23,7 +23,7 @@ export const projectsData = [
       "/images/Tisane-Labs-Four.png"
     ],
     demoUrl: "https://tisane.ai/home",
-    githubUrl: "https://github.com/singhnaman320/meeting-booking-app",
+    /* githubUrl: "", */
     features: [
       "Real-time meeting scheduling",
       "Calendar integration",
@@ -53,12 +53,11 @@ export const projectsData = [
     description: "Developed a high-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features.",
     fullDescription: "A complete e-commerce solution built with React and Node.js. Features include product catalog, shopping cart, secure payment processing, order management, and admin panel. The platform supports multiple payment methods and provides a seamless shopping experience across all devices.",
     techStack: [
-      "React",
       "Node.js",
-      "Express", 
-      "MongoDB",
-      "JavaScript",
-      "Tailwind CSS"
+      "Express.js", 
+      "Terraform",
+      "Amazon DynamoDB",
+      "Amazon S3"
     ],
     category: "Backend Developer",
     status: "Completed",
@@ -70,7 +69,7 @@ export const projectsData = [
       "/images/Hush-Four.png"
     ],
     demoUrl: "https://play.google.com/store/apps/details?id=ac.hush.app&hl=en-US",
-    githubUrl: "https://github.com/singhnaman320/ecommerce-platform",
+    /* githubUrl: "", */
     features: [
       "Product catalog with search and filters",
       "Shopping cart and wishlist",
