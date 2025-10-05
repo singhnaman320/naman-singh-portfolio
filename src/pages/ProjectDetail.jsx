@@ -8,8 +8,8 @@ import { useInView } from 'react-intersection-observer'
 
 // Function to get tech stack colors for dark/light mode (same as Projects page)
 const getTechColor = (tech) => {
-  // All tech stacks use the same blue color scheme
-  return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+  // All tech stacks use the same orange color scheme
+  return 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
 }
 
 const ProjectDetail = () => {

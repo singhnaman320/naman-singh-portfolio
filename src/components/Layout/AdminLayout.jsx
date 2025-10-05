@@ -78,7 +78,7 @@ const AdminLayout = () => {
                   className={cn(
                     'flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group',
                     isActiveLink(item.href)
-                      ? 'bg-primary-600 text-white shadow-md'
+                      ? 'bg-orange-600 text-white shadow-md'
                       : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 hover:translate-x-1'
                   )}
                 >
@@ -95,8 +95,8 @@ const AdminLayout = () => {
           {/* User info and actions */}
           <div className="mt-auto px-4 py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/20 rounded-full flex items-center justify-center mr-3">
-                <span className="text-primary-600 dark:text-primary-400 font-semibold">
+              <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mr-3">
+                <span className="text-orange-600 dark:text-orange-400 font-semibold">
                   {admin?.name?.charAt(0) || 'A'}
                 </span>
               </div>

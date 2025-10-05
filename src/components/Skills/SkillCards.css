@@ -26,7 +26,7 @@
   box-shadow: 
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(59, 130, 246, 0.1),
+    0 0 0 1px rgba(249, 115, 22, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
 }
@@ -36,7 +36,7 @@
   position: absolute;
   inset: -2px;
   padding: 2px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.2), rgba(59, 130, 246, 0.4));
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(245, 158, 11, 0.2), rgba(249, 115, 22, 0.4));
   border-radius: inherit;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: xor;
@@ -51,11 +51,11 @@
 
 .skill-card-enhanced:hover {
   box-shadow: 
-    0 25px 50px -12px rgba(59, 130, 246, 0.25),
+    0 25px 50px -12px rgba(249, 115, 22, 0.25),
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(59, 130, 246, 0.3),
-    0 0 20px rgba(59, 130, 246, 0.2),
+    0 0 0 1px rgba(249, 115, 22, 0.3),
+    0 0 20px rgba(249, 115, 22, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -64,17 +64,17 @@
   box-shadow: 
     0 10px 25px -5px rgba(0, 0, 0, 0.3),
     0 10px 10px -5px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(59, 130, 246, 0.2),
+    0 0 0 1px rgba(249, 115, 22, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .dark .skill-card-enhanced:hover {
   box-shadow: 
-    0 25px 50px -12px rgba(59, 130, 246, 0.4),
+    0 25px 50px -12px rgba(249, 115, 22, 0.4),
     0 20px 25px -5px rgba(0, 0, 0, 0.4),
     0 10px 10px -5px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(59, 130, 246, 0.5),
-    0 0 30px rgba(59, 130, 246, 0.3),
+    0 0 0 1px rgba(249, 115, 22, 0.5),
+    0 0 30px rgba(249, 115, 22, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -100,10 +100,10 @@
 /* Pulsing glow animation for borders */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
   }
   50% {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.5), 0 0 40px rgba(249, 115, 22, 0.2);
   }
 }
 
@@ -126,11 +126,11 @@
 
 .skill-card-enhanced::before {
   background: linear-gradient(135deg, 
-    rgba(59, 130, 246, 0.6), 
-    rgba(147, 51, 234, 0.3), 
-    rgba(59, 130, 246, 0.6), 
-    rgba(16, 185, 129, 0.3),
-    rgba(59, 130, 246, 0.6)
+    rgba(249, 115, 22, 0.6), 
+    rgba(245, 158, 11, 0.3), 
+    rgba(249, 115, 22, 0.6), 
+    rgba(234, 88, 12, 0.3),
+    rgba(249, 115, 22, 0.6)
   );
   background-size: 200% 200%;
   animation: borderRotate 3s ease infinite;
@@ -312,12 +312,12 @@
   }
 
   .mobile-filter-trigger:hover {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
   }
 
   .mobile-filter-trigger svg {
-    color: #3b82f6; /* Blue color for trigger icon */
+    color: #f97316; /* Orange color for trigger icon */
   }
 
   .mobile-filter-dropdown-content {
@@ -378,7 +378,7 @@
   }
 
   .mobile-filter-dropdown-item.active {
-    background: #3b82f6;
+    background: #f97316;
     color: white;
   }
 
@@ -475,12 +475,12 @@
   }
 
   .mobile-sort-trigger:hover {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
   }
 
   .mobile-sort-trigger svg {
-    color: #3b82f6;
+    color: #f97316;
   }
 
   .mobile-sort-dropdown-content {
@@ -539,12 +539,12 @@
   }
 
   .mobile-sort-dropdown-item.active {
-    background: #3b82f6;
+    background: #f97316;
     color: white;
   }
 
   .mobile-sort-dropdown-item svg {
-    color: #3b82f6;
+    color: #f97316;
   }
 
   .mobile-sort-dropdown-item.active svg {

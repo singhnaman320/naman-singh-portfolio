@@ -65,7 +65,7 @@ const Footer = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gray-800 dark:bg-gray-900 rounded-lg flex items-center justify-center text-gray-300 dark:text-gray-400 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-500 transition-all duration-200"
+                    className="w-10 h-10 bg-gray-800 dark:bg-gray-900 rounded-lg flex items-center justify-center text-gray-300 dark:text-gray-400 hover:text-white hover:bg-orange-600 dark:hover:bg-orange-500 transition-all duration-200"
                     aria-label={link.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -91,9 +91,9 @@ const Footer = () => {
                           window.scrollTo({ top: 0, behavior: 'smooth' })
                         }, 100)
                       }}
-                      className="flex items-center text-gray-300 dark:text-gray-400 hover:text-white hover:text-primary-400 transition-colors duration-200 group"
+                      className="flex items-center text-gray-300 dark:text-gray-400 hover:text-white hover:text-orange-400 transition-colors duration-200 group"
                     >
-                      <Icon className="w-4 h-4 mr-2 group-hover:text-primary-400 transition-colors duration-200" />
+                      <Icon className="w-4 h-4 mr-2 group-hover:text-orange-400 transition-colors duration-200" />
                       {link.name}
                     </Link>
                   </li>
@@ -127,7 +127,7 @@ const Footer = () => {
                       window.scrollTo({ top: 0, behavior: 'smooth' })
                     }, 100)
                   }}
-                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 dark:from-primary-500 dark:to-primary-600 dark:hover:from-primary-600 dark:hover:to-primary-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 dark:from-orange-500 dark:to-amber-500 dark:hover:from-orange-600 dark:hover:to-amber-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
                 >
                   <MessageCircle className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
                   Contact Me

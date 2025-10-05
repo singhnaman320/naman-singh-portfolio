@@ -123,11 +123,11 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl p-6 text-white">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-xl p-6 text-white">
             <h1 className="text-2xl font-bold mb-2">
               Welcome back, {admin?.name || 'Admin'}! 👋
             </h1>
-            <p className="text-primary-100">
+            <p className="text-orange-100">
               Here's what's happening with your portfolio today.
             </p>
           </div>
@@ -187,13 +187,13 @@ const Dashboard = () => {
                     <ActionComponent
                       key={action.name}
                       {...linkProps}
-                      className="flex items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 group"
+                      className="flex items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-200 group"
                     >
                       <div className={`p-2 rounded-lg ${action.color} text-white mr-4`}>
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-primary-400">
+                        <h3 className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-orange-700 dark:group-hover:text-orange-400">
                           {action.name}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300">{action.description}</p>
@@ -221,7 +221,7 @@ const Dashboard = () => {
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Recent Messages</h2>
                 <Link
                   to="/admin/contacts"
-                  className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                  className="text-orange-600 hover:text-orange-700 text-sm font-medium"
                 >
                   View All
                 </Link>
@@ -240,7 +240,7 @@ const Dashboard = () => {
                       className={`p-4 rounded-lg border relative ${
                         contact.isRead 
                           ? 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700' 
-                          : 'border-primary-200 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20'
+                          : 'border-orange-200 dark:border-orange-600 bg-orange-50 dark:bg-orange-900/20'
                       }`}
                     >
                       {!contact.isRead && (

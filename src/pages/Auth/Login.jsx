@@ -47,7 +47,7 @@ const Login = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ const Login = () => {
           <div className="text-center">
             <Link
               to="/"
-              className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-6 group"
+              className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-6 group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
               Back to Portfolio
@@ -166,7 +166,7 @@ const Login = () => {
                   Don't have an admin account?{' '}
                   <Link
                     to="/auth/signup"
-                    className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300 transition-colors duration-200"
+                    className="font-medium text-orange-600 hover:text-orange-500 dark:text-orange-400 dark:hover:text-orange-300 transition-colors duration-200"
                   >
                     Create Account
                   </Link>

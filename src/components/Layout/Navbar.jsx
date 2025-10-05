@@ -85,15 +85,15 @@ const Navbar = () => {
                   className={cn(
                     'relative px-3 py-2 text-sm font-medium transition-colors duration-200',
                     isActiveLink(item.href)
-                      ? 'text-primary-600 dark:text-primary-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                      ? 'text-orange-600 dark:text-orange-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
                   )}
                 >
                   {item.name}
                   {isActiveLink(item.href) && item.href !== '/' && (
                     <motion.div
                       layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 dark:bg-orange-400 rounded-full"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
@@ -101,7 +101,7 @@ const Navbar = () => {
                   {isActiveLink(item.href) && item.href === '/' && location.pathname === '/' && (
                     <motion.div
                       layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 dark:bg-orange-400 rounded-full"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
@@ -112,7 +112,7 @@ const Navbar = () => {
               {/* Download Resume Icon */}
               <button
                 onClick={handleDownloadResume}
-                className="group relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                className="group relative p-2 text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200"
               >
                 <Download className="w-5 h-5" />
                 {/* Tooltip */}
@@ -128,7 +128,7 @@ const Navbar = () => {
               {/* Admin Link */}
               <Link
                 to="/admin"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200"
               >
                 <User className="w-4 h-4 mr-2" />
                 Admin
@@ -140,7 +140,7 @@ const Navbar = () => {
               <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 aria-label="Toggle menu"
               >
                 {isOpen ? (
@@ -173,8 +173,8 @@ const Navbar = () => {
                     className={cn(
                       'px-3 py-2 text-base font-medium rounded-lg transition-colors duration-200',
                       isActiveLink(item.href)
-                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                        ? 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-50 dark:hover:bg-gray-800'
                     )}
                   >
                     {item.name}
@@ -184,7 +184,7 @@ const Navbar = () => {
                 {/* Download Resume Link */}
                 <button
                   onClick={handleDownloadResume}
-                  className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 w-full text-left"
+                  className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 w-full text-left"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download Resume
@@ -193,7 +193,7 @@ const Navbar = () => {
                 {/* Admin Link */}
                 <Link
                   to="/admin"
-                  className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
+                  className="inline-flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
                 >
                   <User className="w-4 h-4 mr-2" />
                   Admin

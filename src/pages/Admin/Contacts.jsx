@@ -119,7 +119,7 @@ const AdminContacts = () => {
                 className={`card p-6 cursor-pointer transition-all duration-200 hover:shadow-lg relative ${
                   contact.isRead 
                     ? 'border-gray-200 dark:border-gray-600' 
-                    : 'border-primary-200 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20'
+                    : 'border-orange-200 dark:border-orange-600 bg-orange-50 dark:bg-orange-900/20'
                 }`}
               >
                 {!contact.isRead && (
@@ -245,7 +245,7 @@ const AdminContacts = () => {
                               {selectedContact.isRead ? 'Read' : 'Unread'}
                             </span>
                             {selectedContact.isReplied && (
-                              <span className="inline-block px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
+                              <span className="inline-block px-2 py-1 bg-orange-100 dark:bg-orange-800 text-orange-700 dark:text-orange-300 text-xs font-medium rounded-full">
                                 Replied
                               </span>
                             )}
@@ -276,7 +276,7 @@ const AdminContacts = () => {
                     {selectedContact.isReplied && selectedContact.reply && (
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Your Reply</p>
-                        <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4">
+                        <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4">
                           <p className="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">
                             {selectedContact.reply}
                           </p>
@@ -299,7 +299,7 @@ const AdminContacts = () => {
                   </button>
                   <button
                     onClick={handleReply}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
                   >
                     <Reply className="w-4 h-4" />
                     Reply via Email

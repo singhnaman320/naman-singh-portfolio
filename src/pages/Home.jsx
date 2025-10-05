@@ -188,7 +188,7 @@ const Home = () => {
               >
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100 leading-relaxed pb-2">
                   <motion.span 
-                    className="bg-gradient-to-r from-primary-600 via-blue-600 to-purple-600 bg-clip-text text-transparent inline-block"
+                    className="bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent inline-block"
                     animate={{ 
                       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                     }}
@@ -206,7 +206,7 @@ const Home = () => {
                   </motion.span>
                 </h1>
                 <motion.div 
-                  className="h-1 w-24 bg-gradient-to-r from-primary-500 to-blue-500 rounded-full mx-auto lg:mx-0"
+                  className="h-1 w-24 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full mx-auto lg:mx-0"
                   initial={{ width: 0 }}
                   animate={heroInView ? { width: "6rem" } : {}}
                   transition={{ duration: 1, delay: 0.8 }}
@@ -247,8 +247,8 @@ const Home = () => {
               >
                 {/* Location Card */}
                 <div className="flex items-center bg-white dark:bg-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 flex-1 sm:flex-none sm:w-[180px] lg:w-[200px]">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
-                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-primary-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 dark:text-orange-400" />
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</p>
@@ -277,7 +277,7 @@ const Home = () => {
               >
                 <Link
                   to="/projects"
-                  className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-center sm:text-left"
+                  className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-center sm:text-left"
                 >
                   <span className="flex items-center justify-center sm:justify-start">
                     <span className="text-sm sm:text-base">View My Work</span>
@@ -287,7 +287,7 @@ const Home = () => {
                 
                 <Link
                   to="/contact"
-                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold rounded-xl shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-center sm:text-left"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold rounded-xl shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-center sm:text-left"
                 >
                   <span className="flex items-center justify-center sm:justify-start">
                     <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
@@ -309,9 +309,9 @@ const Home = () => {
                 <div className="relative w-full max-w-md lg:max-w-lg">
                   {/* Floating Background Elements */}
                   <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <div className="absolute top-4 left-4 w-4 h-4 bg-primary-500 rounded-full animate-float-1"></div>
-                    <div className="absolute top-12 right-8 w-3 h-3 bg-blue-500 rounded-full animate-float-2"></div>
-                    <div className="absolute bottom-16 left-12 w-2 h-2 bg-purple-500 rounded-full animate-float-3"></div>
+                    <div className="absolute top-4 left-4 w-4 h-4 bg-orange-500 rounded-full animate-float-1"></div>
+                    <div className="absolute top-12 right-8 w-3 h-3 bg-amber-500 rounded-full animate-float-2"></div>
+                    <div className="absolute bottom-16 left-12 w-2 h-2 bg-red-500 rounded-full animate-float-3"></div>
                     <div className="absolute bottom-4 right-4 w-3 h-3 bg-pink-500 rounded-full animate-float-1"></div>
                   </div>
                   
@@ -326,7 +326,7 @@ const Home = () => {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20"
+                    className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 mx-auto rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gradient-to-br from-orange-100 to-amber-100 dark:from-orange-900/20 dark:to-amber-900/20"
                   >
                     <img
                       src={getImageUrl(home?.profileImage)}
@@ -336,7 +336,7 @@ const Home = () => {
                       onError={handleImageError}
                     />
                     {/* Subtle Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 via-transparent to-transparent"></div>
                   </motion.div>
                 </div>
               </motion.div>
@@ -434,7 +434,7 @@ const Home = () => {
                 className="text-center w-full"
               >
                 <motion.div 
-                  className="text-2xl sm:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent mb-2 lg:mb-4 min-w-[120px] flex justify-center"
+                  className="text-2xl sm:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-400 dark:to-amber-400 bg-clip-text text-transparent mb-2 lg:mb-4 min-w-[120px] flex justify-center"
                   initial={{ scale: 0.8 }}
                   animate={statsInView ? { scale: 1 } : {}}
                   transition={{ duration: 0.3 }}
@@ -483,8 +483,8 @@ const Home = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="card p-6 text-center hover:shadow-lg transition-shadow duration-300"
                 >
-                  <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <ArrowRight className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     {highlight.title}
@@ -501,7 +501,7 @@ const Home = () => {
 
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-600 dark:bg-primary-700 text-white">
+      <section className="py-20 bg-orange-600 dark:bg-orange-700 text-white">
         <div className="container-max section-padding text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -512,14 +512,14 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to work together?
             </h2>
-            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
               I'm always interested in new opportunities and exciting projects. 
               Let's create something amazing together!
             </p>
             <div className="flex justify-center">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 Start a Project

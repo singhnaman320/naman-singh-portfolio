@@ -69,7 +69,7 @@ const Contact = () => {
       name: 'LinkedIn',
       icon: Linkedin,
       url: 'https://www.linkedin.com/in/namankumarsingh-dev/',
-      color: 'hover:text-blue-600'
+      color: 'hover:text-orange-600'
     },
     {
       name: 'Instagram',
@@ -87,7 +87,7 @@ const Contact = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-gray-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container-max section-padding">
           <motion.div
             ref={heroRef}
@@ -132,15 +132,15 @@ const Contact = () => {
                   const Icon = item.icon
                   return (
                     <div key={item.label} className="flex items-center">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                        <Icon className="w-6 h-6 text-primary-600" />
+                      <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                        <Icon className="w-6 h-6 text-orange-600" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{item.label}</p>
                         {item.href ? (
                           <a
                             href={item.href}
-                            className="text-gray-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                            className="text-gray-900 dark:text-gray-100 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200"
                           >
                             {item.value}
                           </a>

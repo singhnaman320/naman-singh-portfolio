@@ -119,7 +119,7 @@ const Experience = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-gray-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container-max section-padding">
           <motion.div
             ref={heroRef}
@@ -174,28 +174,28 @@ const Experience = () => {
                     <div
                       className="absolute w-3 h-3 -left-1 top-0 rounded-full z-20"
                       style={{
-                        background: 'radial-gradient(circle, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)',
+                        background: 'radial-gradient(circle, #fb923c 0%, #f97316 50%, #ea580c 100%)',
                         boxShadow: `
-                          0 0 10px rgba(59, 130, 246, 0.8),
-                          0 0 20px rgba(59, 130, 246, 0.5),
-                          0 0 30px rgba(59, 130, 246, 0.3)
+                          0 0 10px rgba(249, 115, 22, 0.8),
+                          0 0 20px rgba(249, 115, 22, 0.5),
+                          0 0 30px rgba(249, 115, 22, 0.3)
                         `,
                         transition: 'all 0.3s ease-out'
                       }}
                     />
                   )}
                   
-                  {/* Scroll-based bright blue light line */}
+                  {/* Scroll-based bright orange light line */}
                   <div
                     className="absolute left-0 top-0 w-full rounded-full z-10"
                     style={{
                       height: `${scrollProgress * 100}%`,
-                      background: scrollProgress > 0.01 ? 'linear-gradient(to bottom, #60a5fa, #3b82f6, #2563eb, #1d4ed8)' : 'transparent',
+                      background: scrollProgress > 0.01 ? 'linear-gradient(to bottom, #fb923c, #f97316, #ea580c, #c2410c)' : 'transparent',
                       boxShadow: scrollProgress > 0.01 ? `
-                        0 0 20px rgba(59, 130, 246, 0.8),
-                        0 0 40px rgba(59, 130, 246, 0.6),
-                        0 0 60px rgba(59, 130, 246, 0.4),
-                        0 0 80px rgba(59, 130, 246, 0.2)
+                        0 0 20px rgba(249, 115, 22, 0.8),
+                        0 0 40px rgba(249, 115, 22, 0.6),
+                        0 0 60px rgba(249, 115, 22, 0.4),
+                        0 0 80px rgba(249, 115, 22, 0.2)
                       ` : 'none',
                       transition: 'all 0.1s ease-out'
                     }}
@@ -249,11 +249,11 @@ const Experience = () => {
                           <motion.div 
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute inset-0 w-8 h-8 -m-1 bg-primary-400 rounded-full opacity-20" 
+                            className="absolute inset-0 w-8 h-8 -m-1 bg-orange-400 rounded-full opacity-20" 
                           />
                           
                           {/* Main dot */}
-                          <div className="w-6 h-6 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full border-4 border-white dark:border-gray-900 shadow-xl relative overflow-hidden">
+                          <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full border-4 border-white dark:border-gray-900 shadow-xl relative overflow-hidden">
                             {/* Inner shine effect */}
                             <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent rounded-full" />
                           </div>
@@ -268,7 +268,7 @@ const Experience = () => {
                               delay: index * 0.8,
                               ease: "easeOut"
                             }}
-                            className="absolute inset-0 w-6 h-6 bg-primary-400 rounded-full"
+                            className="absolute inset-0 w-6 h-6 bg-orange-400 rounded-full"
                           />
                         </div>
                       </motion.div>
@@ -290,7 +290,7 @@ const Experience = () => {
                         >
                           <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gray-800 shadow-xl hover:shadow-2xl transition-all duration-500 group border border-gray-100 dark:border-gray-700">
                             {/* Gradient border effect */}
-                            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" style={{ padding: '2px' }}>
+                            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-orange-500/20 via-amber-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" style={{ padding: '2px' }}>
                               <div className="w-full h-full rounded-3xl bg-white dark:bg-gray-800"></div>
                             </div>
                             
@@ -305,7 +305,7 @@ const Experience = () => {
                                       initial={{ opacity: 0, x: -20 }}
                                       whileInView={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.1 + 0.2 }}
-                                      className="text-2xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+                                      className="text-2xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300 leading-tight"
                                     >
                                       {experience.company}
                                     </motion.h3>
@@ -314,7 +314,7 @@ const Experience = () => {
                                       initial={{ opacity: 0, x: -20 }}
                                       whileInView={{ opacity: 1, x: 0 }}
                                       transition={{ delay: index * 0.1 + 0.3 }}
-                                      className="text-lg sm:text-lg lg:text-base xl:text-lg font-semibold text-primary-600 dark:text-primary-400 mb-2 sm:mb-3 leading-snug"
+                                      className="text-lg sm:text-lg lg:text-base xl:text-lg font-semibold text-orange-600 dark:text-orange-400 mb-2 sm:mb-3 leading-snug"
                                     >
                                       {experience.position}
                                     </motion.p>
@@ -330,13 +330,13 @@ const Experience = () => {
                                       <img
                                         src={getCompanyLogo(experience.company)}
                                         alt={experience.company}
-                                        className="w-24 h-10 lg:w-32 lg:h-12 rounded object-cover border-2 border-gray-200 dark:border-gray-600 group-hover:border-primary-400 transition-all duration-500 shadow-md group-hover:shadow-lg"
+                                        className="w-24 h-10 lg:w-32 lg:h-12 rounded object-cover border-2 border-gray-200 dark:border-gray-600 group-hover:border-orange-400 transition-all duration-500 shadow-md group-hover:shadow-lg"
                                         onError={(e) => {
                                           e.target.src = '/images/company-placeholder.jpg'
                                         }}
                                       />
                                       {/* Logo glow effect */}
-                                      <div className="absolute inset-0 rounded bg-primary-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                      <div className="absolute inset-0 rounded bg-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     </div>
                                   </motion.div>
                                 </div>
@@ -351,7 +351,7 @@ const Experience = () => {
                                   {/* Duration Row with Logo - Mobile */}
                                   <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                      <Calendar className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
+                                      <Calendar className="w-4 h-4 mr-2 flex-shrink-0 text-orange-500" />
                                       <span className="font-medium text-sm sm:text-sm">{formatExperienceDate(experience.startDate, experience.endDate, experience.current)}</span>
                                     </div>
                                     
@@ -377,7 +377,7 @@ const Experience = () => {
                                   {/* Location Row - Mobile */}
                                   {experience.location && (
                                     <div className="flex items-center">
-                                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500" />
+                                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-orange-500" />
                                       <span className="font-medium text-sm sm:text-sm">{experience.location}</span>
                                     </div>
                                   )}
@@ -441,7 +441,7 @@ const Experience = () => {
                                             damping: 30
                                           }}
                                           whileHover={{ scale: 1.1, y: -2 }}
-                                          className="px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 text-primary-700 dark:text-primary-300 text-sm sm:text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
+                                          className="px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-r from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30 text-orange-700 dark:text-orange-300 text-sm sm:text-sm rounded-full font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-default"
                                         >
                                           {tech}
                                         </motion.span>
@@ -553,7 +553,7 @@ const Experience = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-600">
+      <section className="py-20 bg-orange-600">
         <div className="container-max section-padding text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -564,21 +564,21 @@ const Experience = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to Work Together?
             </h2>
-            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
               I'm always open to discussing new opportunities and exciting projects. 
               Let's connect and see how we can collaborate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 Get In Touch
               </a>
               <a
                 href="/projects"
-                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-orange-600 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <FolderOpen className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 View My Work

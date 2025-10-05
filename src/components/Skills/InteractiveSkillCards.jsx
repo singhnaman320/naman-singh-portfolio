@@ -33,10 +33,10 @@ const InteractiveSkillCards = ({ skills }) => {
 
   // Category configuration
   const categoryConfig = {
-    'Frontend': { icon: Code, color: 'from-blue-500 to-cyan-500', bgColor: 'bg-blue-50 dark:bg-blue-900/20' },
+    'Frontend': { icon: Code, color: 'from-orange-500 to-amber-500', bgColor: 'bg-orange-50 dark:bg-orange-900/20' },
     'Backend': { icon: Database, color: 'from-green-500 to-emerald-500', bgColor: 'bg-green-50 dark:bg-green-900/20' },
     'Database': { icon: Database, color: 'from-purple-500 to-violet-500', bgColor: 'bg-purple-50 dark:bg-purple-900/20' },
-    'DevOps/Cloud': { icon: Cloud, color: 'from-indigo-500 to-blue-500', bgColor: 'bg-indigo-50 dark:bg-indigo-900/20' },
+    'DevOps/Cloud': { icon: Cloud, color: 'from-indigo-500 to-purple-500', bgColor: 'bg-indigo-50 dark:bg-indigo-900/20' },
     'Tools': { icon: Wrench, color: 'from-orange-500 to-amber-500', bgColor: 'bg-orange-50 dark:bg-orange-900/20' },
     'Languages': { icon: Layers, color: 'from-red-500 to-pink-500', bgColor: 'bg-red-50 dark:bg-red-900/20' },
     'Other': { icon: Zap, color: 'from-gray-500 to-slate-500', bgColor: 'bg-gray-50 dark:bg-gray-900/20' }
@@ -121,7 +121,7 @@ const InteractiveSkillCards = ({ skills }) => {
   const getProficiencyColor = (proficiency) => {
     const colors = {
       'Basic': 'from-yellow-400 to-orange-400',
-      'Intermediate': 'from-blue-400 to-indigo-400',
+      'Intermediate': 'from-orange-400 to-amber-400',
       'Advanced': 'from-green-400 to-emerald-400',
       'Expert': 'from-purple-400 to-pink-400'
     }
@@ -131,7 +131,7 @@ const InteractiveSkillCards = ({ skills }) => {
   const getProficiencyBadgeColor = (proficiency) => {
     const colors = {
       'Basic': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300',
-      'Intermediate': 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300',
+      'Intermediate': 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300',
       'Advanced': 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300',
       'Expert': 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300'
     }
@@ -166,7 +166,7 @@ const InteractiveSkillCards = ({ skills }) => {
             placeholder="Search skills..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="mobile-search-input w-full pl-9 md:pl-10 pr-4 py-3 md:py-3 border border-gray-200 dark:border-gray-700 rounded-xl md:rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-all duration-200"
+            className="mobile-search-input w-full pl-9 md:pl-10 pr-4 py-3 md:py-3 border border-gray-200 dark:border-gray-700 rounded-xl md:rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-all duration-200"
           />
           {searchTerm && (
             <button
@@ -189,14 +189,14 @@ const InteractiveSkillCards = ({ skills }) => {
               <div className="flex items-center gap-2">
                 {selectedCategory !== 'All' && categoryConfig[selectedCategory] && (() => {
                   const IconComponent = categoryConfig[selectedCategory].icon
-                  return <IconComponent className="w-4 h-4 text-blue-500" />
+                  return <IconComponent className="w-4 h-4 text-orange-500" />
                 })()}
                 <span>{selectedCategory}</span>
                 <span className="mobile-filter-dropdown-item-count">
                   {categories.find(cat => cat.name === selectedCategory)?.count || 0}
                 </span>
               </div>
-              <ChevronDown className={`w-4 h-4 transition-transform text-blue-500 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 transition-transform text-orange-500 ${isDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             
             <AnimatePresence>
@@ -220,7 +220,7 @@ const InteractiveSkillCards = ({ skills }) => {
                         className={`mobile-filter-dropdown-item ${selectedCategory === category.name ? 'active' : ''}`}
                       >
                         <div className="mobile-filter-dropdown-item-left">
-                          {CategoryIcon && <CategoryIcon className="w-4 h-4 text-blue-500" />}
+                          {CategoryIcon && <CategoryIcon className="w-4 h-4 text-orange-500" />}
                           <span>{category.name}</span>
                         </div>
                         <span className="mobile-filter-dropdown-item-count">
@@ -246,7 +246,7 @@ const InteractiveSkillCards = ({ skills }) => {
                 whileTap={{ scale: 0.95 }}
                 className={`px-4 py-2 rounded-full font-medium transition-all duration-200 flex items-center gap-2 ${
                   selectedCategory === category.name
-                    ? 'bg-primary-600 text-white shadow-lg'
+                    ? 'bg-orange-600 text-white shadow-lg'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
@@ -279,13 +279,13 @@ const InteractiveSkillCards = ({ skills }) => {
                   const IconComponent = selectedOption?.icon
                   return (
                     <>
-                      {IconComponent && <IconComponent className="w-4 h-4 text-blue-500" />}
+                      {IconComponent && <IconComponent className="w-4 h-4 text-orange-500" />}
                       <span>Sort by: {selectedOption?.label}</span>
                     </>
                   )
                 })()}
               </div>
-              <ChevronDown className={`w-4 h-4 transition-transform text-blue-500 ${isSortDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 transition-transform text-orange-500 ${isSortDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             
             <AnimatePresence>
@@ -331,7 +331,7 @@ const InteractiveSkillCards = ({ skills }) => {
                 onClick={() => setSortBy(option.value)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
                   sortBy === option.value
-                    ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
+                    ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
               >
@@ -347,7 +347,7 @@ const InteractiveSkillCards = ({ skills }) => {
       {/* Skills Count */}
       <div className="mobile-results-text text-center">
         <p className="text-gray-600 dark:text-gray-400">
-          Showing <span className="font-semibold text-primary-600 dark:text-primary-400">{displayedSkills.length}</span> 
+          Showing <span className="font-semibold text-orange-600 dark:text-orange-400">{displayedSkills.length}</span> 
           {!showAllSkills && !searchTerm && selectedCategory === 'All' && filteredSkills.length > maxSkillsToShow && (
             <span> of {filteredSkills.length}</span>
           )} skills
@@ -416,7 +416,7 @@ const InteractiveSkillCards = ({ skills }) => {
             onClick={handleToggleSkills}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 dark:from-primary-500 dark:to-blue-500 dark:hover:from-primary-600 dark:hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl dark:shadow-primary-500/25 transition-all duration-300 transform hover:-translate-y-1 group"
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 dark:from-orange-500 dark:to-amber-500 dark:hover:from-orange-600 dark:hover:to-amber-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl dark:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1 group"
           >
             {showAllSkills ? (
               <>
@@ -473,7 +473,7 @@ const CircularProgress = ({ percentage, size = 60, strokeWidth = 4 }) => {
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="text-blue-500"
+          className="text-orange-500"
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
@@ -515,14 +515,14 @@ const SkillCard = ({ skill, index, categoryConfig, getProficiencyColor, getProfi
         perspective: '1000px'
       }}
     >
-      <div className="skill-card-enhanced mobile-skill-card relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-6 transition-all duration-500 border border-blue-400/30 hover:border-blue-500/60 h-64 overflow-hidden backdrop-blur-sm">
+      <div className="skill-card-enhanced mobile-skill-card relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-6 transition-all duration-500 border border-orange-400/30 hover:border-orange-500/60 h-64 overflow-hidden backdrop-blur-sm">
         {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/10 dark:via-transparent dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 via-transparent to-amber-50/50 dark:from-orange-900/10 dark:via-transparent dark:to-amber-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
         {/* Floating particles effect */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
-            className="absolute w-2 h-2 bg-blue-400/30 rounded-full"
+            className="absolute w-2 h-2 bg-orange-400/30 rounded-full"
             animate={{
               x: [0, 20, 0],
               y: [0, -15, 0],
@@ -554,13 +554,13 @@ const SkillCard = ({ skill, index, categoryConfig, getProficiencyColor, getProfi
         {/* Header with Icon and Badge */}
         <div className="relative flex items-center justify-between mb-6">
           <motion.div 
-            className="p-3 rounded-xl bg-blue-500 shadow-lg"
+            className="p-3 rounded-xl bg-orange-500 shadow-lg"
             whileHover={{ rotate: 360, scale: 1.1 }}
             transition={{ duration: 0.6 }}
           >
             <CategoryIcon className="w-6 h-6 text-white" />
           </motion.div>
-          <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+          <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
             {skill.proficiency}
           </span>
         </div>
@@ -570,20 +570,20 @@ const SkillCard = ({ skill, index, categoryConfig, getProficiencyColor, getProfi
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 leading-tight">
             {skill.name}
           </h3>
-          <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+          <div className="w-12 h-1 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full" />
         </div>
 
         {/* Progress Section */}
         <div className="relative flex items-center justify-between mb-6">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-blue-500" />
+              <TrendingUp className="w-4 h-4 text-orange-500" />
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Proficiency
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-blue-500" />
+              <Calendar className="w-4 h-4 text-orange-500" />
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {skill.yearsOfExperience} years exp.
               </span>
@@ -614,11 +614,11 @@ const SkillCard = ({ skill, index, categoryConfig, getProficiencyColor, getProfi
         </div>
 
         {/* Hover glow effect */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/0 via-blue-400/5 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400/0 via-orange-400/5 to-amber-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         
-        {/* Bright blue border glow */}
+        {/* Bright orange border glow */}
         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-          <div className="border-glow absolute inset-0 rounded-2xl border border-blue-500/60 shadow-[0_0_20px_rgba(59,130,246,0.3)]" />
+          <div className="border-glow absolute inset-0 rounded-2xl border border-orange-500/60 shadow-[0_0_20px_rgba(249,115,22,0.3)]" />
         </div>
       </div>
     </motion.div>

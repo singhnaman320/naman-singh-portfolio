@@ -8,8 +8,8 @@ import { useInView } from 'react-intersection-observer'
 
 // Function to get tech stack colors for dark/light mode
 const getTechColor = (tech) => {
-  // All tech stacks use the same blue color scheme
-  return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+  // All tech stacks use the same orange color scheme
+  return 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
 }
 
 // Advanced ProjectCard Component with Unique Design
@@ -126,9 +126,9 @@ const ProjectCard = ({ project, index, projectsInView }) => {
           
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-blue-500/20 transform group-hover:scale-110 transition-transform duration-1000" />
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-amber-500/20 transform group-hover:scale-110 transition-transform duration-1000" />
             <div className="absolute top-0 left-0 w-full h-full opacity-30 animate-pulse">
-              <div className="w-full h-full bg-gradient-to-br from-primary-200/20 to-blue-200/20 dark:from-primary-800/20 dark:to-blue-800/20" />
+              <div className="w-full h-full bg-gradient-to-br from-orange-200/20 to-amber-200/20 dark:from-orange-800/20 dark:to-amber-800/20" />
             </div>
           </div>
 
@@ -240,7 +240,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
           >
-            <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent group-hover:from-primary-600 group-hover:to-blue-600 transition-all duration-500">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent group-hover:from-orange-600 group-hover:to-amber-600 transition-all duration-500">
               {project.title}
             </h3>
           </motion.div>
@@ -252,10 +252,10 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             animate={projectsInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
           >
-            <div className="p-2 bg-gradient-to-r from-primary-100 to-blue-100 dark:from-primary-900/30 dark:to-blue-900/30 rounded-xl">
-              <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+            <div className="p-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/30 dark:to-amber-900/30 rounded-xl">
+              <User className="w-4 h-4 text-orange-600 dark:text-orange-400" />
             </div>
-            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-3 py-1 rounded-full">
+            <span className="text-sm font-semibold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-3 py-1 rounded-full">
               {project.category || 'Full Stack Developer'}
             </span>
           </motion.div>
@@ -267,7 +267,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             transition={{ duration: 0.6, delay: index * 0.1 + 0.5 }}
             className="relative"
           >
-            <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-primary-500 to-blue-500 rounded-full opacity-30" />
+            <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-orange-500 to-amber-500 rounded-full opacity-30" />
             <div className="pl-4">
               <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-2 uppercase tracking-wide">Description</h4>
               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
@@ -337,14 +337,14 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-primary-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 <ExternalLink className="w-4 h-4 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 <span className="relative z-10">Live Demo</span>
               </motion.a>
@@ -548,7 +548,7 @@ const Projects = () => {
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-3 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-4 py-3 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
               
@@ -556,7 +556,7 @@ const Projects = () => {
                 <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10 pointer-events-none" />
                 <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                  className="w-full px-4 py-3 pl-10 pr-12 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 cursor-pointer text-left flex items-center justify-between"
+                  className="w-full px-4 py-3 pl-10 pr-12 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 cursor-pointer text-left flex items-center justify-between"
                 >
                   <span className="truncate mr-3">
                     {selectedTech || 'All Technologies'}
@@ -602,7 +602,7 @@ const Projects = () => {
                           }}
                           className={`w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700 last:border-b-0 ${
                             (selectedTech === tech || (selectedTech === '' && tech === 'All Technologies'))
-                              ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                              ? 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
@@ -681,7 +681,7 @@ const Projects = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-600 dark:bg-primary-700">
+      <section className="py-20 bg-orange-600 dark:bg-orange-700">
         <div className="container-max section-padding text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -692,21 +692,21 @@ const Projects = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Have a Project in Mind?
             </h2>
-            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
               I'm always excited to work on new challenges and bring innovative ideas to life. 
               Let's discuss your project and see how we can work together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 Start a Project
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-orange-600 transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group"
               >
                 <User className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                 Learn More About Me

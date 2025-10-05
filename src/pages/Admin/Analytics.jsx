@@ -132,8 +132,8 @@ const Analytics = () => {
       name: 'Total',
       value: analytics.total,
       icon: Mail,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
       description: 'All messages'
     },
     {
@@ -288,7 +288,7 @@ const Analytics = () => {
                     <div className="flex-1 mx-4">
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div
-                          className="bg-primary-600 h-2 rounded-full transition-all duration-500"
+                          className="bg-orange-600 h-2 rounded-full transition-all duration-500"
                           style={{ width: `${(count / maxActivity) * 100}%` }}
                         />
                       </div>
