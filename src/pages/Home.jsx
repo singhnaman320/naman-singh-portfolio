@@ -408,7 +408,7 @@ const Home = () => {
           >
             {[
               { 
-                label: 'Projects', 
+                label: 'Featured Projects', 
                 value: stats.projects,
                 suffix: '',
                 duration: 800

@@ -62,20 +62,30 @@ const Skills = () => {
   const certifications = [
     {
       id: 1,
-      title: 'AWS Certified Solutions Architect',
-      issuer: 'Amazon Web Services',
+      title: 'Problem Solving Certification',
+      issuer: 'HackerRank',
       date: '2024',
-      image: '/images/cert-aws.jpg', // Add your certificate images here
-      description: 'Validates expertise in designing distributed systems on AWS'
+      image: '/images/cert-problemSolving.png', // Add your certificate images here
+      description: 'Validates strong problem-solving skills and ability to write efficient algorithms'
     },
     {
       id: 2,
       title: 'React Developer Certification',
-      issuer: 'Meta',
+      issuer: 'HackerRank',
       date: '2023',
       image: '/images/cert-react.jpg',
       description: 'Demonstrates proficiency in React development and best practices'
     },
+    {
+      id: 3,
+      title: 'SQL Certification',
+      issuer: 'HackerRank',
+      date: '2022',
+      image: '/images/cert-sql.png',
+      description: 'Demonstrates proficiency in SQL queries, database management, and data analysis'
+    },
+
+    /*
     {
       id: 3,
       title: 'Full Stack Web Development',
@@ -108,6 +118,7 @@ const Skills = () => {
       image: '/images/cert-mongodb.jpg',
       description: 'Database design and development with MongoDB'
     }
+    */
   ]
 
   const displayedCertifications = showAllCertifications ? certifications : certifications.slice(0, 3)

@@ -20,6 +20,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
   const [showConfidentialityModal, setShowConfidentialityModal] = useState(false)
+  const [showDemoConfidentialityModal, setShowDemoConfidentialityModal] = useState(false)
 
   // Use project images from data
   const projectImages = project.images || []
@@ -350,7 +351,8 @@ const ProjectCard = ({ project, index, projectsInView }) => {
               </motion.button>
             )}
             
-            {project.demoUrl && (
+            {/* Live Demo Button - Always show, but handle differently based on demoUrl */}
+            {project.demoUrl ? (
               <motion.a
                 href={project.demoUrl}
                 target="_blank"
@@ -366,6 +368,20 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 <ExternalLink className="w-4 h-4 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 <span className="relative z-10">Live Demo</span>
               </motion.a>
+            ) : (
+              <motion.button
+                onClick={() => setShowDemoConfidentialityModal(true)}
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2.5 bg-gradient-to-r from-orange-400 to-amber-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group cursor-pointer"
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(249, 115, 22, 0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-300 to-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <Lock className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                <span className="relative z-10">Live Demo</span>
+              </motion.button>
             )}
           </motion.div>
         </div>
@@ -505,6 +521,56 @@ const ProjectCard = ({ project, index, projectsInView }) => {
                 
                 <button
                   onClick={() => setShowConfidentialityModal(false)}
+                  className="w-full px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg font-medium hover:from-orange-700 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Understood
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Demo Confidentiality Modal */}
+        {showDemoConfidentialityModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 dark:bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowDemoConfidentialityModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-white dark:bg-gray-800 rounded-2xl p-6 mx-4 max-w-md w-full shadow-2xl border border-gray-200 dark:border-gray-700"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setShowDemoConfidentialityModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Modal content */}
+              <div className="text-center">
+                <div className="mx-auto flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4">
+                  <Lock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
+                </div>
+                
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                  Live Demo Unavailable
+                </h3>
+                
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
+                  Live demo unavailable due to company confidentiality policies and proprietary restrictions.
+                </p>
+                
+                <button
+                  onClick={() => setShowDemoConfidentialityModal(false)}
                   className="w-full px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg font-medium hover:from-orange-700 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
                   Understood

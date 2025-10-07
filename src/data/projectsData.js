@@ -114,7 +114,7 @@ export const projectsData = [
       "/images/Serenity-Three.png",
       "/images/Serenity-Four.png"
     ],
-    demoUrl: "https://www.serenityhp.com/",
+    demoUrl: "https://www.serenityhp.com",
     /* githubUrl: "", */
     features: [
       "Real-time messaging",
@@ -160,7 +160,7 @@ export const projectsData = [
       "/images/MealPrep-Three.jpeg",
       "/images/MealPrep-Four.jpeg"
     ],
-    demoUrl: "https://task-manager-demo.vercel.app",
+    /* demoUrl: "https://task-manager-demo.vercel.app", */
     /* githubUrl: "", */
     features: [
       "Project and task organization",
