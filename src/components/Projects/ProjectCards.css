@@ -1,0 +1,114 @@
+/* 3D Flip Card Styles for Project Cards */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Ensure proper perspective for 3D effect */
+.project-card-container {
+  perspective: 1000px;
+}
+
+/* Smooth transitions for flip animation */
+.project-flip-container {
+  transition: transform 0.7s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+/* Hover effects for project cards */
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Animation for project card entrance */
+@keyframes projectCardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.project-card-enter {
+  animation: projectCardEntrance 0.6s ease-out forwards;
+}
+
+/* Flip button animation */
+.flip-button {
+  transition: all 0.3s ease;
+}
+
+.flip-button:hover {
+  transform: scale(1.1);
+}
+
+.flip-button.flipped {
+  transform: rotate(180deg);
+}
+
+/* Content fade in animation for back side */
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.back-content {
+  animation: contentFadeIn 0.4s ease-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-card-container {
+    perspective: 800px;
+  }
+}
+
+/* Dark mode specific adjustments */
+@media (prefers-color-scheme: dark) {
+  .project-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .project-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Gradient overlays for better text readability */
+.gradient-overlay {
+  background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+}
+
+/* Feature, challenge, and learning item animations */
+.detail-item {
+  transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+  transform: translateX(4px);
+}
+
+/* Icon container animations */
+.icon-container {
+  transition: all 0.3s ease;
+}
+
+.icon-container:hover {
+  transform: scale(1.05);
+}

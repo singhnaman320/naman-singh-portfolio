@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { motion } from 'framer-motion'
-import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X, Lock } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, Filter, Github, ExternalLink, MessageCircle, User, Rocket, ChevronDown, ChevronLeft, ChevronRight, Play, Expand, X, Lock, RotateCcw, Target, Lightbulb, Wrench } from 'lucide-react'
 import { projectsData } from '../data/projectsData'
 import { useInView } from 'react-intersection-observer'
+import '../components/Projects/ProjectCards.css'
 
 // Function to get tech stack colors for dark/light mode
 const getTechColor = (tech) => {
@@ -21,6 +22,7 @@ const ProjectCard = ({ project, index, projectsInView }) => {
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
   const [showConfidentialityModal, setShowConfidentialityModal] = useState(false)
   const [showDemoConfidentialityModal, setShowDemoConfidentialityModal] = useState(false)
+  const [isFlipped, setIsFlipped] = useState(false)
 
   // Use project images from data
   const projectImages = project.images || []
@@ -113,6 +115,16 @@ const ProjectCard = ({ project, index, projectsInView }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <AnimatePresence mode="wait">
+        {/* Front Side */}
+        {!isFlipped && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, rotateY: -90 }}
+          transition={{ duration: 0.3 }}
+          className="w-full h-full flex flex-col"
+        >
+        
         
         {/* Image Slideshow with Advanced Effects */}
         <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
@@ -234,17 +246,31 @@ const ProjectCard = ({ project, index, projectsInView }) => {
         </div>
 
         {/* Content Section */}
-        <div className="relative p-5 space-y-4 flex-1 flex flex-col">
+        <div className="relative p-5 space-y-4 flex-1 flex flex-col overflow-hidden">
 
-          {/* Title with Gradient Effect */}
+          {/* Title with Gradient Effect and Flip Icon */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={projectsInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+            className="flex items-center justify-between"
           >
             <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent group-hover:from-orange-600 group-hover:to-amber-600 transition-all duration-500">
               {project.title}
             </h3>
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsFlipped(!isFlipped)
+              }}
+              className="p-2 rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 hover:bg-orange-200 dark:hover:bg-orange-900/40 transition-all duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{ rotate: isFlipped ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <RotateCcw className="w-4 h-4" />
+            </motion.button>
           </motion.div>
 
           {/* Role Badge */}
@@ -385,6 +411,128 @@ const ProjectCard = ({ project, index, projectsInView }) => {
             )}
           </motion.div>
         </div>
+        </motion.div>
+      )}
+
+      {/* Back Side */}
+      {isFlipped && (
+        <motion.div
+          initial={{ opacity: 0, rotateY: 90 }}
+          animate={{ opacity: 1, rotateY: 0 }}
+          transition={{ duration: 0.3 }}
+          className="w-full h-full flex flex-col"
+        >
+          {/* Header with same image background but darker overlay */}
+          <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
+            {projectImages.length > 0 && (
+              <img
+                src={projectImages[0]}
+                alt={`${project.title} - Background`}
+                className="w-full h-full object-cover opacity-30"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/80 to-amber-600/80" />
+            
+            {/* Back side title */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white">
+                <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                <p className="text-sm opacity-90">Project Details</p>
+              </div>
+            </div>
+
+            {/* Flip back button */}
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsFlipped(false)
+              }}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <RotateCcw className="w-4 h-4" />
+            </motion.button>
+          </div>
+
+          {/* Back side content */}
+          <div className="p-5 space-y-3 flex-1 flex flex-col overflow-hidden">
+            {/* Features */}
+            {project.features && project.features.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isFlipped ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="flex items-center mb-2">
+                  <div className="p-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/30 dark:to-amber-900/30 rounded-xl mr-3">
+                    <Target className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wide">Features</h4>
+                </div>
+                <div className="space-y-1">
+                  {project.features.slice(0, 2).map((feature, index) => (
+                    <div key={index} className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{feature}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Challenges */}
+            {project.challenges && project.challenges.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isFlipped ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <div className="flex items-center mb-2">
+                  <div className="p-2 bg-gradient-to-r from-orange-200 to-amber-200 dark:from-orange-800/40 dark:to-amber-800/40 rounded-xl mr-3">
+                    <Wrench className="w-4 h-4 text-orange-700 dark:text-orange-300" />
+                  </div>
+                  <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wide">Challenges</h4>
+                </div>
+                <div className="space-y-1">
+                  {project.challenges.slice(0, 2).map((challenge, index) => (
+                    <div key={index} className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-orange-600 rounded-full mt-2 flex-shrink-0" />
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{challenge}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Learnings */}
+            {project.learnings && project.learnings.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isFlipped ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="mt-auto"
+              >
+                <div className="flex items-center mb-2">
+                  <div className="p-2 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/30 dark:to-yellow-900/30 rounded-xl mr-3">
+                    <Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  </div>
+                  <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wide">Key Learnings</h4>
+                </div>
+                <div className="space-y-1">
+                  {project.learnings.slice(0, 2).map((learning, index) => (
+                    <div key={index} className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{learning}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      )}
+      </AnimatePresence>
 
         {/* Lightbox Modal */}
         {isLightboxOpen && (

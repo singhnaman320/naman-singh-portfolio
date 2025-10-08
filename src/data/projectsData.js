@@ -3,7 +3,7 @@ export const projectsData = [
   {
     _id: "1",
     title: "Tisane Labs",
-    description: "Built and deployed AI-driven text analysis APIs with sentiment and contextual insights, alongside a secure role-based authentication system for controlled data access.",
+    description: "AI-driven text analysis API platform with sentiment and contextual insights, alongside a secure role-based authentication system for controlled data access.",
     fullDescription: "A comprehensive meeting booking application built with the MERN stack. This application allows users to schedule, manage, and track meetings efficiently. Features include real-time availability checking, automated email notifications, calendar integration, and a responsive dashboard for both users and administrators.",
     techStack: [
       "React.js",
@@ -50,7 +50,7 @@ export const projectsData = [
   {
     _id: "2", 
     title: "Hush Application",
-    description: "Developed a high-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features.",
+    description: "High-performance social media platform with interest-based communities, real-time messaging, and interactive posts, stories, and group features.",
     fullDescription: "A complete e-commerce solution built with React and Node.js. Features include product catalog, shopping cart, secure payment processing, order management, and admin panel. The platform supports multiple payment methods and provides a seamless shopping experience across all devices.",
     techStack: [
       "Node.js",
@@ -96,7 +96,7 @@ export const projectsData = [
   {
     _id: "3",
     title: "Serenity", 
-    description: "Built an insurance analytics platform with automated notifications, personalized communication, interactive dashboards, and optimized reporting performance.",
+    description: "Insurance analytics platform with automated notifications, personalized communication, interactive dashboards, and optimized reporting performance.",
     fullDescription: "A real-time chat application built with React and Socket.io. Features include instant messaging, group chats, file sharing, emoji support, and online status indicators. The application provides a smooth and responsive messaging experience similar to popular chat platforms.",
     techStack: [
       "React.js",
@@ -141,8 +141,8 @@ export const projectsData = [
   },
   {
     _id: "4",
-    title: "Meal Prep Ottawa Admin Panel",
-    description: "Developed a personalized meal delivery application with custom meal selection, real-time order updates, push notifications, and scalable role-based user management.",
+    title: "Meal Prep Admin Panel",
+    description: "Personalized meal delivery application with custom meal selection, real-time order updates, push notifications, and scalable role-based user management.",
     fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
     techStack: [
       "React.js",
@@ -188,14 +188,14 @@ export const projectsData = [
   {
     _id: "5",
     title: "PGI Equipment Admin Panel",
-    description: "Developed a personalized meal delivery application with custom meal selection, real-time order updates, push notifications, and scalable role-based user management.",
+    description: "PGI Equipment Admin Panel with dashboard, analytics, PDF exports, user authentication, and automated maintenance tracking for efficient equipment management.",
     fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
     techStack: [
       "React.js",
-      "Node.js",
-      "Express.js",
-      "MongoDB", 
-      "Firebase",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Material UI",
+      "Express API"
     ],
     category: "Frontend Developer",
     status: "In Progress",
@@ -230,7 +230,56 @@ export const projectsData = [
     teamSize: "Solo Project",
     createdAt: "2024-02-01",
     updatedAt: "2024-03-20"
+  },
+
+  /*
+  {
+    _id: "6",
+    title: "Elevate Realty",
+    description: "PGI Equipment Admin Panel with dashboard, analytics, PDF exports, user authentication, and automated maintenance tracking for efficient equipment management.",
+    fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
+    techStack: [
+      "WIX",
+      "WIX Velo",
+      "JavaScript",
+      "HTML",
+      "CSS3"
+    ],
+    category: "Full-Stack Developer",
+    status: "In Progress",
+    featured: false,
+    images: [
+      "/images/ER-One.png",
+      "/images/ER-Two.png",
+      "/images/ER-Three.png",
+      "/images/ER-Four.png"
+    ],
+    demoUrl: "https://www.elevaterealtyinfo.com",
+    githubUrl: "",
+    features: [
+      "Project and task organization",
+      "Team collaboration tools",
+      "Progress tracking and analytics",
+      "Deadline management",
+      "File attachments",
+      "Activity timeline"
+    ],
+    challenges: [
+      "Complex data relationships",
+      "Real-time collaboration features",
+      "Performance optimization for large datasets"
+    ],
+    learnings: [
+      "PostgreSQL advanced queries",
+      "Complex state management",
+      "Performance optimization techniques"
+    ],
+    duration: "Ongoing",
+    teamSize: "Solo Project",
+    createdAt: "2024-02-01",
+    updatedAt: "2024-03-20"
   }
+*/
 ]
 
 // Export individual project by ID for project detail pages
