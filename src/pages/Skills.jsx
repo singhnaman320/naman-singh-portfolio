@@ -62,19 +62,20 @@ const Skills = () => {
   const certifications = [
     {
       id: 1,
-      title: 'Problem Solving Certification',
+      title: 'Node.js Certification',
       issuer: 'HackerRank',
-      date: '2024',
-      image: '/images/cert-problemSolving.png', // Add your certificate images here
-      description: 'Validates strong problem-solving skills and ability to write efficient algorithms'
+      date: '2025',
+      image: '/images/cert-nodejs.png',
+      description: 'Validates expertise in building scalable backend applications with Node.js'
     },
+    
     {
       id: 2,
       title: 'React Developer Certification',
       issuer: 'HackerRank',
-      date: '2023',
-      image: '/images/cert-react.jpg',
-      description: 'Demonstrates proficiency in React development and best practices'
+      date: '2025',
+      image: '/images/cert-react.png',
+      description: 'Recognizes advanced knowledge of React fundamentals and real-world implementation'
     },
     {
       id: 3,
@@ -84,6 +85,31 @@ const Skills = () => {
       image: '/images/cert-sql.png',
       description: 'Demonstrates proficiency in SQL queries, database management, and data analysis'
     },
+    {
+      id: 4,
+      title: 'JavaScript Certification',
+      issuer: 'HackerRank',
+      date: '2022',
+      image: '/images/cert-javascript.png',
+      description: 'Proves capability in applying JavaScript to solve real-world challenges and optimize performance'
+    },
+    {
+      id: 5,
+      title: 'Java Certification',
+      issuer: 'HackerRank',
+      date: '2022',
+      image: '/images/cert-java.png',
+      description: 'Highlights ability to build efficient, object-oriented applications using Java'
+    },
+    {
+      id: 6,
+      title: 'Problem Solving Certification',
+      issuer: 'HackerRank',
+      date: '2023',
+      image: '/images/cert-problemSolving.png',
+      description: 'Showcases logical reasoning, algorithmic design, and optimization techniques for solving problems'
+    },
+    
 
     /*
     {
