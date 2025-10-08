@@ -184,6 +184,52 @@ export const projectsData = [
     teamSize: "Solo Project",
     createdAt: "2024-02-01",
     updatedAt: "2024-03-20"
+  },
+  {
+    _id: "5",
+    title: "PGI Equipment Admin Panel",
+    description: "Developed a personalized meal delivery application with custom meal selection, real-time order updates, push notifications, and scalable role-based user management.",
+    fullDescription: "A comprehensive task management application with project organization, team collaboration, and progress tracking. Built with modern React patterns and a clean, intuitive interface that helps teams stay organized and productive.",
+    techStack: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB", 
+      "Firebase",
+    ],
+    category: "Frontend Developer",
+    status: "In Progress",
+    featured: false,
+    images: [
+      "/images/PGIEquip-One.png",
+      "/images/PGIEquip-Two.png",
+      "/images/PGIEquip-Three.png",
+      "/images/PGIEquip-Four.png"
+    ],
+    /* demoUrl: "https://task-manager-demo.vercel.app", */
+    /* githubUrl: "", */
+    features: [
+      "Project and task organization",
+      "Team collaboration tools",
+      "Progress tracking and analytics",
+      "Deadline management",
+      "File attachments",
+      "Activity timeline"
+    ],
+    challenges: [
+      "Complex data relationships",
+      "Real-time collaboration features",
+      "Performance optimization for large datasets"
+    ],
+    learnings: [
+      "PostgreSQL advanced queries",
+      "Complex state management",
+      "Performance optimization techniques"
+    ],
+    duration: "Ongoing",
+    teamSize: "Solo Project",
+    createdAt: "2024-02-01",
+    updatedAt: "2024-03-20"
   }
 ]
 
