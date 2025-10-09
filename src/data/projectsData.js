@@ -25,21 +25,21 @@ export const projectsData = [
     demoUrl: "https://tisane.ai/home",
     /* githubUrl: "", */
     features: [
-      "Real-time meeting scheduling",
-      "Calendar integration",
+      "Implemented contextual analysis, entity extraction, and granular topic modeling",
+      "Enabled automatic translation, multilingual word lists, and accurate language identification",
       "Email notifications",
       "User authentication",
       "Admin dashboard",
       "Responsive design"
     ],
     challenges: [
-      "Implementing real-time availability checking",
-      "Managing complex scheduling logic",
+      "Ensuring accuracy in translation and language identification across diverse datasets",
+      "NLP model accuracy with real-time performance",
       "Ensuring data consistency across time zones"
     ],
     learnings: [
-      "Advanced React state management",
-      "MongoDB aggregation pipelines",
+      "Hands-on experience in sentiment analysis, topic modeling",
+      "Gained security-first principles with role-based authentication",
       "Real-time data synchronization"
     ],
     duration: "3 months",
@@ -71,21 +71,21 @@ export const projectsData = [
     demoUrl: "https://play.google.com/store/apps/details?id=ac.hush.app&hl=en-US",
     /* githubUrl: "", */
     features: [
-      "Product catalog with search and filters",
-      "Shopping cart and wishlist",
+      "Interest-based communities with group creation, stories, posts, and threaded comment replies",
+      "Real-time private and group chat with scalable messaging architecture",
       "Secure payment processing",
       "Order tracking",
       "User profiles and order history",
       "Admin dashboard for inventory management"
     ],
     challenges: [
-      "Implementing secure payment processing",
-      "Managing complex product variations",
+      "Designing a backend that efficiently handles both relational and NoSQL data structures",
+      "Ensuring real-time synchronization for chats",
       "Optimizing performance for large product catalogs"
     ],
     learnings: [
-      "Payment gateway integration",
-      "Advanced database optimization",
+      "Gained expertise in architecting hybrid database systems for performance and scalability",
+      "Building user based real-time communication systems",
       "Security best practices for e-commerce"
     ],
     duration: "4 months",
@@ -117,21 +117,21 @@ export const projectsData = [
     demoUrl: "https://www.serenityhp.com",
     /* githubUrl: "", */
     features: [
-      "Real-time messaging",
-      "Group chat functionality", 
+      "Integration of dynamic templates enables personalized communication with users",
+      "Interactive charts provide clear visualization of insurance trends and claims data", 
       "File and image sharing",
       "Emoji support",
       "Online/offline status",
       "Message history"
     ],
     challenges: [
-      "Implementing real-time communication",
-      "Managing socket connections efficiently",
+      "Representing large insurance and claims datasets in an intuitive, interactive format",
+      "Maintaining data accuracy and integrity",
       "Handling file uploads and sharing"
     ],
     learnings: [
-      "WebSocket implementation",
-      "Real-time data synchronization",
+      "Well-designed dashboards make trends actionable and decision-making faster",
+      "Proper indexing and query tuning significantly enhance reporting efficiency",
       "Optimizing socket performance"
     ],
     duration: "2 months",
@@ -163,21 +163,21 @@ export const projectsData = [
     /* demoUrl: "https://task-manager-demo.vercel.app", */
     /* githubUrl: "", */
     features: [
-      "Project and task organization",
-      "Team collaboration tools",
+      "Personalized meal selection platform with admin dashboard for seamless management",
+      "Real-time order updates via Firebase push notifications, including bulk notifications",
       "Progress tracking and analytics",
       "Deadline management",
       "File attachments",
       "Activity timeline"
     ],
     challenges: [
-      "Complex data relationships",
-      "Real-time collaboration features",
+      "Ensuring smooth coordination between frontend React.js components and backend Node.js APIs",
+      "Implementing individual & bulk push notifications",
       "Performance optimization for large datasets"
     ],
     learnings: [
-      "PostgreSQL advanced queries",
-      "Complex state management",
+      "Strengthened understanding of role-based access control and secure user management",
+      "Gained hands-on experience implementing real-time notifications with Firebase",
       "Performance optimization techniques"
     ],
     duration: "Ongoing",
@@ -209,21 +209,21 @@ export const projectsData = [
     /* demoUrl: "https://task-manager-demo.vercel.app", */
     /* githubUrl: "", */
     features: [
-      "Project and task organization",
-      "Team collaboration tools",
+      "Interactive admin panel with Dashboard, Add Equipment, Analytics, and user authentication",
+      "OTP-based password management and email integration for secure user access",
       "Progress tracking and analytics",
       "Deadline management",
       "File attachments",
       "Activity timeline"
     ],
     challenges: [
-      "Complex data relationships",
-      "Real-time collaboration features",
+      "Implementing OTP-based authentication and ensuring secure password updates",
+      "Handling dynamic equipment data in real-time",
       "Performance optimization for large datasets"
     ],
     learnings: [
-      "PostgreSQL advanced queries",
-      "Complex state management",
+      "Hands-on experience integrating frontend with Express.js APIs and Tailwind for responsive UI",
+      "Learned to manage real-time data updates, and downloadable report generation effectively.",
       "Performance optimization techniques"
     ],
     duration: "Ongoing",
