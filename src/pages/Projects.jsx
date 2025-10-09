@@ -752,7 +752,7 @@ const Projects = () => {
     'CSS3', 
     'JavaScript',
     'Git',
-    'React',
+    'React.js',
     'Tailwind CSS',
     'WebSocket',
     'Node.js',
